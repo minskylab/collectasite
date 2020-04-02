@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { styled } from "linaria/react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
+import CollectaLogo from "../components/atoms/CollectaLogo";
+import CollectaIsotype from "../components/atoms/CollectaIsotype";
 
 const Center = styled.div`
     width: 100%;
@@ -15,12 +17,7 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
     return (
         <Center>
             <div>
-                <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-                    Hello world! - user agent: {userAgent}
-                </motion.h1>
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                    Template by Minsky
-                </motion.p>
+                <CollectaLogo scale={0.6} />
             </div>
         </Center>
     );
