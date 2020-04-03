@@ -1,26 +1,27 @@
 import { NextPage } from "next";
 import { styled } from "linaria/react";
-import { css } from "linaria";
-// import { motion } from "framer-motion";
+import Head from "next/head";
+// import { css } from "linaria";
+import { motion } from "framer-motion";
 import CollectaLogo from "../components/atoms/CollectaLogo";
 import CollectaIsotype from "../components/atoms/CollectaIsotype";
 
-export const globals = css`
-	:global() {
-		html {
-			box-sizing: border-box;
-		}
-		body {
-			margin: 0px;
-		}
+// export const globals = css`
+// 	:global() {
+// 		html {
+// 			box-sizing: border-box;
+// 		}
+// 		body {
+// 			margin: 0px;
+// 		}
 
-		*,
-		*:before,
-		*:after {
-			box-sizing: inherit;
-		}
-	}
-`;
+// 		*,
+// 		*:before,
+// 		*:after {
+// 			box-sizing: inherit;
+// 		}
+// 	}
+// `;
 
 const Center = styled.div`
 	width: 100%;
@@ -34,11 +35,16 @@ const Center = styled.div`
 
 const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 	return (
-		<Center>
-			<div>
-				<CollectaLogo scale={0.6} />
-			</div>
-		</Center>
+        <>
+            <Head>
+                <title>Collecta Surveys | Minsky</title>
+            </Head>
+            <Center>
+                <div>
+                    <CollectaLogo scale={0.6} />
+                </div>
+            </Center>
+        </>
 	);
 };
 
