@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { styled } from "linaria/react";
 import { motion } from "framer-motion";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
@@ -34,7 +33,7 @@ const GoogleButton: FC<ButtonGoogleProps> = (props: ButtonGoogleProps) => {
 				className={buttonContainer}
 				transition={{ type: "spring", damping: 0 }}
 				//@ts-ignore
-				style={{ "--bg-color": theme.backgroundCards, "--sec-color": "theme.backgroundCards" }}
+				style={{ "--bg-color": theme.backgroundCards, "--sec-color": theme.backgroundCards }}
 			>
 				<motion.div
 					animate={
