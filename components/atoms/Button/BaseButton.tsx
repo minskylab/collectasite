@@ -2,7 +2,6 @@ import React, { FC, ReactElement } from "react";
 import { motion } from "framer-motion";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
-import { GoogleIcon } from "../Icon";
 
 const buttonContainer = css`
 	background-size: 200% 100%;
@@ -45,33 +44,33 @@ const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
 							boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.24)"
 						}
 					) : (
-						{
-							backgroundColor: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
-							justifyContent: props.iconPosition !== "left" ? "flex-end" : "flex-start"
-						}
-					)
+							{
+								backgroundColor: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
+								justifyContent: props.iconPosition !== "left" ? "flex-end" : "flex-start"
+							}
+						)
 				}
 			>
 				{props.iconElement &&
-				props.iconPosition === "left" && (
-					<motion.div
-						animate={
-							props.loading ? (
-								{
-									transform: "translateX(-5px)"
-								}
-							) : (
-								{
-									transform: "translateX(0)"
-								}
-							)
-						}
-						transition={{ type: "spring", damping: 0 }}
-						style={{ display: "flex" }}
-					>
-						{props.iconElement}
-					</motion.div>
-				)}
+					props.iconPosition === "left" && (
+						<motion.div
+							animate={
+								props.loading ? (
+									{
+										transform: "translateX(-5px)"
+									}
+								) : (
+										{
+											transform: "translateX(0)"
+										}
+									)
+							}
+							transition={{ type: "spring", damping: 0 }}
+							style={{ display: "flex" }}
+						>
+							{props.iconElement}
+						</motion.div>
+					)}
 
 				<div
 					style={{
@@ -86,25 +85,25 @@ const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
 					{props.text ? props.text : "Button"}
 				</div>
 				{props.iconElement &&
-				props.iconPosition !== "left" && (
-					<motion.div
-						animate={
-							props.loading ? (
-								{
-									transform: "translateX(5px)"
-								}
-							) : (
-								{
-									transform: "translateX(0)"
-								}
-							)
-						}
-						transition={{ type: "spring", damping: 0 }}
-						style={{ display: "flex" }}
-					>
-						{props.iconElement}
-					</motion.div>
-				)}
+					props.iconPosition !== "left" && (
+						<motion.div
+							animate={
+								props.loading ? (
+									{
+										transform: "translateX(5px)"
+									}
+								) : (
+										{
+											transform: "translateX(0)"
+										}
+									)
+							}
+							transition={{ type: "spring", damping: 0 }}
+							style={{ display: "flex" }}
+						>
+							{props.iconElement}
+						</motion.div>
+					)}
 			</motion.div>
 		</motion.div>
 	);

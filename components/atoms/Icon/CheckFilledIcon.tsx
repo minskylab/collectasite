@@ -3,6 +3,7 @@ import { FC } from "react";
 interface IconProps {
 	color?: string;
 	size?: number;
+	checkColor?: string;
 }
 
 const CheckFilledIcon: FC<IconProps> = props => {
@@ -23,7 +24,7 @@ const CheckFilledIcon: FC<IconProps> = props => {
 			<circle cx="12" cy="12" r="12" fill={props.color ? props.color : "#000000"} />
 			<path
 				d="M11.1304 14.2604L8.6979 11.8279L7.86957 12.6504L11.1304 15.9113L18.1304 8.91128L17.3079 8.08878L11.1304 14.2604Z"
-				fill="white"
+				fill={props.checkColor ? props.checkColor : "#000000"}
 				fill-opacity="0.6"
 			/>
 		</svg>

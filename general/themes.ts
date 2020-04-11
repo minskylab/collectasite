@@ -9,6 +9,7 @@ interface Theme {
 	inputBorderBottomColor: string;
 	inputBorderBottomFocusColor: string;
 	primaryColor: string;
+	darkSecondaryTextColor: string;
 	secondaryColor: string;
 	fontFamilyTitle: string;
 	fontFamilyText: string;
@@ -26,7 +27,9 @@ const themes: CollectaSurveysThemes = {
 	light: {
 		backgroundColor: "#FEFEFE",
 		textColor: "#353739",
-		secondaryTextColor: "#B7B7B7",
+		darkSecondaryTextColor: "#5B5B5B",
+		secondaryColor: "#EFF1F5",
+		secondaryTextColor: "#B1B1B1",
 
 		inputColor: "#ffffff",
 		inputFocusColor: "#ffffff",
@@ -35,9 +38,10 @@ const themes: CollectaSurveysThemes = {
 		inputBorderBottomColor: "#CED3DD70",
 		inputBorderBottomFocusColor: "#ffffff",
 
+		//button
 		primaryColor: "#4258ED",
-		primaryColorText: "#FFFFFF",
-		secondaryColor: "#2d3243",
+		primaryColorText: "#ffffff",
+
 		fontFamilyTitle: `"Rubik", sans-serif`,
 		fontFamilyText: `"Karla", sans-serif`,
 		backgroundCards: "#FFFFFF"
@@ -45,6 +49,7 @@ const themes: CollectaSurveysThemes = {
 	dark: {
 		backgroundColor: "#121212",
 		textColor: "#FFFFFF",
+		darkSecondaryTextColor: "#5B5B5B",
 		secondaryTextColor: "#B7B7B7",
 
 		inputColor: "#4f4f4f",
@@ -64,6 +69,7 @@ const themes: CollectaSurveysThemes = {
 	gray: {
 		backgroundColor: "#121212",
 		textColor: "#FFFFFF",
+		darkSecondaryTextColor: "#5B5B5B",
 		secondaryTextColor: "#B7B7B7",
 
 		inputColor: "#4f4f4f",

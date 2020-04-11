@@ -10,9 +10,46 @@ import {
 	CheckFilledIcon
 } from "../../../components/atoms/Icon";
 import { BaseInput } from "../../../components/atoms/Input";
+import { ClassroomCard } from "../../../components/molecules/Cards";
+import { DefaultChoices } from "../../../components/molecules/Choices";
+
+const surveys = [
+	{
+		expiredAt: "Vence el 24 de Marzo a las 23:59",
+		surveyName: "Feedback por Sesión | Estudiantes",
+		course: "Teoría de Decisiones",
+		teacher: "Profesor José Larco",
+		createdAt: "Inicia: Martes 23 de Marzo",
+		availableFrom: "Disponible desde las 16:00"
+	},
+	{
+		expiredAt: "Vence el 24 de Marzo a las 23:59",
+		surveyName: "Feedback por Sesión | Estudiantes",
+		course: "Teoría de Decisiones",
+		teacher: "Profesor José Larco",
+		createdAt: "Inicia: Martes 23 de Marzo",
+		availableFrom: "Disponible desde las 16:00"
+	},
+	{
+		expiredAt: "Vence el 24 de Marzo a las 23:59",
+		surveyName: "Feedback por Sesión | Estudiantes",
+		course: "Teoría de Decisiones",
+		teacher: "Profesor José Larco",
+		createdAt: "Inicia: Martes 23 de Marzo",
+		availableFrom: "Disponible desde las 16:00"
+	}
+];
+
+const OPTIONS = [
+	{ key: "01", text: "Breakout Rooms", value: "breakoutrooms", checked: false },
+	{ key: "02", text: "Chat", value: "chat", checked: true },
+	{ key: "03", text: "Juego-simulación", value: "juegosimulacion", checked: false },
+	{ key: "04", text: "Kahoot u otra encuesta", value: "kahootuotraencuesta", checked: true },
+	{ key: "05", text: "Otra", value: "otra", checked: false }
+];
 
 const Playground = () => {
-	const [username, setUsername] = useState<string>("");
+	const [ username, setUsername ] = useState<string>("");
 
 	return (
 		<div>
@@ -60,6 +97,25 @@ const Playground = () => {
 						onChange={e => setUsername(e.target.value)}
 					/>
 				</div>
+				<br />
+				<div style={{ display: "flex" }}>
+					{surveys.map(survey => (
+						<div style={{ width: "207px", margin: "0.3rem" }}>
+							<ClassroomCard {...survey} />
+						</div>
+					))}
+				</div>
+				<br />
+				<br />
+				<div style={{ width: "360px" }}>
+					<DefaultChoices options={OPTIONS} />
+				</div>
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
 			</div>
 		</div>
 	);
