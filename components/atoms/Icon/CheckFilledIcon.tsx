@@ -16,8 +16,8 @@ const CheckFilledIcon: FC<IconProps> = props => {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d="M20 9H4V11H20V9ZM14 13H4V15H14V13Z"
 				fill={props.color ? props.color : "#000000"}
 			/>
@@ -25,7 +25,7 @@ const CheckFilledIcon: FC<IconProps> = props => {
 			<path
 				d="M11.1304 14.2604L8.6979 11.8279L7.86957 12.6504L11.1304 15.9113L18.1304 8.91128L17.3079 8.08878L11.1304 14.2604Z"
 				fill={props.checkColor ? props.checkColor : "#000000"}
-				fill-opacity="0.6"
+				fillOpacity="0.6"
 			/>
 		</svg>
 	);

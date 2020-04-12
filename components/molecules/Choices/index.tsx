@@ -1,3 +1,3 @@
-import DefaultChoices from "./DefaultChoices";
+import Choices from "./Choices";
 
-export { DefaultChoices };
+export { Choices };

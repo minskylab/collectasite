@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, ReactElement } from "react";
 import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
@@ -16,7 +16,7 @@ const buttonContainer = css`
 	-webkit-touch-callout: none;
 	border-color: var(--border-color);
 	border-style: solid;
-	border-width: var(--border-width);
+	border-width: 2px;
 	transition: 0.3s;
 	height: 20px;
 	:hover {
@@ -31,58 +31,84 @@ const text = css`
 	transition: 0.3s;
 `;
 
-interface ChoiceProps {
-	activeColor?: string;
-	secondaryColor?: string;
-	option: { key: string; text: string; value: string };
-	checked?: boolean;
-	onChecked?: () => void;
+export interface OptionValue {
+	key: string;
+	text: string;
+	value: string;
+	checked: boolean;
 }
 
-const ChoiceButton: FC<ChoiceProps> = (props: ChoiceProps) => {
+interface ChoiceProps {
+	option: OptionValue;
+	onClick?: (e: React.MouseEvent) => void;
+}
+
+function ChoiceButton(props: ChoiceProps): ReactElement {
+	// const ChoiceButton: FC<ChoiceProps> = (props: ChoiceProps) => {
 	const [ mouseOver, setOnMouse ] = useState<boolean>(false);
+	const [ render, setRender ] = useState<number>(0);
 	const theme = useTheme();
+
+	useEffect(
+		() => {
+			setRender(c => c + 1);
+		},
+		[ props.option.checked, props.option.value ]
+	);
+
+	// console.log(render);
+
+	// console.log(props.option);
+
 	return (
-		<motion.div
-			onMouseOver={() => {
-				setOnMouse(true);
-			}}
-			onMouseLeave={() => {
-				setOnMouse(false);
-			}}
-		>
-			<motion.div
+		<div onClick={props.onClick}>
+			<div
+				onMouseOver={() => {
+					setOnMouse(true);
+				}}
+				onMouseLeave={() => {
+					setOnMouse(false);
+				}}
 				className={buttonContainer}
-				transition={{ type: "spring", damping: 0 }}
-				//@ts-ignore
 				style={{
 					//@ts-ignore
-					"--background-color": props.checked ? theme.primaryColor : "transparent",
-					"--border-color": props.checked ? theme.primaryColor : theme.secondaryColor,
-					"--border-width": props.checked ? "0px" : "2px"
+					"--background-color": props.option.checked ? theme.primaryColor : "transparent",
+					"--border-color": props.option.checked ? theme.primaryColor : theme.secondaryColor
 				}}
-				onClick={() => {}}
 			>
 				<div
 					className={text}
 					style={{
 						//@ts-ignore
-						"--text-color": props.checked ? theme.primaryColorText : theme.secondaryTextColor,
+						"--text-color": props.option.checked ? theme.primaryColorText : theme.secondaryTextColor,
 						"--font-family": theme.fontFamilyText
 					}}
 				>
 					{props.option.text}
 				</div>
-				{props.checked ? (
-					<CheckFilledIcon color={theme.primaryColorText} checkColor={theme.primaryColor} size={20} />
+				{props.option.checked ? (
+					<motion.div
+						animate={
+							render > 1 ? (
+								{
+									scale: [ 1, 1.5, 1 ]
+								}
+							) : (
+								{}
+							)
+						}
+						transition={{ duration: 0.3 }}
+					>
+						<CheckFilledIcon color={theme.primaryColorText} checkColor={theme.primaryColor} size={20} />
+					</motion.div>
 				) : mouseOver ? (
 					<CheckFilledIcon color={theme.secondaryColor} checkColor={theme.textColor} size={20} />
 				) : (
 					""
 				)}
-			</motion.div>
-		</motion.div>
+			</div>
+		</div>
 	);
-};
+}
 
 export default ChoiceButton;

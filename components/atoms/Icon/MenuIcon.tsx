@@ -15,8 +15,8 @@ const MenuIcon: FC<IconProps> = props => {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d="M20 9H4V11H20V9ZM14 13H4V15H14V13Z"
 				fill={props.color ? props.color : "#000000"}
 			/>

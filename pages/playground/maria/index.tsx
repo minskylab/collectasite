@@ -11,7 +11,8 @@ import {
 } from "../../../components/atoms/Icon";
 import { BaseInput } from "../../../components/atoms/Input";
 import { ClassroomCard } from "../../../components/molecules/Cards";
-import { DefaultChoices } from "../../../components/molecules/Choices";
+import { Choices } from "../../../components/molecules/Choices";
+import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 
 const surveys = [
 	{
@@ -48,16 +49,28 @@ const OPTIONS = [
 	{ key: "05", text: "Otra", value: "otra", checked: false }
 ];
 
+const OPTIONSSINGLE = [
+	{ key: "06", text: "Breakout Rooms", value: "breakoutrooms", checked: true },
+	{ key: "07", text: "Chat", value: "chat", checked: false },
+	{ key: "08", text: "Juego-simulación", value: "juegosimulacion", checked: false },
+	{ key: "09", text: "Kahoot u otra encuesta", value: "kahootuotraencuesta", checked: false },
+	{ key: "10", text: "Otra", value: "otra", checked: false }
+];
+
 const Playground = () => {
 	const [ username, setUsername ] = useState<string>("");
+	const [ multipleOptions, setMultipleOptions ] = useState<OptionValue[]>(OPTIONS);
+	const [ singleOptions, setSingleOptions ] = useState<OptionValue[]>(OPTIONSSINGLE);
+	const [ change, setChange ] = useState(false);
 
+	console.log(singleOptions);
 	return (
 		<div>
 			<Head>
 				<title>Minsky | Lab</title>
 			</Head>
 			<div style={{ textAlign: "center", display: "flex", alignItems: "center", flexDirection: "column" }}>
-				<div>Maria playground</div>
+				<div>Bebita playground</div>
 				<br />
 				<div style={{ width: "200px" }}>
 					<GoogleButton />
@@ -91,7 +104,7 @@ const Playground = () => {
 				<div style={{ width: "217px" }}>
 					<BaseInput
 						placeholder={"Pon tu código de ingreso aquí"}
-						type={"email"}
+						type={"text"}
 						value={username}
 						//@ts-ignore
 						onChange={e => setUsername(e.target.value)}
@@ -99,19 +112,38 @@ const Playground = () => {
 				</div>
 				<br />
 				<div style={{ display: "flex" }}>
-					{surveys.map(survey => (
-						<div style={{ width: "207px", margin: "0.3rem" }}>
+					{surveys.map((survey, s) => (
+						<div key={s} style={{ width: "207px", margin: "0.3rem" }}>
 							<ClassroomCard {...survey} />
 						</div>
 					))}
 				</div>
 				<br />
 				<br />
+				MULTIPLE
+				<br />
+				<br />
 				<div style={{ width: "360px" }}>
-					<DefaultChoices options={OPTIONS} />
+					<Choices
+						options={multipleOptions}
+						onChange={options => {
+							setMultipleOptions(options);
+						}}
+						multiple={true}
+					/>
 				</div>
 				<br />
+				SINGLE
 				<br />
+				<br />
+				<div style={{ width: "360px" }}>
+					<Choices
+						options={singleOptions}
+						onChange={options => {
+							setSingleOptions(options);
+						}}
+					/>
+				</div>
 				<br />
 				<br />
 				<br />
