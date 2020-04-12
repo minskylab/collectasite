@@ -30,7 +30,11 @@ const Choices: FC<DefaultChoicesProps> = (props: DefaultChoicesProps) => {
 							} else {
 								_options.forEach(_option => {
 									if (option.key === _option.key) {
-										_option.checked = true;
+										if (_option.checked) {
+											_option.checked = false;
+										} else {
+											_option.checked = true;
+										}
 									} else {
 										_option.checked = false;
 									}

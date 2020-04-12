@@ -45,20 +45,18 @@ interface ChoiceProps {
 
 function ChoiceButton(props: ChoiceProps): ReactElement {
 	// const ChoiceButton: FC<ChoiceProps> = (props: ChoiceProps) => {
-	const [ mouseOver, setOnMouse ] = useState<boolean>(false);
-	const [ render, setRender ] = useState<number>(0);
+	const [mouseOver, setOnMouse] = useState<boolean>(false);
+	const [render, setRender] = useState<number>(0);
 	const theme = useTheme();
 
 	useEffect(
 		() => {
 			setRender(c => c + 1);
 		},
-		[ props.option.checked, props.option.value ]
+		[props.option.checked, props.option.value]
 	);
 
 	// console.log(render);
-
-	// console.log(props.option);
 
 	return (
 		<div onClick={props.onClick}>
@@ -86,26 +84,25 @@ function ChoiceButton(props: ChoiceProps): ReactElement {
 				>
 					{props.option.text}
 				</div>
-				{props.option.checked ? (
-					<motion.div
-						animate={
+				<motion.div
+					animate={
+						props.option.checked ?
 							render > 1 ? (
 								{
-									scale: [ 1, 1.5, 1 ]
+									scale: [1, 1.5, 1]
 								}
 							) : (
-								{}
-							)
-						}
-						transition={{ duration: 0.3 }}
-					>
-						<CheckFilledIcon color={theme.primaryColorText} checkColor={theme.primaryColor} size={20} />
-					</motion.div>
-				) : mouseOver ? (
-					<CheckFilledIcon color={theme.secondaryColor} checkColor={theme.textColor} size={20} />
-				) : (
-					""
-				)}
+									{}
+								) : { scale: 1, opacity: mouseOver ? [0, 1] : render <= 1 ? 0 : [1, 0] }
+					}
+					style={{
+						opacity:
+							render <= 1 ? props.option.checked ? 1 : 0 : mouseOver ? 0 : 1
+					}}
+					transition={{ duration: 0.4 }}
+				>
+					<CheckFilledIcon color={props.option.checked ? theme.primaryColorText : theme.secondaryColor} checkColor={props.option.checked ? theme.primaryColor : theme.textColor} size={20} />
+				</motion.div>
 			</div>
 		</div>
 	);

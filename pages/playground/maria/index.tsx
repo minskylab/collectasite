@@ -11,7 +11,7 @@ import {
 } from "../../../components/atoms/Icon";
 import { BaseInput } from "../../../components/atoms/Input";
 import { ClassroomCard } from "../../../components/molecules/Cards";
-import { Choices } from "../../../components/molecules/Choices";
+import { Choices, YesNoChoices } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 
 const surveys = [
@@ -143,6 +143,14 @@ const Playground = () => {
 							setSingleOptions(options);
 						}}
 					/>
+				</div>
+				<br />
+				<br />
+				YES - NO
+				<br />
+				<br />
+				<div>
+					<YesNoChoices onChange={selectedOption => console.log(selectedOption)} />
 				</div>
 				<br />
 				<br />
