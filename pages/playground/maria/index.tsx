@@ -13,6 +13,7 @@ import { BaseInput } from "../../../components/atoms/Input";
 import { ClassroomCard } from "../../../components/molecules/Cards";
 import { Choices, YesNoChoices } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
+import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoices";
 
 const surveys = [
 	{
@@ -61,9 +62,9 @@ const Playground = () => {
 	const [ username, setUsername ] = useState<string>("");
 	const [ multipleOptions, setMultipleOptions ] = useState<OptionValue[]>(OPTIONS);
 	const [ singleOptions, setSingleOptions ] = useState<OptionValue[]>(OPTIONSSINGLE);
-	const [ change, setChange ] = useState(false);
+	const [ yesNoValue, setYesNoValue ] = useState<YesNoValue>(YesNoValue.Undefined);
 
-	console.log(singleOptions);
+	// console.log(singleOptions);
 	return (
 		<div>
 			<Head>
@@ -150,7 +151,15 @@ const Playground = () => {
 				<br />
 				<br />
 				<div>
-					<YesNoChoices onChange={selectedOption => console.log(selectedOption)} />
+					<YesNoChoices
+						positiveOptionName={"SI"}
+						negativeOptionName={"NO"}
+						value={yesNoValue}
+						onChange={selectedOption => {
+							console.log(selectedOption);
+							setYesNoValue(selectedOption);
+						}}
+					/>
 				</div>
 				<br />
 				<br />
