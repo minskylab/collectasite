@@ -1,10 +1,7 @@
 import React, { FC } from "react";
 import { styled } from "linaria/react";
 import { css } from "linaria";
-import { useTheme } from "../../../general/theming";
-import { motion } from "framer-motion";
 import { YesNoButton } from "../../atoms/Button";
-import { OptionValue } from "../../atoms/Button/ChoiceButton";
 
 const WrapperYesNoButtons = styled.div`
 	display: flex;
@@ -25,7 +22,7 @@ interface YesNoChoicesProps {
 	negativeOptionName?: string;
 }
 
-const YesNoChoices: FC<YesNoChoicesProps> = (props: YesNoChoicesProps) => {
+const YesNoChoice: FC<YesNoChoicesProps> = (props: YesNoChoicesProps) => {
 	return (
 		<WrapperYesNoButtons>
 			<ContainerOption key={1} style={{ paddingLeft: "0rem" }}>
@@ -60,4 +57,4 @@ const YesNoChoices: FC<YesNoChoicesProps> = (props: YesNoChoicesProps) => {
 	);
 };
 
-export default YesNoChoices;
+export default YesNoChoice;

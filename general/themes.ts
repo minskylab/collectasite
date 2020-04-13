@@ -15,6 +15,9 @@ interface Theme {
 	fontFamilyText: string;
 	backgroundCards: string;
 	primaryColorText: string;
+	satisfactionBorderColor: string;
+	satisfactionColors: string[];
+	satisfactionTextColors: string[];
 }
 
 interface CollectaSurveysThemes {
@@ -44,7 +47,11 @@ const themes: CollectaSurveysThemes = {
 
 		fontFamilyTitle: `"Rubik", sans-serif`,
 		fontFamilyText: `"Karla", sans-serif`,
-		backgroundCards: "#FFFFFF"
+		backgroundCards: "#FFFFFF",
+
+		satisfactionBorderColor: "#EFF1F5",
+		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
 	},
 	dark: {
 		backgroundColor: "#121212",
@@ -64,7 +71,11 @@ const themes: CollectaSurveysThemes = {
 		secondaryColor: "#E1E7F8",
 		fontFamilyTitle: `"Rubik", sans-serif`,
 		fontFamilyText: `"Karla", sans-serif`,
-		backgroundCards: "#FFFFFF"
+		backgroundCards: "#FFFFFF",
+
+		satisfactionBorderColor: "#EFF1F5",
+		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
 	},
 	gray: {
 		backgroundColor: "#121212",
@@ -84,7 +95,11 @@ const themes: CollectaSurveysThemes = {
 		secondaryColor: "#E1E7F8",
 		fontFamilyTitle: `"Rubik", sans-serif`,
 		fontFamilyText: `"Karla", sans-serif`,
-		backgroundCards: "#FFFFFF"
+		backgroundCards: "#FFFFFF",
+
+		satisfactionBorderColor: "#EFF1F5",
+		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
 	}
 };
 

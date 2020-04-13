@@ -11,9 +11,10 @@ import {
 } from "../../../components/atoms/Icon";
 import { BaseInput } from "../../../components/atoms/Input";
 import { ClassroomCard } from "../../../components/molecules/Cards";
-import { Choices, YesNoChoices } from "../../../components/molecules/Choices";
+import { Choices, YesNoChoice, SatisfactionChoice } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
-import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoices";
+import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
+import { SatisfactionValue } from "../../../components/molecules/Choices/SatisfactionChoice";
 
 const surveys = [
 	{
@@ -63,6 +64,7 @@ const Playground = () => {
 	const [ multipleOptions, setMultipleOptions ] = useState<OptionValue[]>(OPTIONS);
 	const [ singleOptions, setSingleOptions ] = useState<OptionValue[]>(OPTIONSSINGLE);
 	const [ yesNoValue, setYesNoValue ] = useState<YesNoValue>(YesNoValue.Undefined);
+	const [ satisfactionValue, setSatisfactionValue ] = useState<SatisfactionValue>(SatisfactionValue.Undefined);
 
 	// console.log(singleOptions);
 	return (
@@ -151,14 +153,27 @@ const Playground = () => {
 				<br />
 				<br />
 				<div>
-					<YesNoChoices
+					<YesNoChoice
 						positiveOptionName={"SI"}
 						negativeOptionName={"NO"}
 						value={yesNoValue}
 						onChange={selectedOption => {
-							console.log(selectedOption);
 							setYesNoValue(selectedOption);
 						}}
+					/>
+				</div>
+				<br />
+				<br />
+				SATISFACTION
+				<br />
+				<br />
+				<div>
+					<SatisfactionChoice
+						onChange={s => {
+							console.log(s);
+							setSatisfactionValue(s);
+						}}
+						value={satisfactionValue}
 					/>
 				</div>
 				<br />

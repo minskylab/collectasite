@@ -1,4 +1,5 @@
 import Choices from "./Choices";
-import YesNoChoices from "./YesNoChoices";
+import YesNoChoice from "./YesNoChoice";
+import SatisfactionChoice from "./SatisfactionChoice";
 
-export { Choices, YesNoChoices };
+export { Choices, YesNoChoice, SatisfactionChoice };
