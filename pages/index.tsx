@@ -6,24 +6,13 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import CollectaLogo from "../components/atoms/CollectaLogo";
 import CollectaIsotype from "../components/atoms/CollectaIsotype";
-// import { Choices } from "../components/molecules/Choices";
 
-// export const globals = css`
-// 	:global() {
-// 		html {
-// 			box-sizing: border-box;
-// 		}
-// 		body {
-// 			margin: 0px;
-// 		}
-
-// 		*,
-// 		*:before,
-// 		*:after {
-// 			box-sizing: inherit;
-// 		}
-// 	}
-// `;
+const circleConfig = {
+	viewBox: '0 0 38 38',
+	x: '19',
+	y: '19',
+	radio: '15.91549430918954'
+};
 
 const Center = styled.div`
 	width: 100%;
@@ -66,13 +55,29 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 			<Center>
 				<div>
 					<CollectaLogo scale={0.6} />
-					{/* <Choices
-						options={singleOptions}
-						onChange={options => {
-							console.log("options", options.map(({ checked }) => checked))
-							setSingleOptions(options);
-						}}
-					/> */}
+					{/* <figure >
+						<svg viewBox={circleConfig.viewBox} width="400" height="400">
+
+							<circle
+								className="ring"
+								cx={circleConfig.x}
+								cy={circleConfig.y}
+								r={circleConfig.radio}
+								fill="transparent"
+								stroke="gray"
+							/>
+
+							<circle
+								className="path"
+								cx={circleConfig.x}
+								cy={circleConfig.y}
+								r={circleConfig.radio}
+								fill="transparent"
+								stroke="teal"
+							/>
+
+						</svg>
+					</figure> */}
 				</div>
 			</Center>
 		</>

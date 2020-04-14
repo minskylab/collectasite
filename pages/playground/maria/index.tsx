@@ -15,6 +15,8 @@ import { Choices, YesNoChoice, SatisfactionChoice } from "../../../components/mo
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
 import { SatisfactionValue, SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
+import { CircleProgressBarBase } from "../../../components/molecules/CircleProgressBar";
+import CircleProgressBar from "../../../components/molecules/CircleProgressBar/CircleProgressBar";
 
 const surveys = [
 	{
@@ -180,6 +182,18 @@ const Playground = () => {
 				</div>
 				<br />
 				<br />
+				Circle progress bar base
+				<br />
+				<br />
+				<div>
+					<CircleProgressBar
+						strokeWidth={2}
+						percentage={75}
+						innerText="completado"
+						speed={1}
+						size={250}
+					/>
+				</div>
 				<br />
 				<br />
 				<br />

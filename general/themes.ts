@@ -18,6 +18,7 @@ interface Theme {
 	satisfactionBorderColor: string;
 	satisfactionColors: string[];
 	satisfactionTextColors: string[];
+	trailStrokeColor: string;
 }
 
 interface CollectaSurveysThemes {
@@ -51,7 +52,9 @@ const themes: CollectaSurveysThemes = {
 
 		satisfactionBorderColor: "#EFF1F5",
 		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
-		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ],
+
+		trailStrokeColor: "#F3F3F6"
 	},
 	dark: {
 		backgroundColor: "#121212",
@@ -75,7 +78,9 @@ const themes: CollectaSurveysThemes = {
 
 		satisfactionBorderColor: "#EFF1F5",
 		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
-		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ],
+
+		trailStrokeColor: "#F3F3F6"
 	},
 	gray: {
 		backgroundColor: "#121212",
@@ -99,7 +104,9 @@ const themes: CollectaSurveysThemes = {
 
 		satisfactionBorderColor: "#EFF1F5",
 		satisfactionColors: [ "#FF7B86", "#FF9C88", "#FFD6A4", "#BAF6A5", "#8DEDB0" ],
-		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ]
+		satisfactionTextColors: [ "#DD2E3C", "#F07A62", "#ECAF65", "#7AE256", "#1FB856" ],
+
+		trailStrokeColor: "#F3F3F6"
 	}
 };
 
