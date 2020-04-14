@@ -1,3 +1,3 @@
-import CircleProgressBarBase from "./CircleProgressBarBase";
+import CircleProgressBar from "./CircleProgressBar";
 
-export { CircleProgressBarBase }
+export { CircleProgressBar }

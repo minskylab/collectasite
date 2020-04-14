@@ -1,6 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC } from "react";
 import CircleProgressBarBase from "./CircleProgressBarBase";
-import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 

@@ -14,9 +14,8 @@ import { ClassroomCard } from "../../../components/molecules/Cards";
 import { Choices, YesNoChoice, SatisfactionChoice } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
-import { SatisfactionValue, SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
-import { CircleProgressBarBase } from "../../../components/molecules/CircleProgressBar";
-import CircleProgressBar from "../../../components/molecules/CircleProgressBar/CircleProgressBar";
+import { SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
+import { CircleProgressBar } from "../../../components/molecules/CircleProgressBar";
 
 const surveys = [
 	{
