@@ -14,7 +14,7 @@ import { ClassroomCard } from "../../../components/molecules/Cards";
 import { Choices, YesNoChoice, SatisfactionChoice } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
-import { SatisfactionValue } from "../../../components/molecules/Choices/SatisfactionChoice";
+import { SatisfactionValue, SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
 
 const surveys = [
 	{
@@ -60,11 +60,11 @@ const OPTIONSSINGLE = [
 ];
 
 const Playground = () => {
-	const [ username, setUsername ] = useState<string>("");
-	const [ multipleOptions, setMultipleOptions ] = useState<OptionValue[]>(OPTIONS);
-	const [ singleOptions, setSingleOptions ] = useState<OptionValue[]>(OPTIONSSINGLE);
-	const [ yesNoValue, setYesNoValue ] = useState<YesNoValue>(YesNoValue.Undefined);
-	const [ satisfactionValue, setSatisfactionValue ] = useState<SatisfactionValue>(SatisfactionValue.Undefined);
+	const [username, setUsername] = useState<string>("");
+	const [multipleOptions, setMultipleOptions] = useState<OptionValue[]>(OPTIONS);
+	const [singleOptions, setSingleOptions] = useState<OptionValue[]>(OPTIONSSINGLE);
+	const [yesNoValue, setYesNoValue] = useState<YesNoValue>(YesNoValue.Undefined);
+	const [satisfactionValue, setSatisfactionValue] = useState<number | undefined>(0);
 
 	// console.log(singleOptions);
 	return (
@@ -170,12 +170,18 @@ const Playground = () => {
 				<div>
 					<SatisfactionChoice
 						onChange={s => {
-							console.log(s);
 							setSatisfactionValue(s);
 						}}
-						value={satisfactionValue}
+						unitValue={satisfactionValue}
+						iconSize={100}
+						satisfactionOptionsSize={SatisfactionMode.Large}
+					// alternativeNames={["a", "b", 'c']}
 					/>
 				</div>
+				<br />
+				<br />
+				<br />
+				<br />
 				<br />
 				<br />
 				<br />
