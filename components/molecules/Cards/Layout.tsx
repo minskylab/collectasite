@@ -23,12 +23,13 @@ const Wrapper = styled.div<WrapperProps>`
 interface LayoutProps {
   children?: any;
   isShadow?: boolean;
+  onClick?: () => void;
 }
 
 const Layout: FC<LayoutProps> = (props: LayoutProps) => {
   const [hover, setHover] = useState<boolean>(false);
   return (
-    <Wrapper isShadow={props.isShadow} hover={hover} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <Wrapper onClick={props.onClick} isShadow={props.isShadow} hover={hover} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       {props.children}
     </Wrapper>
   );

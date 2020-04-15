@@ -158,7 +158,10 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 			</motion.div>
 			<WrapperHome>
 				<AvatarPosition>
-					<Avatar size={"2.5rem"} />
+					<Avatar
+						size={"2.5rem"}
+						image={"https://static.nationalgeographicla.com/files/styles/image_885/public/nina-afgana-002.jpg"}
+					/>
 				</AvatarPosition>
 				<ContentWrapper>
 					<Container>
@@ -188,7 +191,7 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 						<div className={cardsContainer}>
 							{surveys.map((survey, s) => (
 								<div key={s} className={cardItem}>
-									<ClassroomCard {...survey} isShadow={true} />
+									<ClassroomCard {...survey} isShadow={true} onSelected={id => console.log(id)} />
 								</div>
 							))}
 						</div>
@@ -226,6 +229,7 @@ const sidebar = {
 
 const surveys = [
 	{
+		id: "1",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",
@@ -234,6 +238,7 @@ const surveys = [
 		availableFrom: "Disponible desde las 16:00"
 	},
 	{
+		id: "2",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",
@@ -242,6 +247,7 @@ const surveys = [
 		availableFrom: "Disponible desde las 16:00"
 	},
 	{
+		id: "3",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",

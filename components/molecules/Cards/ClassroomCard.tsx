@@ -61,6 +61,8 @@ const textAvailableFrom = css`
 `;
 
 interface CardClassroomProps {
+	id: string | number;
+	onSelected: ((id?: string | number) => void);
 	expiredAt?: string;
 	surveyName?: string;
 	course?: string;
@@ -72,12 +74,17 @@ interface CardClassroomProps {
 
 const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 	const theme = useTheme();
+
+	const handleClick = (id: string | number) => {
+		props.onSelected(id);
+	};
+
 	return (
 		<motion.div
 			whileHover={{ scale: 1.05 }}
 			whileTap={{ scale: [1, 0.9, 1] }}
 		>
-			<Layout isShadow={props.isShadow}>
+			<Layout isShadow={props.isShadow} onClick={() => handleClick(props.id)}>
 				<Container>
 					<div
 						className={textExpiredAt}
