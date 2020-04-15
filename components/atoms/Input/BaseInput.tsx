@@ -41,6 +41,7 @@ const inputStyle = css`
 	font-family: var(--font-family);
 	color: var(--text-color);
 	transition: 0.3s;
+  text-align: var(--text-align);
 	::placeholder {
 		color: var(--placeholder-color);
 	}
@@ -111,6 +112,7 @@ export interface InputProps {
   inputMode?: InputMode;
   placeholder?: string;
   label?: string;
+  textAlign?: string;
   helperText?: string;
   errorMessage?: string;
 
@@ -158,7 +160,8 @@ function BaseInput(props: InputProps): ReactElement {
           "--text-color": theme.textColor,
           "--focus-color": theme.inputFocusColor,
           "--placeholder-color": theme.inputPlaceholderColor,
-          "--placeholder-focus-color": theme.inputPlaceholderFocusColor
+          "--placeholder-focus-color": theme.inputPlaceholderFocusColor,
+          "--text-align": props.textAlign || "left"
         }}
       />
       {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}

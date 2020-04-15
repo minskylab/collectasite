@@ -78,11 +78,11 @@ const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
 						fontFamily: theme.fontFamilyText,
 						fontWeight: "bold",
 						fontSize: "0.82rem",
-						marginLeft: props.iconElement && props.iconPosition === "left" ? "1.5rem" : "0px",
-						marginRight: props.iconElement && props.iconPosition !== "left" ? "1.5rem" : "0px"
+						marginLeft: props.text ? props.iconElement && props.iconPosition === "left" ? "1.5rem" : "0px" : "0px",
+						marginRight: props.text ? props.iconElement && props.iconPosition !== "left" ? "1.5rem" : "0px" : "0px"
 					}}
 				>
-					{props.text ? props.text : "Button"}
+					{props.text ? props.text : ""}
 				</div>
 				{props.iconElement &&
 					props.iconPosition !== "left" && (

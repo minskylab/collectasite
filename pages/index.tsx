@@ -56,6 +56,8 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 		[render]
 	);
 
+	console.log()
+
 
 	return (
 		<>
