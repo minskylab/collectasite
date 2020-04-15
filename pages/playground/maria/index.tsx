@@ -74,7 +74,6 @@ const Playground = () => {
 				<title>Minsky | Lab</title>
 			</Head>
 			<div style={{ textAlign: "center", display: "flex", alignItems: "center", flexDirection: "column" }}>
-				<div>Bebita playground</div>
 				<br />
 				<div style={{ width: "200px" }}>
 					<GoogleButton />
@@ -190,7 +189,7 @@ const Playground = () => {
 						percentage={75}
 						innerText="completado"
 						speed={1}
-						size={250}
+						size={150}
 					/>
 				</div>
 				<br />

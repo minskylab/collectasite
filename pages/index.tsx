@@ -40,12 +40,22 @@ interface OptionValue {
 }
 
 const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
-	const [singleOptions, setSingleOptions] = useState<OptionValue[]>(OPTIONSSINGLE);
-	const [clicks, setClicks] = useState(0);
+	const [render, setRender] = useState<number>(0);
 
-	useEffect(() => {
-		console.log("useEffect singleOptions => ", singleOptions);
-	}, [singleOptions])
+	useEffect(
+		() => {
+			setRender(c => c + 1);
+		},
+		[]
+	);
+
+	useEffect(
+		() => {
+			if (render > 0) console.log("GO TO LOGIN")
+		},
+		[render]
+	);
+
 
 	return (
 		<>
@@ -55,29 +65,6 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
 			<Center>
 				<div>
 					<CollectaLogo scale={0.6} />
-					{/* <figure >
-						<svg viewBox={circleConfig.viewBox} width="400" height="400">
-
-							<circle
-								className="ring"
-								cx={circleConfig.x}
-								cy={circleConfig.y}
-								r={circleConfig.radio}
-								fill="transparent"
-								stroke="gray"
-							/>
-
-							<circle
-								className="path"
-								cx={circleConfig.x}
-								cy={circleConfig.y}
-								r={circleConfig.radio}
-								fill="transparent"
-								stroke="teal"
-							/>
-
-						</svg>
-					</figure> */}
 				</div>
 			</Center>
 		</>

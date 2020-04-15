@@ -97,7 +97,9 @@ function ChoiceButton(props: ChoiceProps): ReactElement {
 					}
 					style={{
 						opacity:
-							render <= 1 ? props.option.checked ? 1 : 0 : mouseOver ? 0 : 1
+							render <= 1 ? props.option.checked ? 1 : 0 : mouseOver ? 0 : 1,
+						display: "flex",
+						alignItems: "center"
 					}}
 					transition={{ duration: 0.4 }}
 				>

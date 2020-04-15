@@ -32,8 +32,8 @@ interface WrapperIconProps {
 
 const WrapperIcon =
 	styled.div <
-	WrapperIconProps >
-	`
+		WrapperIconProps >
+		`
 	padding-bottom: 3em;
 	height: ${props => (props.size ? `${props.size}px` : "70px")};
 	width: ${props => (props.size ? `${props.size}px` : "70px")};
@@ -42,8 +42,8 @@ const WrapperIcon =
 
 const SatisfactionButton =
 	styled.div <
-	SatisfactionButtonProps >
-	`
+		SatisfactionButtonProps >
+		`
     //@ts-ignore
     font-family: ${props => props.fontFamily};
     //@ts-ignore
@@ -63,7 +63,8 @@ const SatisfactionButton =
 	  border-width: 2px;
     /* border-radius: 5px; */
     cursor: pointer;
-    user-select: none;
+		user-select: none;
+		width: 5rem;
 `;
 
 export enum ViewMode {
@@ -95,7 +96,7 @@ interface SatisfactionProps {
 	iconSize?: number;
 }
 
-const basicNames = [ "NADA", "POCO", "REGULAR", "SUFICIENTE", "BASTANTE" ];
+const basicNames = ["NADA", "POCO", "REGULAR", "SUFICIENTE", "BASTANTE"];
 
 const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => {
 	const theme = useTheme();
@@ -108,11 +109,11 @@ const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => 
 	const names = props.alternativeNames
 		? props.alternativeNames.length === sizeMode
 			? props.alternativeNames
-			: sizeMode === SatisfactionMode.Short ? [ basicNames[0], basicNames[2], basicNames[4] ] : [ ...basicNames ]
-		: sizeMode === SatisfactionMode.Short ? [ basicNames[0], basicNames[2], basicNames[4] ] : [ ...basicNames ];
-	const arrayOptions = sizeMode === SatisfactionMode.Short ? [ 1, 2, 3 ] : [ 1, 2, 3, 4, 5 ];
-	const [ focus, setFocus ] = useState<boolean[]>(
-		sizeMode === SatisfactionMode.Short ? [ false, false, false ] : [ false, false, false, false, false ]
+			: sizeMode === SatisfactionMode.Short ? [basicNames[0], basicNames[2], basicNames[4]] : [...basicNames]
+		: sizeMode === SatisfactionMode.Short ? [basicNames[0], basicNames[2], basicNames[4]] : [...basicNames];
+	const arrayOptions = sizeMode === SatisfactionMode.Short ? [1, 2, 3] : [1, 2, 3, 4, 5];
+	const [focus, setFocus] = useState<boolean[]>(
+		sizeMode === SatisfactionMode.Short ? [false, false, false] : [false, false, false, false, false]
 	);
 
 	const handleClick = (value: SatisfactionValue | undefined, optionValue: SatisfactionValue) => {
@@ -128,23 +129,23 @@ const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => 
 		let icons =
 			sizeMode === SatisfactionMode.Short
 				? [
-						<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-						<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-						<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
-					]
+					<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
+					<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
+					<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
+				]
 				: [
-						<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-						<Satisfaction2FilledIcon color={theme.satisfactionColors[1]} size={iconSize || 70} />,
-						<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-						<Satisfaction4FilledIcon color={theme.satisfactionColors[3]} size={iconSize || 70} />,
-						<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
-					];
+					<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
+					<Satisfaction2FilledIcon color={theme.satisfactionColors[1]} size={iconSize || 70} />,
+					<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
+					<Satisfaction4FilledIcon color={theme.satisfactionColors[3]} size={iconSize || 70} />,
+					<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
+				];
 		return icons.map((icon, key) => (
 			<motion.div
 				style={{ position: "absolute", opacity: value === key + 1 ? 1 : 0 }}
 				key={key}
 				animate={
-					value === key + 1 ? { scale: [ 1, 1, 1 ], zIndex: 1, opacity: 1 } : { scale: 1, zIndex: 0, opacity: 0 }
+					value === key + 1 ? { scale: [1, 1, 1], zIndex: 1, opacity: 1 } : { scale: 1, zIndex: 0, opacity: 0 }
 				}
 			>
 				{icon}
@@ -163,19 +164,19 @@ const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => 
 						animate={_value === optionValue || focus[key] ? { zIndex: 1 } : { zIndex: 0 }}
 					>
 						<motion.div
-							animate={_value === optionValue ? { scale: [ 1, 1.15, 1 ] } : { scale: 1 }}
+							animate={_value === optionValue ? { scale: [1, 1.15, 1] } : { scale: 1 }}
 							transition={{ duration: 0.4 }}
 						>
 							<SatisfactionButton
 								selected={_value === optionValue}
 								onClick={() => handleClick(_value, optionValue)}
 								onMouseOver={() => {
-									const _focus = [ ...focus ];
+									const _focus = [...focus];
 									_focus[key] = true;
 									setFocus(_focus);
 								}}
 								onMouseLeave={() => {
-									const _focus = [ ...focus ];
+									const _focus = [...focus];
 									_focus[key] = false;
 									setFocus(_focus);
 								}}
