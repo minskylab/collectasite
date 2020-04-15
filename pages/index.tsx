@@ -134,7 +134,7 @@ const cardItem = css`
 	}
 `;
 
-const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
+const Home: NextPage = () => {
 	const theme = useTheme();
 	const [ isOpen, toggleOpen ] = useCycle(false, true);
 	const containerRef = useRef(null);

@@ -19,6 +19,7 @@ import { CircleProgressBar } from "../../../components/molecules/CircleProgressB
 
 const surveys = [
 	{
+		id: "1",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",
@@ -27,6 +28,7 @@ const surveys = [
 		availableFrom: "Disponible desde las 16:00"
 	},
 	{
+		id: "2",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",
@@ -35,6 +37,7 @@ const surveys = [
 		availableFrom: "Disponible desde las 16:00"
 	},
 	{
+		id: "3",
 		expiredAt: "Vence el 24 de Marzo a las 23:59",
 		surveyName: "Feedback por Sesión | Estudiantes",
 		course: "Teoría de Decisiones",
@@ -117,7 +120,7 @@ const Playground = () => {
 				<div style={{ display: "flex" }}>
 					{surveys.map((survey, s) => (
 						<div key={s} style={{ width: "207px", margin: "0.3rem" }}>
-							<ClassroomCard {...survey} />
+							<ClassroomCard {...survey} onSelected={s => console.log(s)} />
 						</div>
 					))}
 				</div>
