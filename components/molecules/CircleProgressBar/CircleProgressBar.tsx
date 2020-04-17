@@ -12,6 +12,7 @@ interface CircleProgressBarProps {
 const classN = css`
 	max-width: var(--max-size);
 	vertical-align: middle;
+	margin: 0;
 `;
 
 interface CircleProgressBarBaseProps {

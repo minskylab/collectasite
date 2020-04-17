@@ -11,6 +11,7 @@ import { OPTIONS, OPTIONSSINGLE } from "../playground/maria";
 import { YesNoValue } from "../../components/molecules/Choices/YesNoChoice";
 import { BaseButton } from "../../components/atoms/Button";
 import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
+import { CircleProgressBar } from "../../components/molecules/CircleProgressBar";
 
 const Layout = styled.div`
 	position: relative;
@@ -43,6 +44,18 @@ const questionButton = css`
 	@media (max-width: 400px) {
 		padding-left: 1.7rem;
 		padding-right: 1.7rem;
+	}
+`;
+
+const CircleProgressWrapper = styled.div`
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
+	@media (max-width: 400px) {
+		position: relative;
+		top: 0;
+		left: 0;
+		padding-bottom: 2em;
 	}
 `;
 
@@ -90,8 +103,12 @@ const Survey: NextPage = () => {
 	}
 
 	if (page === "questions") {
+		console.log(Number(question.id) + 1, (Number(question.id) + 1) / 4 * 100);
 		return (
 			<Layout key={page}>
+				<CircleProgressWrapper>
+					<CircleProgressBar strokeWidth={2} percentage={(Number(question.id) + 1) / 4 * 100} speed={3} size={90} />
+				</CircleProgressWrapper>
 				<motion.div
 					key={question.id}
 					initial={{ opacity: 0 }}
@@ -100,6 +117,7 @@ const Survey: NextPage = () => {
 				>
 					<Question
 						title={question.title}
+						description={question.description}
 						anonymous={question.anonymous}
 						input={question.input}
 						answer={s => {
@@ -282,7 +300,8 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
 const QUESTIONS = [
 	{
 		id: 0,
-		title: "QUESTION 1",
+		title: "PREGUNTA 1/4",
+		description: "Selecciona las dinámicas que usó el profesor y fueron de provecho.",
 		anonymous: false,
 		input: {
 			value: OPTIONS,
@@ -292,7 +311,8 @@ const QUESTIONS = [
 	},
 	{
 		id: 1,
-		title: "QUESTION 2",
+		title: "PREGUNTA 2/4",
+		description: "Por problemas de conectividad, ¿crees que es necesario repetir la clase?",
 		anonymous: false,
 		input: {
 			value: YesNoValue.Undefined,
@@ -302,7 +322,8 @@ const QUESTIONS = [
 	},
 	{
 		id: 2,
-		title: "QUESTION 3",
+		title: "PREGUNTA 3/4",
+		description: "Si tienes algún comentario extra, por favor escríbelo a continuación.",
 		anonymous: true,
 		input: {
 			value: "Question 1",
@@ -312,7 +333,8 @@ const QUESTIONS = [
 	},
 	{
 		id: 3,
-		title: "QUESTION 4",
+		title: "PREGUNTA 4/4",
+		description: "¿Qué tan provechosa fue esta clase para tu aprendizaje?",
 		anonymous: false,
 		input: {
 			value: 1,

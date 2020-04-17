@@ -18,22 +18,25 @@ interface Input {
 export interface QuestionInterface {
 	id: string | number;
 	title: string;
+	description: string;
 	anonymous: boolean;
 	input: Input;
 }
 
 export interface QuestionProps {
 	title: string;
+	description: string;
 	anonymous: boolean;
 	input?: Input;
 	answer: (answer: any) => void;
 }
 
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
-	const [ value, setValue ] = useState<any>(props.input ? props.input.value : null);
+	const [value, setValue] = useState<any>(props.input ? props.input.value : null);
 	return (
 		<div>
-			<div>{props.title || "TITULO"}</div>
+			<div>{props.title || ""}</div>
+			<div>{props.description || ""}</div>
 			{props.input ? <div>{props.anonymous ? "ES ANONIMO" : null}</div> : null}
 			{props.input ? (
 				<QuestionInput
