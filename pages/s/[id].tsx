@@ -108,6 +108,13 @@ const QuestionTopWrapper = styled.div`
 	}
 `;
 
+const thanks = css`
+	font-family: var(--font-family);
+	color: var(--color-text);
+	font-size: 1.5rem;
+	text-align: center;
+`;
+
 interface SurveyProps {
 	title: string;
 	description: string;
@@ -217,19 +224,28 @@ const Survey: NextPage = () => {
 	}
 	return (
 		<Layout>
-			<div>THANKS</div>
-			<br />
-			<br />
-			<br />
-			<div>
-				<BaseButton
-					onClick={() => router.push("/")}
-					iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
-					iconPosition={"left"}
-					text={"Volver al inicio"}
-					colorText={"#B1B1B1"}
-					backgroundColor={"transparent"}
-				/>
+			<div style={{ paddingTop: "4em" }}>
+				<div
+					className={thanks}
+					style={{
+						//@ts-ignore
+						"--font-family": theme.fontFamilyText,
+						"--color-text": theme.textColor,
+						paddingBottom: "3em"
+					}}
+				>
+					¡Gracias!
+				</div>
+				<div>
+					<BaseButton
+						onClick={() => router.push("/")}
+						iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
+						iconPosition={"left"}
+						text={"Volver a inicio"}
+						colorText={"#B1B1B1"}
+						backgroundColor={"transparent"}
+					/>
+				</div>
 			</div>
 		</Layout>
 	);
