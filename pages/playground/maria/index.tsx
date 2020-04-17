@@ -49,9 +49,9 @@ const surveys = [
 
 export const OPTIONS = [
 	{ key: "01", text: "Breakout Rooms", value: "breakoutrooms", checked: false },
-	{ key: "02", text: "Chat", value: "chat", checked: true },
+	{ key: "02", text: "Chat", value: "chat", checked: false },
 	{ key: "03", text: "Juego-simulación", value: "juegosimulacion", checked: false },
-	{ key: "04", text: "Kahoot u otra encuesta", value: "kahootuotraencuesta", checked: true },
+	{ key: "04", text: "Kahoot u otra encuesta", value: "kahootuotraencuesta", checked: false },
 	{ key: "05", text: "Otra", value: "otra", checked: false }
 ];
 

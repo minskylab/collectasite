@@ -7,7 +7,7 @@ import { css } from "linaria";
 import { useTheme } from "../../general/theming";
 import Question, { QuestionInterface } from "../../components/organisms/Question";
 import { QuestionType } from "../../components/organisms/QuestionInput";
-import { OPTIONS, OPTIONSSINGLE } from "../playground/maria";
+import { OPTIONS } from "../playground/maria";
 import { YesNoValue } from "../../components/molecules/Choices/YesNoChoice";
 import { BaseButton } from "../../components/atoms/Button";
 import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
@@ -20,21 +20,39 @@ const Layout = styled.div`
 	align-items: center;
 	flex-direction: column;
 	height: 100vh;
+	max-height: 100vh;
 	width: 100vw;
 	overflow: hidden;
 	@media (max-width: 400px) {
+		min-height: 100vh;
+	}
+`;
+
+const QuestionButtonFirst = styled.div`
+	position: fixed;
+	bottom: 2rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	width: 100vw;
+	@media (max-width: 400px) {
+		justify-content: space-between;
 	}
 `;
 
 const QuestionButtons = styled.div`
-	position: fixed;
+	position: absolute;
 	bottom: 2rem;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	width: 100vw;
 	@media (max-width: 400px) {
+		position: relative;
+		bottom: 0;
 		justify-content: space-between;
+		padding-top: 3em;
 	}
 `;
 
@@ -42,13 +60,31 @@ const questionButton = css`
 	padding-left: 2.5rem;
 	padding-right: 2.5rem;
 	@media (max-width: 400px) {
-		padding-left: 1.7rem;
-		padding-right: 1.7rem;
+		padding-left: 1.5rem;
+		padding-right: 2.5rem;
+	}
+`;
+
+const questionButtonLeft = css`
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	@media (max-width: 400px) {
+		padding-left: 1.5rem;
+		padding-right: 0;
+	}
+`;
+
+const questionButtonRight = css`
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	@media (max-width: 400px) {
+		padding-left: 0;
+		padding-right: 1.5rem;
 	}
 `;
 
 const CircleProgressWrapper = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 2rem;
 	left: 2rem;
 	@media (max-width: 400px) {
@@ -56,6 +92,19 @@ const CircleProgressWrapper = styled.div`
 		top: 0;
 		left: 0;
 		padding-bottom: 2em;
+	}
+`;
+
+const QuestionTopWrapper = styled.div`
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100vw;
+	@media (max-width: 400px) {
+		min-height: 80vh;
+		justify-content: flex-start;
 	}
 `;
 
@@ -86,7 +135,7 @@ const Survey: NextPage = () => {
 					}
 					dueDate={"Vence el 24 de Marzo a las 23:00 h."}
 				/>
-				<QuestionButtons>
+				<QuestionButtonFirst>
 					<div />
 					<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
 						<BaseButton
@@ -97,36 +146,38 @@ const Survey: NextPage = () => {
 							iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
 						/>
 					</motion.div>
-				</QuestionButtons>
+				</QuestionButtonFirst>
 			</Layout>
 		);
 	}
 
 	if (page === "questions") {
-		console.log(Number(question.id) + 1, (Number(question.id) + 1) / 4 * 100);
 		return (
 			<Layout key={page}>
-				<CircleProgressWrapper>
-					<CircleProgressBar strokeWidth={2} percentage={(Number(question.id) + 1) / 4 * 100} speed={3} size={90} />
-				</CircleProgressWrapper>
-				<motion.div
-					key={question.id}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: [ 0, 1 ] }}
-					transition={{ delay: 0.05, stiffness: 8, duration: 0.4 }}
-				>
-					<Question
-						title={question.title}
-						description={question.description}
-						anonymous={question.anonymous}
-						input={question.input}
-						answer={s => {
-							console.log(s);
-						}}
-					/>
-				</motion.div>
+				<QuestionTopWrapper>
+					<div style={{ height: 50 }} />
+					<CircleProgressWrapper>
+						<CircleProgressBar strokeWidth={2} percentage={(Number(question.id) + 1) / 4 * 100} speed={3} size={90} />
+					</CircleProgressWrapper>
+					<motion.div
+						key={question.id}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: [ 0, 1 ] }}
+						transition={{ delay: 0.05, stiffness: 8, duration: 0.4 }}
+					>
+						<Question
+							title={question.title}
+							description={question.description}
+							anonymous={question.anonymous}
+							input={question.input}
+							answer={s => {
+								console.log(s);
+							}}
+						/>
+					</motion.div>
+				</QuestionTopWrapper>
 				<QuestionButtons>
-					<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
+					<motion.div className={questionButtonLeft} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
 						<BaseButton
 							iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
 							iconPosition={"left"}
@@ -142,7 +193,7 @@ const Survey: NextPage = () => {
 							}}
 						/>
 					</motion.div>
-					<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
+					<motion.div className={questionButtonRight} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
 						<BaseButton
 							iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
 							text={Number(question.id) === QUESTIONS.length - 1 ? "FINALIZAR" : "SIGUIENTE"}
@@ -160,6 +211,7 @@ const Survey: NextPage = () => {
 						/>
 					</motion.div>
 				</QuestionButtons>
+				<div style={{ height: 50 }} />
 			</Layout>
 		);
 	}
@@ -326,7 +378,7 @@ const QUESTIONS = [
 		description: "Si tienes algún comentario extra, por favor escríbelo a continuación.",
 		anonymous: true,
 		input: {
-			value: "Question 1",
+			value: "",
 			type: QuestionType.TEXT,
 			multiple: false
 		}

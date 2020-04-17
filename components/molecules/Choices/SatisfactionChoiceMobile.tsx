@@ -65,6 +65,7 @@ const SatisfactionButton =
     cursor: pointer;
 		user-select: none;
 		width: 30vw;
+		text-align: center;
 `;
 
 export enum ViewMode {

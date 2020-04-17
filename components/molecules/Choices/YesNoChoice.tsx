@@ -5,7 +5,7 @@ import { YesNoButton } from "../../atoms/Button";
 
 const WrapperYesNoButtons = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 `;
 const ContainerOption = styled.div`padding: 0em;`;
 

@@ -1,9 +1,21 @@
 import React, { FC } from "react";
 import { BaseInput } from "../atoms/Input";
-import { Choices, YesNoChoice, SatisfactionChoice } from "../molecules/Choices";
+import { Choices, YesNoChoice, SatisfactionChoice, SatisfactionChoiceMobile } from "../molecules/Choices";
 import { OptionValue } from "../atoms/Button/ChoiceButton";
 import { YesNoValue } from "../molecules/Choices/YesNoChoice";
 import { SatisfactionMode } from "../molecules/Choices/SatisfactionChoice";
+import { styled } from "linaria/react";
+
+const Layout = styled.div`
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	max-width: 25rem;
+
+	@media (max-width: 400px) {
+		padding-left: 1.7rem;
+		padding-right: 1.7rem;
+	}
+`;
 
 export enum QuestionType {
 	TEXT,
@@ -27,52 +39,74 @@ const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
 	if (props.type === QuestionType.TEXT) {
 		const valueText: string = props.value;
 		return (
-			<BaseInput
-				placeholder={"Escribe tu respuesta aquí"}
-				type={"text"}
-				value={valueText}
-				//@ts-ignore
-				onChange={e => props.onChangeValue(e.target.value)}
-			/>
+			<Layout style={{ paddingTop: "2em", paddingBottom: "3em" }}>
+				<BaseInput
+					placeholder={"Escribe tu respuesta aquí"}
+					type={"text"}
+					value={valueText}
+					//@ts-ignore
+					onChange={e => props.onChangeValue(e.target.value)}
+				/>
+			</Layout>
 		);
 	}
 	if (props.type === QuestionType.OPTIONS) {
 		const valueOptions: OptionValue[] = props.value;
 		return (
-			<Choices
-				options={valueOptions}
-				onChange={options => {
-					props.onChangeValue(options);
-				}}
-				multiple={props.multiple}
-			/>
+			<Layout>
+				<Choices
+					options={valueOptions}
+					onChange={options => {
+						props.onChangeValue(options);
+					}}
+					multiple={props.multiple}
+				/>
+			</Layout>
 		);
 	}
 	if (props.type === QuestionType.YESNO) {
 		const yesNoValue: YesNoValue = props.value;
 		return (
-			<YesNoChoice
-				positiveOptionName={"SI"}
-				negativeOptionName={"NO"}
-				value={yesNoValue}
-				onChange={selectedOption => {
-					props.onChangeValue(selectedOption);
-				}}
-			/>
+			<Layout>
+				<YesNoChoice
+					positiveOptionName={"SI"}
+					negativeOptionName={"NO"}
+					value={yesNoValue}
+					onChange={selectedOption => {
+						props.onChangeValue(selectedOption);
+					}}
+				/>
+			</Layout>
 		);
 	}
 	if (props.type === QuestionType.SATISFACTION) {
-		const satisfactionValue: number | undefined = props.value;
+		const satisfactionValueDesktop: number | undefined = props.value;
+		const satisfactionValueMobile: number = props.value;
+		const isMobile: boolean = window.innerWidth < 600;
+
 		return (
-			<SatisfactionChoice
-				onChange={s => {
-					props.onChangeValue(s);
-				}}
-				unitValue={satisfactionValue}
-				iconSize={100}
-				satisfactionOptionsSize={SatisfactionMode.Large}
-				// alternativeNames={["a", "b", 'c']}
-			/>
+			<div style={{ paddingBottom: "3em" }}>
+				{isMobile ? (
+					<SatisfactionChoiceMobile
+						onChange={s => {
+							props.onChangeValue(s);
+						}}
+						unitValue={satisfactionValueMobile}
+						iconSize={100}
+						satisfactionOptionsSize={SatisfactionMode.Large}
+					/>
+				) : (
+					<SatisfactionChoice
+						onChange={s => {
+							props.onChangeValue(s);
+						}}
+						unitValue={satisfactionValueDesktop}
+						iconSize={100}
+						satisfactionOptionsSize={SatisfactionMode.Large}
+						// alternativeNames={["a", "b", 'c']}
+					/>
+				)}
+			</div>
 		);
 	}
 	return null;
