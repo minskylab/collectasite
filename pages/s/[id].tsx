@@ -14,6 +14,9 @@ import { BaseButton } from "../../components/atoms/Button";
 import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
 import { CircleProgressBar } from "../../components/molecules/CircleProgressBar";
 import { querySurvey, queryQuestion } from "../../general/queries";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/es";
 
 const Layout = styled.div`
 	position: relative;
@@ -135,7 +138,7 @@ const Survey: NextPage = () => {
 	const [ page, setPage ] = useState<string>("begin");
 
 	if (page === "begin") {
-		const [ surveyResult ] = useQuery({
+		const [ surveyResult ] = useQuery<any>({
 			query: querySurvey,
 			variables: { id: id }
 		});
@@ -158,29 +161,28 @@ const Survey: NextPage = () => {
 					Oh no... {errorSurvey.message}
 				</div>
 			);
-		return (
-			<Layout key={page}>
-				<SurveyBegin
-					title={"Feedback por Sesión | Estudiantes"}
-					description={
-						"María, responde esta pequeña encuesta sobre tu clase de Teoría de Decisiones del día martes 23 de Marzo."
-					}
-					dueDate={"Vence el 24 de Marzo a las 23:00 h."}
-				/>
-				<QuestionButtonFirst>
-					<div />
-					<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
-						<BaseButton
-							text={"INICIAR"}
-							onClick={() => {
-								setPage("questions");
-							}}
-							iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
-						/>
-					</motion.div>
-				</QuestionButtonFirst>
-			</Layout>
-		);
+		if (dataSurvey)
+			return (
+				<Layout key={page}>
+					<SurveyBegin
+						title={dataSurvey && dataSurvey.survey ? dataSurvey.survey.title : ""}
+						description={dataSurvey && dataSurvey.survey ? dataSurvey.survey.description : ""}
+						dueDate={dataSurvey && dataSurvey.survey ? dataSurvey.survey.dueDate : ""}
+					/>
+					<QuestionButtonFirst>
+						<div />
+						<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
+							<BaseButton
+								text={"INICIAR"}
+								onClick={() => {
+									setPage("questions");
+								}}
+								iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
+							/>
+						</motion.div>
+					</QuestionButtonFirst>
+				</Layout>
+			);
 	}
 
 	if (page === "questions") {
@@ -361,9 +363,14 @@ interface SurveyBeginProps {
 	dueDate: string;
 }
 
+dayjs.extend(relativeTime);
+dayjs.locale("es");
+
 const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
 	const theme = useTheme();
-
+	const expiredIn = dayjs().to(dayjs(props.dueDate));
+	const expiredDay = dayjs(props.dueDate).format("DD");
+	const expiredMonth = dayjs(props.dueDate).format("MMMM");
 	return (
 		<SurveyWrapper>
 			<motion.div
@@ -378,7 +385,7 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
 					paddingBottom: "0.7rem"
 				}}
 			>
-				{props.dueDate}
+				Vence en {expiredIn}, el {expiredDay} de {expiredMonth}
 			</motion.div>
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -406,7 +413,7 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
 						"--color-text": theme.textColor
 					}}
 				>
-					{props.description}
+					<div dangerouslySetInnerHTML={{ __html: props.description }} />
 				</motion.div>
 			</SurveyDescriptionWrapper>
 		</SurveyWrapper>
