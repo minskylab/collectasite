@@ -174,7 +174,6 @@ const Home: NextPage = () => {
 
 	const { token } = router.query;
 
-	console.log(token);
 	useEffect(
 		() => {
 			if (!token) {
@@ -188,7 +187,15 @@ const Home: NextPage = () => {
 		query: userByToken,
 		variables: { token: token }
 	});
+
 	const { data: dataUserByToken, fetching: fetchingUserByToken, error: errorUserByToken } = userByTokenResult;
+
+	const [ userResult ] = useQuery({
+		query: queryUser,
+		variables: { id: dataUserByToken ? (dataUserByToken.userByToken ? dataUserByToken.userByToken.id : null) : null }
+	});
+
+	const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
 
 	if (fetchingUserByToken)
 		return (
@@ -202,13 +209,6 @@ const Home: NextPage = () => {
 				Oh no... {errorUserByToken.message}
 			</div>
 		);
-
-	const [ userResult ] = useQuery({
-		query: queryUser,
-		variables: { id: dataUserByToken ? (dataUserByToken.userByToken ? dataUserByToken.userByToken.id : null) : null }
-	});
-
-	const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
 
 	if (fetchingUser)
 		return (
