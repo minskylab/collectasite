@@ -203,107 +203,87 @@ const Home: NextPage = () => {
 			</div>
 		);
 
-	if (dataUserByToken) {
-		const [ userResult ] = useQuery({
-			query: queryUser,
-			variables: { id: dataUserByToken.userByToken ? dataUserByToken.userByToken.id : null }
-		});
+	const [ userResult ] = useQuery({
+		query: queryUser,
+		variables: { id: dataUserByToken ? (dataUserByToken.userByToken ? dataUserByToken.userByToken.id : null) : null }
+	});
 
-		const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
+	const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
 
-		if (fetchingUser)
-			return (
-				<div
-					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
-				>
-					Loading...
-				</div>
-			);
-		if (errorUser)
-			return (
-				<div
-					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
-				>
-					Oh no... {errorUser.message}
-				</div>
-			);
+	if (fetchingUser)
+		return (
+			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
+				Loading...
+			</div>
+		);
+	if (errorUser)
+		return (
+			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
+				Oh no... {errorUser.message}
+			</div>
+		);
 
-		if (dataUser) {
-			// const [ isOpen, toggleOpen ] = useCycle(false, true);
-			// const containerRef = useRef(null);
-			// const { height } = useDimensions(containerRef);
-
-			return (
-				<div>
-					<Head>
-						<title>Collecta Surveys</title>
-					</Head>
-					<motion.div
-						className={menuWrapper}
-						initial={false}
-						// animate={isOpen ? "open" : "closed"}
-						// custom={height}
-						// ref={containerRef}
-					>
-						{/* 
-						<motion.div className={background} variants={sidebar} />
-					<Navigation />
-						<MenuToggle toggle={() => {}} />*/}
-						<div style={{ padding: 30 }}>
-							<MenuIcon size={30} color={theme.textColor} />
-						</div>
-					</motion.div>
-					<WrapperHome>
-						<AvatarPosition>
-							<Avatar size={"2.5rem"} image={dataUser.user.picture} />
-						</AvatarPosition>
-						<ContentWrapper>
-							<Container>
-								<div
-									className={textTitle}
-									style={{
-										//@ts-ignore
-										"--font-family": theme.fontFamilyTitle,
-										"--color-text": theme.textColor,
-										paddingBottom: "1.8rem"
-									}}
-								>
-									Hola {dataUser.user.name ? dataUser.user.name.split(" ", 1)[0] : ""}
-								</div>
-								<div
-									className={text}
-									style={{
-										//@ts-ignore
-										"--font-family": theme.fontFamilyText,
-										"--color-text": theme.secondaryTextColor
-									}}
-								>
-									Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
-								</div>
-							</Container>
-							<div className={cardsWrapper}>
-								<div className={cardsContainer}>
-									{dataUser.user ? dataUser.user.surveys ? (
-										dataUser.user.surveys.map((survey: any, s: number) => (
-											<div key={s} className={cardItem}>
-												<ClassroomCard
-													{...survey}
-													isShadow={true}
-													onSelected={id => {
-														// console.log(id);
-														router.push(`/s/${id}`);
-													}}
-												/>
-											</div>
-										))
-									) : null : null}
-								</div>
+	if (dataUser) {
+		return (
+			<div>
+				<Head>
+					<title>Collecta Surveys</title>
+				</Head>
+				<motion.div className={menuWrapper} initial={false}>
+					<div style={{ padding: 30 }}>
+						<MenuIcon size={30} color={theme.textColor} />
+					</div>
+				</motion.div>
+				<WrapperHome>
+					<AvatarPosition>
+						<Avatar size={"2.5rem"} image={dataUser.user.picture} />
+					</AvatarPosition>
+					<ContentWrapper>
+						<Container>
+							<div
+								className={textTitle}
+								style={{
+									//@ts-ignore
+									"--font-family": theme.fontFamilyTitle,
+									"--color-text": theme.textColor,
+									paddingBottom: "1.8rem"
+								}}
+							>
+								Hola {dataUser.user.name ? dataUser.user.name.split(" ", 1)[0] : ""}
 							</div>
-						</ContentWrapper>
-					</WrapperHome>
-				</div>
-			);
-		}
+							<div
+								className={text}
+								style={{
+									//@ts-ignore
+									"--font-family": theme.fontFamilyText,
+									"--color-text": theme.secondaryTextColor
+								}}
+							>
+								Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
+							</div>
+						</Container>
+						<div className={cardsWrapper}>
+							<div className={cardsContainer}>
+								{dataUser.user ? dataUser.user.surveys ? (
+									dataUser.user.surveys.map((survey: any, s: number) => (
+										<div key={s} className={cardItem}>
+											<ClassroomCard
+												{...survey}
+												isShadow={true}
+												onSelected={id => {
+													// console.log(id);
+													router.push(`/s/${id}`);
+												}}
+											/>
+										</div>
+									))
+								) : null : null}
+							</div>
+						</div>
+					</ContentWrapper>
+				</WrapperHome>
+			</div>
+		);
 	}
 
 	return null;
