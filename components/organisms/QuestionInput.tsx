@@ -1,6 +1,9 @@
 import React, { FC } from "react";
 import { BaseInput } from "../atoms/Input";
-import { Choices } from "../molecules/Choices";
+import { Choices, YesNoChoice, SatisfactionChoice } from "../molecules/Choices";
+import { OptionValue } from "../atoms/Button/ChoiceButton";
+import { YesNoValue } from "../molecules/Choices/YesNoChoice";
+import { SatisfactionMode } from "../molecules/Choices/SatisfactionChoice";
 
 export enum QuestionType {
 	TEXT,
@@ -9,43 +12,70 @@ export enum QuestionType {
 	YESNO
 }
 
+export interface onChange {
+	onChange: (value: any) => void;
+}
+
 export interface QuestionInputProps {
+	value: any;
 	type: QuestionType;
-	defaults: string[];
 	multiple?: boolean;
-	values: any[];
-	// onChange:
+	onChangeValue: (value: any) => void;
 }
 
 const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
-	let component;
-	switch (props.type) {
-		case QuestionType.TEXT:
-			component = (
-				<BaseInput
-					placeholder={"Escribe tu respuesta aquí"}
-					type={"text"}
-					value={"props.value.lenght"}
-					//@ts-ignore
-					onChange={e => props.onChange([ e.target.value ])}
-				/>
-			);
-			break;
-		case QuestionType.OPTIONS:
-			component = (
-				<Choices
-					options={props.values}
-					onChange={options => {
-						// props.onChange(options);
-					}}
-					multiple={true}
-				/>
-			);
-			break;
-		default:
-			break;
+	if (props.type === QuestionType.TEXT) {
+		const valueText: string = props.value;
+		return (
+			<BaseInput
+				placeholder={"Escribe tu respuesta aquí"}
+				type={"text"}
+				value={valueText}
+				//@ts-ignore
+				onChange={e => props.onChangeValue(e.target.value)}
+			/>
+		);
 	}
-	return <div>Render question input</div>;
+	if (props.type === QuestionType.OPTIONS) {
+		const valueOptions: OptionValue[] = props.value;
+		return (
+			<Choices
+				options={valueOptions}
+				onChange={options => {
+					props.onChangeValue(options);
+				}}
+				multiple={props.multiple}
+			/>
+		);
+	}
+	if (props.type === QuestionType.YESNO) {
+		const yesNoValue: YesNoValue = props.value;
+		return (
+			<YesNoChoice
+				positiveOptionName={"SI"}
+				negativeOptionName={"NO"}
+				value={yesNoValue}
+				onChange={selectedOption => {
+					props.onChangeValue(selectedOption);
+				}}
+			/>
+		);
+	}
+	if (props.type === QuestionType.SATISFACTION) {
+		const satisfactionValue: number | undefined = props.value;
+		return (
+			<SatisfactionChoice
+				onChange={s => {
+					props.onChangeValue(s);
+				}}
+				unitValue={satisfactionValue}
+				iconSize={100}
+				satisfactionOptionsSize={SatisfactionMode.Large}
+				// alternativeNames={["a", "b", 'c']}
+			/>
+		);
+	}
+	return null;
 };
 
 export default QuestionInput;

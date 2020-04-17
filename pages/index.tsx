@@ -1,5 +1,7 @@
 import { NextPage } from "next";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import { useRouter } from "next/router";
+
 import { styled } from "linaria/react";
 import Head from "next/head";
 import { css } from "linaria";
@@ -136,6 +138,7 @@ const cardItem = css`
 
 const Home: NextPage = () => {
 	const theme = useTheme();
+	const router = useRouter();
 	const [ isOpen, toggleOpen ] = useCycle(false, true);
 	const containerRef = useRef(null);
 	const { height } = useDimensions(containerRef);
@@ -191,7 +194,14 @@ const Home: NextPage = () => {
 						<div className={cardsContainer}>
 							{surveys.map((survey, s) => (
 								<div key={s} className={cardItem}>
-									<ClassroomCard {...survey} isShadow={true} onSelected={id => console.log(id)} />
+									<ClassroomCard
+										{...survey}
+										isShadow={true}
+										onSelected={id => {
+											// console.log(id);
+											router.push(`/s/${id}`);
+										}}
+									/>
 								</div>
 							))}
 						</div>

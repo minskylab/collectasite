@@ -47,7 +47,7 @@ const surveys = [
 	}
 ];
 
-const OPTIONS = [
+export const OPTIONS = [
 	{ key: "01", text: "Breakout Rooms", value: "breakoutrooms", checked: false },
 	{ key: "02", text: "Chat", value: "chat", checked: true },
 	{ key: "03", text: "Juego-simulación", value: "juegosimulacion", checked: false },
@@ -55,7 +55,7 @@ const OPTIONS = [
 	{ key: "05", text: "Otra", value: "otra", checked: false }
 ];
 
-const OPTIONSSINGLE = [
+export const OPTIONSSINGLE = [
 	{ key: "06", text: "Breakout Rooms", value: "breakoutrooms", checked: true },
 	{ key: "07", text: "Chat", value: "chat", checked: false },
 	{ key: "08", text: "Juego-simulación", value: "juegosimulacion", checked: false },
