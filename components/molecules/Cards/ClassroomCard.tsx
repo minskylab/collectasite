@@ -1,9 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { styled } from "linaria/react";
 import Layout from "./Layout";
 import { useTheme } from "../../../general/theming";
 import { css } from "linaria";
 import { motion } from "framer-motion";
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime';
+import "dayjs/locale/es";
 
 const Container = styled.div`
 	padding-top: 1.5em;
@@ -14,19 +17,19 @@ const Container = styled.div`
 	cursor: pointer;
 `;
 
-const textExpiredAt = css`
+const textdueDate = css`
 	color: var(--text-color);
 	font-family: var(--font-family);
-	font-size: 0.65em;
-	padding-bottom: 0.7em;
+	font-size: 0.85em;
+	padding-bottom: 1.2em;
 `;
 
-const textSurveyName = css`
+const texttitle = css`
 	color: var(--text-color);
 	font-family: var(--font-family);
 	font-size: 0.9em;
-	padding-bottom: 1.7em;
-	line-height: 130%;
+	padding-bottom: 1.5em;
+	line-height: 120%;
 `;
 
 const textCourse = css`
@@ -35,7 +38,8 @@ const textCourse = css`
 	font-size: 1.4em;
 	font-weight: 500;
 	padding-bottom: 0.5em;
-	line-height: 130%;
+	line-height: 100%;
+	text-transform: uppercase;
 `;
 
 const textTeacher = css`
@@ -63,21 +67,22 @@ const textAvailableFrom = css`
 interface CardClassroomProps {
 	id: string | number;
 	onSelected: ((id?: string | number) => void);
-	expiredAt?: string;
-	surveyName?: string;
-	course?: string;
-	teacher?: string;
-	createdAt?: string;
-	availableFrom?: string;
+	dueDate?: string;
+	title?: string;
+	tags?: string[];
 	isShadow?: boolean;
 }
 
+dayjs.extend(relativeTime)
+dayjs.locale('es');
+
 const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 	const theme = useTheme();
-
+	const expiredIn = dayjs().to(dayjs(props.dueDate));
 	const handleClick = (id: string | number) => {
 		props.onSelected(id);
 	};
+
 
 	return (
 		<motion.div
@@ -87,26 +92,26 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 			<Layout isShadow={props.isShadow} onClick={() => handleClick(props.id)}>
 				<Container>
 					<div
-						className={textExpiredAt}
+						className={textdueDate}
 						style={{
 							//@ts-ignore
 							"--text-color": theme.secondaryTextColor,
 							"--font-family": theme.fontFamilyText
 						}}
 					>
-						{props.expiredAt}
+						Expira {expiredIn}
 					</div>
 					<div
-						className={textSurveyName}
+						className={texttitle}
 						style={{
 							//@ts-ignore
 							"--text-color": theme.darkSecondaryTextColor,
 							"--font-family": theme.fontFamilyTitle
 						}}
 					>
-						{props.surveyName}
+						{props.title}
 					</div>
-					<div
+					{props.tags ? props.tags.map((tag, i) => <div key={i}
 						className={textCourse}
 						style={{
 							//@ts-ignore
@@ -114,9 +119,10 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 							"--font-family": theme.fontFamilyTitle
 						}}
 					>
-						{props.course}
-					</div>
-					<div
+						{tag}
+					</div>) : null}
+
+					{/* <div
 						className={textTeacher}
 						style={{
 							//@ts-ignore
@@ -125,8 +131,8 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 						}}
 					>
 						{props.teacher}
-					</div>
-					<div
+					</div> */}
+					{/* <div
 						className={textCreatedAt}
 						style={{
 							//@ts-ignore
@@ -135,8 +141,8 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 						}}
 					>
 						{props.createdAt}
-					</div>
-					<div
+					</div> */}
+					{/* <div
 						className={textAvailableFrom}
 						style={{
 							//@ts-ignore
@@ -145,7 +151,7 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 						}}
 					>
 						{props.availableFrom}
-					</div>
+					</div> */}
 				</Container>
 			</Layout>
 		</motion.div>

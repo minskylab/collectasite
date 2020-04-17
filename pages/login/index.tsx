@@ -10,8 +10,8 @@ import { BaseInput } from "../../components/atoms/Input";
 import { ArrowRightIcon } from "../../components/atoms/Icon";
 
 interface LoginProps {
-	color?: string;
-	size?: number;
+  color?: string;
+  size?: number;
 }
 
 const WrapperLogin = styled.div`
@@ -80,10 +80,10 @@ const WrapperCode = styled.div`
 `;
 
 const Login: FC<LoginProps> = props => {
-	const theme = useTheme();
-	const [ code, setCode ] = useState<string>("");
+  const theme = useTheme();
+  const [code, setCode] = useState<string>("");
 
-	return (
+  return (
     <>
       <Head>
         <title>Login | Collecta Surveys</title>
@@ -105,7 +105,7 @@ const Login: FC<LoginProps> = props => {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.3, stiffness: 8, duration: 0.4 }}
           >
-            <GoogleButton />
+            <GoogleButton onClick={() => window.location.href = "https://core.collecta.site/auth/google"} />
           </motion.div>
           <motion.div
             className={text}
@@ -177,7 +177,7 @@ const Login: FC<LoginProps> = props => {
         </WrapperBottom>
       </WrapperLogin>
     </>
-	);
+  );
 };
 
 export default Login;

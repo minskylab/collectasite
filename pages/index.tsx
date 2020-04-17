@@ -1,9 +1,10 @@
-import { NextPage } from "next";
 import React, { useRef } from "react";
+import Head from "next/head";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useQuery } from "urql";
 
 import { styled } from "linaria/react";
-import Head from "next/head";
 import { css } from "linaria";
 import { motion, useCycle } from "framer-motion";
 import { Avatar } from "../components/atoms/Avatar";
@@ -14,6 +15,7 @@ import { useDimensions } from "../components/atoms/Menu/use-dimensions";
 import MenuToggle from "../components/atoms/Menu/MenuToogle";
 import { Navigation } from "../components/atoms/Menu/Navigation";
 import { ClassroomCard } from "../components/molecules/Cards";
+import { queryUser } from "../general/queries";
 
 const WrapperHome = styled.div`
 	position: relative;
@@ -136,107 +138,6 @@ const cardItem = css`
 	}
 `;
 
-const Home: NextPage = () => {
-	const theme = useTheme();
-	const router = useRouter();
-	const [ isOpen, toggleOpen ] = useCycle(false, true);
-	const containerRef = useRef(null);
-	const { height } = useDimensions(containerRef);
-
-	return (
-		<div>
-			<Head>
-				<title>Collecta Surveys</title>
-			</Head>
-			<motion.div
-				className={menuWrapper}
-				initial={false}
-				animate={isOpen ? "open" : "closed"}
-				custom={height}
-				ref={containerRef}
-			>
-				<motion.div className={background} variants={sidebar} />
-				<Navigation />
-				<MenuToggle toggle={() => toggleOpen()} />
-			</motion.div>
-			<WrapperHome>
-				<AvatarPosition>
-					<Avatar
-						size={"2.5rem"}
-						image={"https://static.nationalgeographicla.com/files/styles/image_885/public/nina-afgana-002.jpg"}
-					/>
-				</AvatarPosition>
-				<ContentWrapper>
-					<Container>
-						<div
-							className={textTitle}
-							style={{
-								//@ts-ignore
-								"--font-family": theme.fontFamilyTitle,
-								"--color-text": theme.textColor,
-								paddingBottom: "1.8rem"
-							}}
-						>
-							Hola María
-						</div>
-						<div
-							className={text}
-							style={{
-								//@ts-ignore
-								"--font-family": theme.fontFamilyText,
-								"--color-text": theme.secondaryTextColor
-							}}
-						>
-							Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
-						</div>
-					</Container>
-					<div className={cardsWrapper}>
-						<div className={cardsContainer}>
-							{surveys.map((survey, s) => (
-								<div key={s} className={cardItem}>
-									<ClassroomCard
-										{...survey}
-										isShadow={true}
-										onSelected={id => {
-											// console.log(id);
-											router.push(`/s/${id}`);
-										}}
-									/>
-								</div>
-							))}
-						</div>
-					</div>
-				</ContentWrapper>
-			</WrapperHome>
-		</div>
-	);
-};
-
-Home.getInitialProps = async ({ req }) => {
-	const userAgent = req ? req.headers["user-agent"] || "" : navigator.userAgent;
-	return { userAgent };
-};
-
-const sidebar = {
-	open: (height = 1000) => ({
-		clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-		transition: {
-			type: "spring",
-			stiffness: 20,
-			restDelta: 2
-		}
-	}),
-	closed: {
-		clipPath: "circle(30px at 40px 40px)",
-		transition: {
-			delay: 0.5,
-			type: "spring",
-			stiffness: 400,
-			damping: 40
-		}
-	}
-};
-
 const surveys = [
 	{
 		id: "1",
@@ -266,5 +167,133 @@ const surveys = [
 		availableFrom: "Disponible desde las 16:00"
 	}
 ];
+
+const Home: NextPage = () => {
+	const theme = useTheme();
+	const router = useRouter();
+
+	const [ userResult ] = useQuery({
+		query: queryUser,
+		variables: { id: "888f93bc-ceec-497c-9454-3acb19eddc28" }
+	});
+
+	const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
+
+	if (fetchingUser)
+		return (
+			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
+				Loading...
+			</div>
+		);
+	if (errorUser)
+		return (
+			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
+				Oh no... {errorUser.message}
+			</div>
+		);
+
+	if (dataUser) {
+		// const [ isOpen, toggleOpen ] = useCycle(false, true);
+		// const containerRef = useRef(null);
+		// const { height } = useDimensions(containerRef);
+
+		return (
+			<div>
+				<Head>
+					<title>Collecta Surveys</title>
+				</Head>
+				<motion.div
+					className={menuWrapper}
+					initial={false}
+					// animate={isOpen ? "open" : "closed"}
+					// custom={height}
+					// ref={containerRef}
+				>
+					{/* 
+					<motion.div className={background} variants={sidebar} />
+				<Navigation />
+					<MenuToggle toggle={() => {}} />*/}
+					<div style={{ padding: 30 }}>
+						<MenuIcon size={30} color={theme.textColor} />
+					</div>
+				</motion.div>
+				<WrapperHome>
+					<AvatarPosition>
+						<Avatar size={"2.5rem"} image={dataUser.user.picture} />
+					</AvatarPosition>
+					<ContentWrapper>
+						<Container>
+							<div
+								className={textTitle}
+								style={{
+									//@ts-ignore
+									"--font-family": theme.fontFamilyTitle,
+									"--color-text": theme.textColor,
+									paddingBottom: "1.8rem"
+								}}
+							>
+								Hola {dataUser.user.name ? dataUser.user.name.split(" ", 1)[0] : ""}
+							</div>
+							<div
+								className={text}
+								style={{
+									//@ts-ignore
+									"--font-family": theme.fontFamilyText,
+									"--color-text": theme.secondaryTextColor
+								}}
+							>
+								Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
+							</div>
+						</Container>
+						<div className={cardsWrapper}>
+							<div className={cardsContainer}>
+								{dataUser.user ? dataUser.user.surveys ? (
+									dataUser.user.surveys.map((survey: any, s: number) => (
+										<div key={s} className={cardItem}>
+											<ClassroomCard
+												{...survey}
+												isShadow={true}
+												onSelected={id => {
+													// console.log(id);
+													router.push(`/s/${id}`);
+												}}
+											/>
+										</div>
+									))
+								) : null : null}
+							</div>
+						</div>
+					</ContentWrapper>
+				</WrapperHome>
+			</div>
+		);
+	}
+	return null;
+};
+
+Home.getInitialProps = async ({ req }) => {
+	const userAgent = req ? req.headers["user-agent"] || "" : navigator.userAgent;
+	return { userAgent };
+};
+
+const sidebar = {
+	open: (height = 1000) => ({
+		clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+		transition: {
+			type: "spring",
+			stiffness: 20,
+			restDelta: 2
+		}
+	}),
+	closed: {
+		clipPath: "circle(30px at 40px 40px)",
+		transition: {
+			delay: 0.5,
+			type: "spring",
+			stiffness: 400,
+			damping: 40
+		}
+	}
+};
 
 export default Home;

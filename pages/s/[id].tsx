@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
+import { useQuery } from "urql";
 import { motion } from "framer-motion";
 import { styled } from "linaria/react";
 import { css } from "linaria";
@@ -12,6 +13,7 @@ import { YesNoValue } from "../../components/molecules/Choices/YesNoChoice";
 import { BaseButton } from "../../components/atoms/Button";
 import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
 import { CircleProgressBar } from "../../components/molecules/CircleProgressBar";
+import { querySurvey, queryQuestion } from "../../general/queries";
 
 const Layout = styled.div`
 	position: relative;
@@ -127,12 +129,35 @@ interface SurveyProps {
 
 const Survey: NextPage = () => {
 	const router = useRouter();
-	const theme = useTheme();
 	const { id } = router.query;
+	const theme = useTheme();
 	const [ question, setQuestion ] = useState<QuestionInterface>(QUESTIONS[0]);
 	const [ page, setPage ] = useState<string>("begin");
 
 	if (page === "begin") {
+		const [ surveyResult ] = useQuery({
+			query: querySurvey,
+			variables: { id: id }
+		});
+
+		const { data: dataSurvey, fetching: fetchingSurvey, error: errorSurvey } = surveyResult;
+
+		if (fetchingSurvey)
+			return (
+				<div
+					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
+				>
+					Loading...
+				</div>
+			);
+		if (errorSurvey)
+			return (
+				<div
+					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
+				>
+					Oh no... {errorSurvey.message}
+				</div>
+			);
 		return (
 			<Layout key={page}>
 				<SurveyBegin
@@ -159,6 +184,29 @@ const Survey: NextPage = () => {
 	}
 
 	if (page === "questions") {
+		const [ questionResult ] = useQuery({
+			query: queryQuestion,
+			variables: { id: question.id }
+		});
+
+		const { data: dataQuestion, fetching: fetchingQuestion, error: errorQuestion } = questionResult;
+
+		if (fetchingQuestion)
+			return (
+				<div
+					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
+				>
+					Loading...
+				</div>
+			);
+		if (errorQuestion)
+			return (
+				<div
+					style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}
+				>
+					Oh no... {errorQuestion.message}
+				</div>
+			);
 		return (
 			<Layout key={page}>
 				<QuestionTopWrapper>
