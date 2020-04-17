@@ -11,6 +11,11 @@ const buttonContainer = css`
 	align-items: center;
 	user-select: none;
 	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 	:hover {
 		cursor: pointer;
 	}
