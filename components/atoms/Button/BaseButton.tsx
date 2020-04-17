@@ -12,13 +12,10 @@ const buttonContainer = css`
 	user-select: none;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-	:hover {
-		cursor: pointer;
-	}
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
 `;
 
 interface ButtonDefaultProps {
@@ -30,27 +27,39 @@ interface ButtonDefaultProps {
 	colorText?: string;
 	backgroundColor?: string;
 	isShadow?: boolean;
+	disabled?: boolean;
 }
 
 const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
 	const theme = useTheme();
 
 	return (
-		<motion.div whileHover={props.loading ? {} : { scale: 1.1 }} onClick={props.onClick}>
+		<motion.div
+			whileHover={props.disabled ? {} : props.loading ? {} : { scale: 1.1 }}
+			onClick={props.disabled ? () => { } : props.onClick}
+			whileTap={props.disabled ? {} : props.loading ? {} : { scale: [1, 0.9, 1] }}
+		>
 			<motion.div
 				className={buttonContainer}
 				transition={{ type: "spring", damping: 0 }}
-				//@ts-ignore
 				style={
 					props.isShadow ? (
 						{
-							backgroundColor: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
+							cursor: props.disabled ? "auto" : "pointer",
+							backgroundColor: props.disabled
+								? theme.secondaryColor
+								: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
 							justifyContent: props.iconPosition !== "left" ? "flex-end" : "flex-start",
+							// ts-ignore
 							boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.24)"
 						}
 					) : (
 							{
-								backgroundColor: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
+								cursor: props.disabled ? "auto" : "pointer",
+
+								backgroundColor: props.disabled
+									? theme.secondaryColor
+									: props.backgroundColor ? props.backgroundColor : theme.primaryColor,
 								justifyContent: props.iconPosition !== "left" ? "flex-end" : "flex-start"
 							}
 						)
@@ -79,12 +88,12 @@ const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
 
 				<div
 					style={{
-						color: props.colorText ? props.colorText : theme.primaryColorText,
+						color: props.disabled ? theme.textColor : props.colorText ? props.colorText : theme.primaryColorText,
 						fontFamily: theme.fontFamilyText,
 						fontWeight: "bold",
 						fontSize: "0.82rem",
-						marginLeft: props.text ? props.iconElement && props.iconPosition === "left" ? "1.5rem" : "0px" : "0px",
-						marginRight: props.text ? props.iconElement && props.iconPosition !== "left" ? "1.5rem" : "0px" : "0px"
+						marginLeft: props.text ? (props.iconElement && props.iconPosition === "left" ? "1.5rem" : "0px") : "0px",
+						marginRight: props.text ? (props.iconElement && props.iconPosition !== "left" ? "1.5rem" : "0px") : "0px"
 					}}
 				>
 					{props.text ? props.text : ""}

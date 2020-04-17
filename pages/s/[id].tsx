@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
-import { useQuery } from "urql";
+import { useQuery, useMutation } from "urql";
 import { motion } from "framer-motion";
 import { styled } from "linaria/react";
 import { css } from "linaria";
@@ -13,7 +13,9 @@ import { YesNoValue } from "../../components/molecules/Choices/YesNoChoice";
 import { BaseButton } from "../../components/atoms/Button";
 import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
 import { CircleProgressBar } from "../../components/molecules/CircleProgressBar";
-import { querySurvey, queryQuestion } from "../../general/queries";
+import { querySurvey, queryLastQuestionOfSurvey } from "../../general/queries";
+import { answerQuestion } from "../../general/mutations";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
@@ -134,17 +136,25 @@ const Survey: NextPage = () => {
 	const router = useRouter();
 	const { id } = router.query;
 	const theme = useTheme();
-	const [ question, setQuestion ] = useState<QuestionInterface>(QUESTIONS[0]);
+	// const [ question, setQuestion ] = useState<QuestionInterface>(QUESTIONS[0]);
 	const [ page, setPage ] = useState<string>("begin");
+	const [ isComplete, setComplete ] = useState<boolean>(false);
+	const [ answer, setAnswer ] = useState<any>(null);
+
+	const [ surveyResult, reexecuteSurvey ] = useQuery<any>({
+		query: querySurvey,
+		variables: { id: id }
+	});
+	const [ questionResult, reexecuteQuestion ] = useQuery({
+		query: queryLastQuestionOfSurvey,
+		variables: { id: id }
+	});
+	const { data: dataSurvey, fetching: fetchingSurvey, error: errorSurvey } = surveyResult;
+	const { data: dataQuestion, fetching: fetchingQuestion, error: errorQuestion } = questionResult;
+
+	const [ updateAnswerQuestionResult, updateAnswerQuestion ] = useMutation(answerQuestion);
 
 	if (page === "begin") {
-		const [ surveyResult ] = useQuery<any>({
-			query: querySurvey,
-			variables: { id: id }
-		});
-
-		const { data: dataSurvey, fetching: fetchingSurvey, error: errorSurvey } = surveyResult;
-
 		if (fetchingSurvey)
 			return (
 				<div
@@ -171,7 +181,7 @@ const Survey: NextPage = () => {
 					/>
 					<QuestionButtonFirst>
 						<div />
-						<motion.div className={questionButton} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
+						<motion.div className={questionButton}>
 							<BaseButton
 								text={"INICIAR"}
 								onClick={() => {
@@ -186,13 +196,6 @@ const Survey: NextPage = () => {
 	}
 
 	if (page === "questions") {
-		const [ questionResult ] = useQuery({
-			query: queryQuestion,
-			variables: { id: question.id }
-		});
-
-		const { data: dataQuestion, fetching: fetchingQuestion, error: errorQuestion } = questionResult;
-
 		if (fetchingQuestion)
 			return (
 				<div
@@ -209,68 +212,99 @@ const Survey: NextPage = () => {
 					Oh no... {errorQuestion.message}
 				</div>
 			);
-		return (
-			<Layout key={page}>
-				<QuestionTopWrapper>
+		if (dataQuestion)
+			return (
+				<Layout key={page}>
+					<QuestionTopWrapper>
+						<div style={{ height: 50 }} />
+						<CircleProgressWrapper>
+							<CircleProgressBar
+								strokeWidth={2}
+								percentage={
+									dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 1/4" ? (
+										25
+									) : dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 2/4" ? (
+										50
+									) : dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 3/4" ? (
+										75
+									) : dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4" ? (
+										100
+									) : (
+										0
+									)
+								}
+								speed={3}
+								size={90}
+							/>
+						</CircleProgressWrapper>
+						<motion.div
+							key={dataQuestion.lastQuestionOfSurvey.id}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: [ 0, 1 ] }}
+							transition={{ delay: 0.05, stiffness: 8, duration: 0.4 }}
+						>
+							<Question
+								title={dataQuestion.lastQuestionOfSurvey.title}
+								description={dataQuestion.lastQuestionOfSurvey.description}
+								anonymous={dataQuestion.lastQuestionOfSurvey.anonymous}
+								input={dataQuestion.lastQuestionOfSurvey.input}
+								answer={s => {
+									console.log("answer ====> ", s);
+									setAnswer(s);
+								}}
+								isComplete={c => {
+									setComplete(c);
+								}}
+							/>
+						</motion.div>
+					</QuestionTopWrapper>
+					<QuestionButtons>
+						<motion.div className={questionButtonLeft}>
+							<BaseButton
+								iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
+								iconPosition={"left"}
+								text={"Anterior"}
+								colorText={"#B1B1B1"}
+								backgroundColor={"transparent"}
+								onClick={() => {
+									if (dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 1/4") {
+										setPage("begin");
+									} else {
+										// setQuestion(QUESTIONS[Number(question.id) > 0 ? Number(question.id) - 1 : Number(question.id)]);
+									}
+								}}
+							/>
+						</motion.div>
+						<motion.div className={questionButtonRight}>
+							<BaseButton
+								disabled={!isComplete}
+								iconElement={<ArrowRightIcon color={!isComplete ? theme.textColor : "#ffffff95"} size={20} />}
+								text={dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4" ? "FINALIZAR" : "SIGUIENTE"}
+								onClick={() => {
+									if (dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4") {
+										setPage("end");
+									} else {
+										let variables = { input: { id: dataQuestion.lastQuestionOfSurvey.id, answer: answer } };
+										updateAnswerQuestion(variables).then(result => {
+											if (result.error) {
+												console.error("Oh no!", result.error);
+											}
+											reexecuteSurvey({ requestPolicy: "network-only" });
+											reexecuteQuestion({ requestPolicy: "network-only" });
+										});
+										// setQuestion(
+										// 	QUESTIONS[
+										// 		Number(question.id) < QUESTIONS.length - 1 ? Number(question.id) + 1 : Number(question.id)
+										// 	]
+										// );
+									}
+								}}
+							/>
+						</motion.div>
+					</QuestionButtons>
 					<div style={{ height: 50 }} />
-					<CircleProgressWrapper>
-						<CircleProgressBar strokeWidth={2} percentage={(Number(question.id) + 1) / 4 * 100} speed={3} size={90} />
-					</CircleProgressWrapper>
-					<motion.div
-						key={question.id}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: [ 0, 1 ] }}
-						transition={{ delay: 0.05, stiffness: 8, duration: 0.4 }}
-					>
-						<Question
-							title={question.title}
-							description={question.description}
-							anonymous={question.anonymous}
-							input={question.input}
-							answer={s => {
-								console.log(s);
-							}}
-						/>
-					</motion.div>
-				</QuestionTopWrapper>
-				<QuestionButtons>
-					<motion.div className={questionButtonLeft} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
-						<BaseButton
-							iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
-							iconPosition={"left"}
-							text={"Anterior"}
-							colorText={"#B1B1B1"}
-							backgroundColor={"transparent"}
-							onClick={() => {
-								if (Number(question.id) === 0) {
-									setPage("begin");
-								} else {
-									setQuestion(QUESTIONS[Number(question.id) > 0 ? Number(question.id) - 1 : Number(question.id)]);
-								}
-							}}
-						/>
-					</motion.div>
-					<motion.div className={questionButtonRight} whileTap={{ scale: [ 1, 0.9, 1 ] }}>
-						<BaseButton
-							iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
-							text={Number(question.id) === QUESTIONS.length - 1 ? "FINALIZAR" : "SIGUIENTE"}
-							onClick={() => {
-								if (Number(question.id) === QUESTIONS.length - 1) {
-									setPage("end");
-								} else {
-									setQuestion(
-										QUESTIONS[
-											Number(question.id) < QUESTIONS.length - 1 ? Number(question.id) + 1 : Number(question.id)
-										]
-									);
-								}
-							}}
-						/>
-					</motion.div>
-				</QuestionButtons>
-				<div style={{ height: 50 }} />
-			</Layout>
-		);
+				</Layout>
+			);
 	}
 	return (
 		<Layout>
@@ -385,7 +419,7 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
 					paddingBottom: "0.7rem"
 				}}
 			>
-				Vence en {expiredIn}, el {expiredDay} de {expiredMonth}
+				Vence {expiredIn}, el {expiredDay} de {expiredMonth}
 			</motion.div>
 			<motion.div
 				initial={{ opacity: 0 }}

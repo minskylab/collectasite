@@ -69,3 +69,53 @@ export const queryQuestion = gql`
 		}
 	}
 `;
+
+export const queryLastQuestionOfSurvey = gql`
+	query lastQuestionOfSurvey($id: ID!) {
+		lastQuestionOfSurvey(id: $id) {
+			id
+			title
+			description
+			anonymous
+			input {
+				kind
+				options
+				multiple
+			}
+			answers {
+				id
+				responses
+			}
+			flow {
+				state
+			}
+		}
+	}
+`;
+
+export const userByToken = gql`
+	query userByToken($token: String!) {
+		userByToken(token: $token) {
+			id
+			name
+			picture
+			username
+			lastActivity
+			surveys {
+				id
+				dueDate
+				title
+				description
+				tags
+			}
+			domain {
+				name
+				domain
+			}
+			contacts {
+				kind
+				value
+			}
+		}
+	}
+`;

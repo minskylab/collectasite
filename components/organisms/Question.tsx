@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import QuestionInput, { QuestionInputProps, QuestionType } from "./QuestionInput";
 import { styled } from "linaria/react";
 import { css } from "linaria";
@@ -67,9 +67,9 @@ interface Answer {
 }
 
 interface Input {
-	value: any;
-	type: QuestionType;
+	kind: QuestionType;
 	multiple?: boolean;
+	options?: any;
 }
 
 export interface QuestionInterface {
@@ -86,11 +86,40 @@ export interface QuestionProps {
 	anonymous: boolean;
 	input?: Input;
 	answer: (answer: any) => void;
+	isComplete?: (complete: boolean) => void;
 }
 
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
 	const theme = useTheme();
-	const [ value, setValue ] = useState<any>(props.input ? props.input.value : null);
+	let options;
+	if (props.input) {
+		if (props.input.kind === QuestionType.OPTIONS) {
+			let keys = Object.keys(props.input.options);
+			options = keys.map((key) => ({ key: key, text: props.input ? props.input.options[key] : "", value: key, checked: false }));
+		} else {
+			options = props.input.options;
+		}
+	}
+	const [value, setValue] = useState<any>(props.input ? options : null);
+
+	useEffect(() => {
+		if (props.input) {
+			if (props.input.kind === QuestionType.OPTIONS) {
+				let filteredArray = value.filter((v: any) => {
+					return v.checked === true;
+				});
+				let keys = filteredArray.map((v: any) => v.key);
+				props.answer(keys);
+				if (props.isComplete) {
+					props.isComplete(!!keys.length);
+				}
+			}
+			else {
+				props.answer(value);
+			}
+		}
+	}, [])
+
 	return (
 		<QuestionWrapper>
 			<TextWrapper>
@@ -136,13 +165,25 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 				{props.input ? (
 					<QuestionInput
 						value={value}
-						onChangeValue={v => {
-							// console.log(v);
-							setValue(v);
-							// cambiar el estado para actualizar el value
-							props.answer(v); // dependiendo del tipo estandarizar esto para subirlo denuevo
+						onChangeValue={newValue => {
+							setValue(newValue);
+							if (props.input) {
+								if (props.input.kind === QuestionType.OPTIONS) {
+									let filteredArray = newValue.filter((v: any) => {
+										return v.checked === true;
+									});
+									let keys = filteredArray.map((v: any) => v.key);
+									props.answer(keys);
+									if (props.isComplete) {
+										props.isComplete(!!keys.length);
+									}
+								}
+								else {
+									props.answer(newValue);
+								}
+							}
 						}}
-						type={props.input.type}
+						type={props.input.kind}
 						multiple={props.input.multiple}
 					/>
 				) : null}

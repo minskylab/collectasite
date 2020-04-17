@@ -18,10 +18,10 @@ const Layout = styled.div`
 `;
 
 export enum QuestionType {
-	TEXT,
-	OPTIONS,
-	SATISFACTION,
-	YESNO
+	TEXT = "Text",
+	OPTIONS = "Options",
+	SATISFACTION = "Satisfaction",
+	YESNO = "Boolean"
 }
 
 export interface onChange {
@@ -96,16 +96,16 @@ const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
 						satisfactionOptionsSize={SatisfactionMode.Large}
 					/>
 				) : (
-					<SatisfactionChoice
-						onChange={s => {
-							props.onChangeValue(s);
-						}}
-						unitValue={satisfactionValueDesktop}
-						iconSize={100}
-						satisfactionOptionsSize={SatisfactionMode.Large}
+						<SatisfactionChoice
+							onChange={s => {
+								props.onChangeValue(s);
+							}}
+							unitValue={satisfactionValueDesktop}
+							iconSize={100}
+							satisfactionOptionsSize={SatisfactionMode.Large}
 						// alternativeNames={["a", "b", 'c']}
-					/>
-				)}
+						/>
+					)}
 			</div>
 		);
 	}
