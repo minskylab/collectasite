@@ -79,8 +79,9 @@ export const queryLastQuestionOfSurvey = gql`
 			anonymous
 			input {
 				kind
-				options
 				multiple
+				defaults
+				options
 			}
 			answers {
 				id

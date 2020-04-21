@@ -70,6 +70,7 @@ interface Input {
 	kind: QuestionType;
 	multiple?: boolean;
 	options?: any;
+	defaults: string[];
 }
 
 export interface QuestionInterface {
@@ -92,16 +93,30 @@ export interface QuestionProps {
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
 	const theme = useTheme();
 	let options;
+
+	// TODO: Revisar si se incluyeron los defaults en cada caso que es un array []
 	if (props.input) {
 		if (props.input.kind === QuestionType.OPTIONS) {
 			let keys = Object.keys(props.input.options);
-			options = keys.map((key) => ({ key: key, text: props.input ? props.input.options[key] : "", value: key, checked: false }));
+			options = keys.map(key => ({
+				key: key,
+				text: props.input ? props.input.options[key] : "",
+				value: key,
+				checked: false
+			}));
+		} else if (props.input.kind === QuestionType.SATISFACTION) {
+			options = props.input.defaults.length === 0 ? 0 : props.input.defaults[0];
+		} else if (props.input.kind === QuestionType.TEXT) {
+			options = props.input.defaults.length === 0 ? "" : props.input.defaults[0];
+		} else if (props.input.kind === QuestionType.YESNO) {
+			options = props.input.defaults.length === 0 ? -1 : props.input.defaults[0] === "true" ? 1 : 0;
 		} else {
-			options = props.input.options;
+			options = props.input.defaults.length === 0 ? "" : props.input.defaults[0];
 		}
 	}
-	const [value, setValue] = useState<any>(props.input ? options : null);
+	const [ value, setValue ] = useState<any>(props.input ? options : null);
 
+	// console.log("value: ", value, value >= -1 && value <= 1 ? true : false);
 	useEffect(() => {
 		if (props.input) {
 			if (props.input.kind === QuestionType.OPTIONS) {
@@ -113,12 +128,31 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 				if (props.isComplete) {
 					props.isComplete(!!keys.length);
 				}
-			}
-			else {
-				props.answer(value);
+			} else if (props.input.kind === QuestionType.SATISFACTION) {
+				if (props.isComplete) {
+					props.isComplete(value >= -1 && value <= 1 ? true : false);
+				}
+				props.answer([ String(value) ]);
+			} else if (props.input.kind === QuestionType.TEXT) {
+				if (props.isComplete) {
+					props.isComplete(!!value);
+				}
+				props.answer([ value ]);
+			} else if (props.input.kind === QuestionType.YESNO) {
+				let _isComplete = value !== -1 ? true : false;
+				let _value = value === -1 ? [] : value === 1 ? [ "true" ] : [ "false" ];
+				if (props.isComplete) {
+					props.isComplete(_isComplete);
+				}
+				props.answer(_value);
+			} else {
+				if (props.isComplete) {
+					props.isComplete(!!value);
+				}
+				props.answer([ value ]);
 			}
 		}
-	}, [])
+	}, []);
 
 	return (
 		<QuestionWrapper>
@@ -177,8 +211,28 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 									if (props.isComplete) {
 										props.isComplete(!!keys.length);
 									}
-								}
-								else {
+								} else if (props.input.kind === QuestionType.YESNO) {
+									let _isComplete = newValue !== -1 ? true : false;
+									let _newValue = newValue === -1 ? [] : newValue === 1 ? [ "true" ] : [ "false" ];
+									if (props.isComplete) {
+										props.isComplete(_isComplete);
+									}
+									props.answer(_newValue);
+								} else if (props.input.kind === QuestionType.TEXT) {
+									let _isComplete = !!newValue;
+									let _newValue = [ newValue ];
+									if (props.isComplete) {
+										props.isComplete(_isComplete);
+									}
+									props.answer(_newValue);
+								} else if (props.input.kind === QuestionType.SATISFACTION) {
+									let _isComplete = newValue >= -1 && newValue <= 1 ? true : false;
+									let _newValue = [ String(newValue) ];
+									if (props.isComplete) {
+										props.isComplete(_isComplete);
+									}
+									props.answer(_newValue);
+								} else {
 									props.answer(newValue);
 								}
 							}

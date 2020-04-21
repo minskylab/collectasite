@@ -73,6 +73,7 @@ const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
 					negativeOptionName={"NO"}
 					value={yesNoValue}
 					onChange={selectedOption => {
+						// console.log("selectedOption ====> ", selectedOption);
 						props.onChangeValue(selectedOption);
 					}}
 				/>
@@ -83,7 +84,7 @@ const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
 		const satisfactionValueDesktop: number | undefined = props.value;
 		const satisfactionValueMobile: number = props.value;
 		const isMobile: boolean = window.innerWidth < 600;
-
+		// console.log("isMobile", isMobile)
 		return (
 			<div style={{ paddingBottom: "3em" }}>
 				{isMobile ? (

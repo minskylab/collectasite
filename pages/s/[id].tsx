@@ -140,6 +140,7 @@ const Survey: NextPage = () => {
 	const [ page, setPage ] = useState<string>("begin");
 	const [ isComplete, setComplete ] = useState<boolean>(false);
 	const [ answer, setAnswer ] = useState<any>(null);
+	console.log("answer ====> ", answer);
 
 	const [ surveyResult, reexecuteSurvey ] = useQuery<any>({
 		query: querySurvey,
@@ -249,7 +250,6 @@ const Survey: NextPage = () => {
 								anonymous={dataQuestion.lastQuestionOfSurvey.anonymous}
 								input={dataQuestion.lastQuestionOfSurvey.input}
 								answer={s => {
-									console.log("answer ====> ", s);
 									setAnswer(s);
 								}}
 								isComplete={c => {
@@ -281,23 +281,24 @@ const Survey: NextPage = () => {
 								iconElement={<ArrowRightIcon color={!isComplete ? theme.textColor : "#ffffff95"} size={20} />}
 								text={dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4" ? "FINALIZAR" : "SIGUIENTE"}
 								onClick={() => {
-									if (dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4") {
-										setPage("end");
-									} else {
-										let variables = { input: { id: dataQuestion.lastQuestionOfSurvey.id, answer: answer } };
-										updateAnswerQuestion(variables).then(result => {
-											if (result.error) {
-												console.error("Oh no!", result.error);
+									let variables = { input: { id: dataQuestion.lastQuestionOfSurvey.id, answer: answer } };
+									updateAnswerQuestion(variables).then(result => {
+										if (result.error) {
+											console.error("Oh no!", result.error);
+										}
+										if (result.data) {
+											if (dataQuestion.lastQuestionOfSurvey.title === "PREGUNTA 4/4") {
+												router.push("/s/done");
 											}
 											reexecuteSurvey({ requestPolicy: "network-only" });
 											reexecuteQuestion({ requestPolicy: "network-only" });
-										});
-										// setQuestion(
-										// 	QUESTIONS[
-										// 		Number(question.id) < QUESTIONS.length - 1 ? Number(question.id) + 1 : Number(question.id)
-										// 	]
-										// );
-									}
+										}
+									});
+									// setQuestion(
+									// 	QUESTIONS[
+									// 		Number(question.id) < QUESTIONS.length - 1 ? Number(question.id) + 1 : Number(question.id)
+									// 	]
+									// );
 								}}
 							/>
 						</motion.div>

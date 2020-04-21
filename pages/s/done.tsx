@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 const SurveyDone: NextPage = () => {
-	return <p>SurveyDone</p>;
+	return <div>Survey is done!</div>;
 };
 
 export default SurveyDone;
