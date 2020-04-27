@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { styled } from "linaria/react";
 import { motion } from "framer-motion";
-import { useTheme } from "../../../general/theming";
 import { CircleProgressBar } from "../../molecules/CircleProgressBar";
 import Question, { Input } from "../Question";
 
@@ -42,7 +41,6 @@ export interface SurveyQuestionProps {
 }
 
 const SurveyQuestion: FC<SurveyQuestionProps> = (props: SurveyQuestionProps) => {
-  const theme = useTheme();
 
   return (
     <QuestionTopWrapper>

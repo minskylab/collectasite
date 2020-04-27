@@ -103,33 +103,41 @@ const CircleProgressBarBase: FC<CircleProgressBarBaseProps> = (props: CircleProg
 	const legendText = props.legendText || defaultProps.legendText;
 	const size = props.size || defaultProps.size;
 
-	const [progressBar, setProgressBar] = useState(0);
+	const [ progressBar, setProgressBar ] = useState(0);
 	const pace = percentage / speed;
 
-	const updatePercentage = (type: string) => {
-		setTimeout(() => {
-			if (type === "add") {
-				setProgressBar(progressBar + 1);
-			} else {
-				setProgressBar(progressBar - 1);
-			}
-
-		}, pace);
-	};
-
 	useEffect(
 		() => {
-			if (percentage > 0) updatePercentage("add");
+			const timer = setTimeout(() => {
+				if (percentage > 0) {
+					setProgressBar(progressBar + 1);
+				}
+			}, pace);
+			return () => {
+				clearTimeout(timer);
+			};
 		},
-		[percentage]
+		[ percentage ]
 	);
 
 	useEffect(
 		() => {
-			if (progressBar < percentage) { updatePercentage("add") } if (progressBar > percentage) { updatePercentage("other") };
+			const timer2 = setTimeout(() => {
+				if (progressBar < percentage) {
+					setProgressBar(progressBar + 1);
+				}
+				if (progressBar > percentage) {
+					setProgressBar(progressBar - 1);
+				}
+			}, pace);
+			return () => {
+				clearTimeout(timer2);
+			};
 		},
-		[progressBar]
+		[ progressBar ]
 	);
+
+	useEffect(() => {}, [ progressBar ]);
 
 	return (
 		<figure className={className} style={props.style}>
@@ -164,7 +172,10 @@ const CircleProgressBarBase: FC<CircleProgressBarBaseProps> = (props: CircleProg
 					}}
 				>
 					<text x="50%" y="50%" className={chartNumber}>
-						<tspan >{progressBar}</tspan> <tspan dy="-0.25rem" dx="-2.1px" className={chartPercentage}>{"%"}</tspan>
+						<tspan>{progressBar}</tspan>{" "}
+						<tspan dy="-0.25rem" dx="-2.1px" className={chartPercentage}>
+							{"%"}
+						</tspan>
 					</text>
 					{/* <text x="50%" y="50%" className={chartLabel}>
 						{innerText}

@@ -73,24 +73,39 @@ export const queryQuestion = gql`
 export const queryLastQuestionOfSurvey = gql`
 	query lastQuestionOfSurvey($surveyID: ID!) {
 		lastQuestionOfSurvey(surveyID: $surveyID) {
-			id
-			title
-			description
-			anonymous
-			input {
-				kind
-				multiple
-				defaults
-				options
-			}
-			answers {
+			lastQuestion {
 				id
-				responses
+				title
+				description
+				anonymous
+				input {
+					kind
+					multiple
+					defaults
+					options
+				}
+				answers {
+					id
+					responses
+				}
+				flow {
+					state
+				}
 			}
-			flow {
-				state
-			}
+			percent
 		}
+	}
+`;
+
+export const queryIsFirstQuestion = gql`
+	query isFirstQuestion($questionID: ID!) {
+		isFirstQuestion(questionID: $questionID)
+	}
+`;
+
+export const queryIsFinalQuestion = gql`
+	query isFinalQuestion($questionID: ID!) {
+		isFinalQuestion(questionID: $questionID)
 	}
 `;
 

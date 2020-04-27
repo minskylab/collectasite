@@ -1,6 +1,6 @@
 export const answerQuestion = `
-  mutation answerQuestion($input: QuestionResponse) {
-    answerQuestion (input: $input) {
+  mutation answerQuestion($questionID: ID!, $answer: [String!]!) {
+    answerQuestion (questionID: $questionID, answer: $answer) {
       id
       dueDate
       title
