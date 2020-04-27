@@ -99,8 +99,8 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 						style={{
 							//@ts-ignore
 							"--font-family": theme.fontFamilyTitle,
-							"--background-color": theme.primaryColor,
-							"--text-color": theme.primaryColorText,
+							"--background-color": `${theme.primaryColor}20`,
+							"--text-color": theme.textColor,
 						}}
 					>
 						{tag}
