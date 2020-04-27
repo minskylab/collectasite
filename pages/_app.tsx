@@ -33,7 +33,7 @@ const client = createClient({
   fetchOptions: () => {
     if (typeof localStorage !== "undefined") {
       const token = getToken();
-      console.log(token);
+      // console.log(token);
       return {
         headers: { "Authorization": token ? `Bearer ${token}` : '' }
       }
