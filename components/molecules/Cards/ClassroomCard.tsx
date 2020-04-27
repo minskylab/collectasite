@@ -15,6 +15,7 @@ const Container = styled.div`
 	padding-right: 1.2em;
 	text-align: left;
 	cursor: pointer;
+	min-height: 14.85rem;
 `;
 
 const textdueDate = css`
@@ -24,44 +25,26 @@ const textdueDate = css`
 	padding-bottom: 1.2em;
 `;
 
-const texttitle = css`
+const textSurveyName = css`
 	color: var(--text-color);
 	font-family: var(--font-family);
-	font-size: 0.9em;
+	font-size: 1.2em;
 	padding-bottom: 1.5em;
 	line-height: 120%;
 `;
 
-const textCourse = css`
+const textTags = css`
 	color: var(--text-color);
 	font-family: var(--font-family);
-	font-size: 1.4em;
-	font-weight: 500;
-	padding-bottom: 0.5em;
+	background-color: var(--background-color);
+	font-size: 0.8em;
+	font-weight: 300;
+	padding: 0.7em 0.5em;
+	margin-bottom: 0.5em;
 	line-height: 100%;
 	text-transform: uppercase;
-`;
-
-const textTeacher = css`
-	color: var(--text-color);
-	font-family: var(--font-family);
-	font-size: 0.84em;
-	padding-bottom: 2.3em;
-`;
-
-const textCreatedAt = css`
-	color: var(--text-color);
-	font-family: var(--font-family);
-	font-size: 0.7em;
-	padding-bottom: 0.2em;
-	/* text-align: right; */
-`;
-
-const textAvailableFrom = css`
-	color: var(--text-color);
-	font-family: var(--font-family);
-	font-size: 0.7em;
-	/* text-align: right; */
+	border-radius: 5px;
+	width: fit-content;
 `;
 
 interface CardClassroomProps {
@@ -95,28 +78,29 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 						className={textdueDate}
 						style={{
 							//@ts-ignore
-							"--text-color": theme.secondaryTextColor,
+							"--text-color": theme.textColor,
 							"--font-family": theme.fontFamilyText
 						}}
 					>
 						Expira {expiredIn}
 					</div>
 					<div
-						className={texttitle}
+						className={textSurveyName}
 						style={{
 							//@ts-ignore
-							"--text-color": theme.darkSecondaryTextColor,
+							"--text-color": theme.textColor,
 							"--font-family": theme.fontFamilyTitle
 						}}
 					>
 						{props.title}
 					</div>
 					{props.tags ? props.tags.map((tag, i) => <div key={i}
-						className={textCourse}
+						className={textTags}
 						style={{
 							//@ts-ignore
-							"--text-color": theme.textColor,
-							"--font-family": theme.fontFamilyTitle
+							"--font-family": theme.fontFamilyTitle,
+							"--background-color": theme.primaryColor,
+							"--text-color": theme.primaryColorText,
 						}}
 					>
 						{tag}

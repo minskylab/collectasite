@@ -89,10 +89,10 @@ const textTitle = css`
 
 const text = css`
 	font-family: var(--font-family);
-	line-height: 130%;
+	line-height: 140%;
 	width: 100%;
 	color: var(--color-text);
-	font-size: 0.9rem;
+	font-size: 0.95rem;
 	text-align: center;
 	max-width: 20rem;
 	padding-bottom: 1.5rem;
@@ -253,7 +253,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
 								paddingBottom: "1.8rem"
 							}}
 						>
-							Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""}
+							Hola, {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""}
 						</div>
 						<div
 							className={text}
@@ -263,7 +263,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
 								"--color-text": theme.textColor
 							}}
 						>
-							Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
+							Esta es una lista de tus <b>encuestas pendientes</b>, trata de contestarlas antes de que se acabe el
+							tiempo.
 						</div>
 					</Container>
 					<div className={cardsWrapper}>
