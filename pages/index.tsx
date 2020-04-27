@@ -170,14 +170,13 @@ const surveys = [
 ];
 
 const Home: NextPage = () => {
-	const theme = useTheme();
 	const router = useRouter();
 
 	useEffect(() => {
 		const { token } = router.query;
 		if (typeof token === "string") {
-			window.location.href = window.location.href.split("?")[0];
 			setToken(token);
+			window.location.href = window.location.href.split("?")[0];
 		}
 	}, []);
 
