@@ -15,7 +15,7 @@ const errorExchange: Exchange = ({ forward }) => ops$ => {
         if (typeof (error.networkError) !== "undefined") {
           if (error.response.status === 403) {
             window.location.replace(window.location.href.split("?")[0] + "login");
-            // console.log("STATUS ", error.response.status, "LOGOUT")
+            console.log("STATUS ", error.response.status, "LOGOUT")
             deleteToken();
           } else {
             console.log("ERROR: ", "No hay internet")
