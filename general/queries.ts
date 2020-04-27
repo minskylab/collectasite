@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const queryUser = gql`
-	query user($id: ID!) {
-		user(id: $id) {
+	query user($token: String!, $id: ID!) {
+		user(token: $token, id: $id) {
 			id
 			name
 			picture
@@ -94,9 +94,9 @@ export const queryLastQuestionOfSurvey = gql`
 	}
 `;
 
-export const userByToken = gql`
-	query userByToken($token: String!) {
-		userByToken(token: $token) {
+export const profile = gql`
+	query profile {
+		profile {
 			id
 			name
 			picture
@@ -109,7 +109,7 @@ export const userByToken = gql`
 				description
 				tags
 			}
-			domain {
+			domains {
 				name
 				domain
 			}

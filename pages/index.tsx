@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -15,7 +15,8 @@ import { useDimensions } from "../components/atoms/Menu/use-dimensions";
 import MenuToggle from "../components/atoms/Menu/MenuToogle";
 import { Navigation } from "../components/atoms/Menu/Navigation";
 import { ClassroomCard } from "../components/molecules/Cards";
-import { queryUser, userByToken } from "../general/queries";
+import { queryUser, profile } from "../general/queries";
+import { setToken } from "../general/auth";
 
 const WrapperHome = styled.div`
 	position: relative;
@@ -172,126 +173,121 @@ const Home: NextPage = () => {
 	const theme = useTheme();
 	const router = useRouter();
 
-	const { token } = router.query;
+	useEffect(() => {
+		const { token } = router.query;
+		if (typeof token === "string") {
+			window.location.href = window.location.href.split("?")[0];
+			setToken(token);
+		}
+	}, []);
 
-	useEffect(
-		() => {
-			if (!token) {
-				router.push("/login");
-			}
-		},
-		[ token ]
-	);
-
-	const [ userByTokenResult ] = useQuery({
-		query: userByToken,
-		variables: { token: token }
-	});
-
-	const { data: dataUserByToken, fetching: fetchingUserByToken, error: errorUserByToken } = userByTokenResult;
-
-	const [ userResult ] = useQuery({
-		query: queryUser,
-		variables: { id: dataUserByToken ? (dataUserByToken.userByToken ? dataUserByToken.userByToken.id : null) : null }
-	});
-
-	const { data: dataUser, fetching: fetchingUser, error: errorUser } = userResult;
-
-	if (fetchingUserByToken)
-		return (
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
-				Loading...
-			</div>
-		);
-	if (errorUserByToken)
-		return (
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
-				Oh no... {errorUserByToken.message}
-			</div>
-		);
-
-	if (fetchingUser)
-		return (
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
-				Loading...
-			</div>
-		);
-	if (errorUser)
-		return (
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100vw", height: "100vh" }}>
-				Oh no... {errorUser.message}
-			</div>
-		);
-
-	if (dataUser) {
-		return (
+	return (
+		<div>
+			<Head>
+				<title>Collecta Surveys</title>
+			</Head>
 			<div>
-				<Head>
-					<title>Collecta Surveys</title>
-				</Head>
-				<motion.div className={menuWrapper} initial={false}>
-					<div style={{ padding: 30 }}>
-						<MenuIcon size={30} color={theme.textColor} />
-					</div>
-				</motion.div>
-				<WrapperHome>
-					<AvatarPosition>
-						<Avatar size={"2.5rem"} image={dataUser.user.picture} />
-					</AvatarPosition>
-					<ContentWrapper>
-						<Container>
-							<div
-								className={textTitle}
-								style={{
-									//@ts-ignore
-									"--font-family": theme.fontFamilyTitle,
-									"--color-text": theme.textColor,
-									paddingBottom: "1.8rem"
-								}}
-							>
-								Hola {dataUser.user.name ? dataUser.user.name.split(" ", 1)[0] : ""}
-							</div>
-							<div
-								className={text}
-								style={{
-									//@ts-ignore
-									"--font-family": theme.fontFamilyText,
-									"--color-text": theme.secondaryTextColor
-								}}
-							>
-								Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
-							</div>
-						</Container>
-						<div className={cardsWrapper}>
-							<div className={cardsContainer}>
-								{dataUser.user ? dataUser.user.surveys ? (
-									dataUser.user.surveys.map((survey: any, s: number) => (
-										<div key={s} className={cardItem}>
-											<ClassroomCard
-												{...survey}
-												isShadow={true}
-												onSelected={id => {
-													// console.log(id);
-													router.push(`/s/${id}`);
-												}}
-											/>
-										</div>
-									))
-								) : null : null}
-							</div>
-						</div>
-					</ContentWrapper>
-				</WrapperHome>
+				<HomeUserData />
 			</div>
-		);
-	}
-
-	return null;
+		</div>
+	);
 };
 
 Home.getInitialProps = async ({ req }) => {
 	const userAgent = req ? req.headers["user-agent"] || "" : navigator.userAgent;
 	return { userAgent };
+};
+
+interface UserData {
+	name?: string;
+}
+
+const HomeUserData: FC<UserData> = (props: UserData) => {
+	const theme = useTheme();
+	const router = useRouter();
+
+	const [ { data, fetching, error }, run ] = useQuery({
+		query: profile,
+		pause: true
+	});
+
+	useEffect(() => {
+		run();
+	}, []);
+
+	if (fetching) {
+		// console.log("FETCHING....");
+		return <div>{`LOADING`}</div>;
+	} else if (error) {
+		// console.log("ERROR....");
+		if (error.graphQLErrors.length !== 0) {
+			return <div>{`Oh no! Error: ${error}`}</div>;
+		}
+	}
+
+	if (!data) {
+		return null;
+	}
+
+	return (
+		<div>
+			<Head>
+				<title>Collecta Surveys | {data.profile.name}</title>
+			</Head>
+			<motion.div className={menuWrapper} initial={false}>
+				<div style={{ padding: 30 }}>
+					<MenuIcon size={30} color={theme.textColor} />
+				</div>
+			</motion.div>
+			<WrapperHome>
+				<AvatarPosition>
+					<Avatar size={"2.5rem"} image={data.profile.picture} />
+				</AvatarPosition>
+				<ContentWrapper>
+					<Container>
+						<div
+							className={textTitle}
+							style={{
+								//@ts-ignore
+								"--font-family": theme.fontFamilyTitle,
+								"--color-text": theme.textColor,
+								paddingBottom: "1.8rem"
+							}}
+						>
+							Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""}
+						</div>
+						<div
+							className={text}
+							style={{
+								//@ts-ignore
+								"--font-family": theme.fontFamilyText,
+								"--color-text": theme.textColor
+							}}
+						>
+							Esta es una lista de tus encuestas pendientes, trata de contestarlas antes de que culminen.
+						</div>
+					</Container>
+					<div className={cardsWrapper}>
+						<div className={cardsContainer}>
+							{data.profile ? data.profile.surveys ? (
+								data.profile.surveys.map((survey: any, s: number) => (
+									<div key={s} className={cardItem}>
+										<ClassroomCard
+											{...survey}
+											isShadow={true}
+											onSelected={id => {
+												router.push(`/s/${id}`);
+											}}
+										/>
+									</div>
+								))
+							) : null : null}
+						</div>
+					</div>
+				</ContentWrapper>
+			</WrapperHome>
+		</div>
+	);
 };
 
 const sidebar = {
