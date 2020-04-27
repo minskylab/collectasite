@@ -15,7 +15,7 @@ import { useDimensions } from "../components/atoms/Menu/use-dimensions";
 import MenuToggle from "../components/atoms/Menu/MenuToogle";
 import { Navigation } from "../components/atoms/Menu/Navigation";
 import { ClassroomCard } from "../components/molecules/Cards";
-import { queryUser, profile } from "../general/queries";
+import { profile } from "../general/queries";
 import { setToken } from "../general/auth";
 
 const WrapperHome = styled.div`

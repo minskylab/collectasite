@@ -66,7 +66,7 @@ interface Answer {
 	responses: string[];
 }
 
-interface Input {
+export interface Input {
 	kind: QuestionType;
 	multiple?: boolean;
 	options?: any;
@@ -114,7 +114,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 			options = props.input.defaults.length === 0 ? "" : props.input.defaults[0];
 		}
 	}
-	const [ value, setValue ] = useState<any>(props.input ? options : null);
+	const [value, setValue] = useState<any>(props.input ? options : null);
 
 	// console.log("value: ", value, value >= -1 && value <= 1 ? true : false);
 	useEffect(() => {
@@ -132,15 +132,15 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 				if (props.isComplete) {
 					props.isComplete(value >= -1 && value <= 1 ? true : false);
 				}
-				props.answer([ String(value) ]);
+				props.answer([String(value)]);
 			} else if (props.input.kind === QuestionType.TEXT) {
 				if (props.isComplete) {
 					props.isComplete(!!value);
 				}
-				props.answer([ value ]);
+				props.answer([value]);
 			} else if (props.input.kind === QuestionType.YESNO) {
 				let _isComplete = value !== -1 ? true : false;
-				let _value = value === -1 ? [] : value === 1 ? [ "true" ] : [ "false" ];
+				let _value = value === -1 ? [] : value === 1 ? ["true"] : ["false"];
 				if (props.isComplete) {
 					props.isComplete(_isComplete);
 				}
@@ -149,7 +149,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 				if (props.isComplete) {
 					props.isComplete(!!value);
 				}
-				props.answer([ value ]);
+				props.answer([value]);
 			}
 		}
 	}, []);
@@ -213,21 +213,21 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 									}
 								} else if (props.input.kind === QuestionType.YESNO) {
 									let _isComplete = newValue !== -1 ? true : false;
-									let _newValue = newValue === -1 ? [] : newValue === 1 ? [ "true" ] : [ "false" ];
+									let _newValue = newValue === -1 ? [] : newValue === 1 ? ["true"] : ["false"];
 									if (props.isComplete) {
 										props.isComplete(_isComplete);
 									}
 									props.answer(_newValue);
 								} else if (props.input.kind === QuestionType.TEXT) {
 									let _isComplete = !!newValue;
-									let _newValue = [ newValue ];
+									let _newValue = [newValue];
 									if (props.isComplete) {
 										props.isComplete(_isComplete);
 									}
 									props.answer(_newValue);
 								} else if (props.input.kind === QuestionType.SATISFACTION) {
 									let _isComplete = newValue >= -1 && newValue <= 1 ? true : false;
-									let _newValue = [ String(newValue) ];
+									let _newValue = [String(newValue)];
 									if (props.isComplete) {
 										props.isComplete(_isComplete);
 									}

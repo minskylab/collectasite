@@ -71,8 +71,8 @@ export const queryQuestion = gql`
 `;
 
 export const queryLastQuestionOfSurvey = gql`
-	query lastQuestionOfSurvey($id: ID!) {
-		lastQuestionOfSurvey(id: $id) {
+	query lastQuestionOfSurvey($surveyID: ID!) {
+		lastQuestionOfSurvey(surveyID: $surveyID) {
 			id
 			title
 			description
