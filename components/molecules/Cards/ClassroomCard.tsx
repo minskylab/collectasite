@@ -31,6 +31,9 @@ const textSurveyName = css`
 	font-size: 1.2em;
 	padding-bottom: 1.5em;
 	line-height: 120%;
+	@media (max-width: 600px) {
+		font-weight: 500;
+	}
 `;
 
 const textTags = css`

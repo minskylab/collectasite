@@ -139,36 +139,6 @@ const cardItem = css`
 	}
 `;
 
-const surveys = [
-	{
-		id: "1",
-		expiredAt: "Vence el 24 de Marzo a las 23:59",
-		surveyName: "Feedback por Sesión | Estudiantes",
-		course: "Teoría de Decisiones",
-		teacher: "Profesor José Larco",
-		createdAt: "Inicia: Martes 23 de Marzo",
-		availableFrom: "Disponible desde las 16:00"
-	},
-	{
-		id: "2",
-		expiredAt: "Vence el 24 de Marzo a las 23:59",
-		surveyName: "Feedback por Sesión | Estudiantes",
-		course: "Teoría de Decisiones",
-		teacher: "Profesor José Larco",
-		createdAt: "Inicia: Martes 23 de Marzo",
-		availableFrom: "Disponible desde las 16:00"
-	},
-	{
-		id: "3",
-		expiredAt: "Vence el 24 de Marzo a las 23:59",
-		surveyName: "Feedback por Sesión | Estudiantes",
-		course: "Teoría de Decisiones",
-		teacher: "Profesor José Larco",
-		createdAt: "Inicia: Martes 23 de Marzo",
-		availableFrom: "Disponible desde las 16:00"
-	}
-];
-
 const Home: NextPage = () => {
 	const router = useRouter();
 
