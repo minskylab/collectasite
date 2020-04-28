@@ -15,17 +15,10 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                     window.location.assign(window.location.href.split("?")[0] + "login");
                     console.log("STATUS ", error.response.status, "LOGOUT");
                     deleteToken();
-                }
-                if (typeof error.networkError !== "undefined") {
-                    if (error.response?.status === 403) {
-                        window.location.assign(window.location.href.split("?")[0] + "login");
-                        console.log("STATUS ", error.response.status, "LOGOUT");
-                        deleteToken();
-                    } else {
-                        console.log("ERROR: ", "No hay internet");
-                    }
+                } else if (typeof error.networkError === "undefined") {
+                    console.log("ERROR: undefined network error : ", error.message);
                 } else {
-                    console.log("ERROR: ", "Respuesta de servidor", " o ", "Query mal hecho");
+                    console.log("ERROR: ", "Respuesta de servidor", " o ", "Query mal hecho", " | network: ", error.networkError, " | message: ", error.message);
                 }
             }
         })
