@@ -153,7 +153,8 @@ const Home: NextPage = () => {
         const { token } = router.query;
         if (typeof token === "string") {
             setToken(token);
-            window.location.href = window.location.href.split("?")[0];
+            console.log("SET TOKEN: ", localStorage.getItem("jwtToken"))
+            window.location.replace(window.location.href.split("?")[0])
         }
     }, []);
 
@@ -194,6 +195,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
         console.log("ERROR....");
     }
 
+
     return (
         <div>
             <Head>
@@ -209,8 +211,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                     {data ? (
                         <Avatar size={"2.5rem"} image={data.profile.picture} />
                     ) : (
-                        <Skeleton key="avatar" height="42px" width="42px" />
-                    )}
+                            <Skeleton key="avatar" height="42px" width="42px" />
+                        )}
                 </AvatarPosition>
                 <ContentWrapper>
                     <Container>
@@ -226,8 +228,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             {data ? (
                                 <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
                             ) : (
-                                <Skeleton height="30px" width="260px" />
-                            )}
+                                    <Skeleton height="30px" width="260px" />
+                                )}
                         </div>
                         <div
                             className={text}
@@ -243,8 +245,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                     que se acabe el tiempo.
                                 </>
                             ) : (
-                                <Skeleton key="head" height="80px" width="280px"></Skeleton>
-                            )}
+                                    <Skeleton key="head" height="80px" width="280px"></Skeleton>
+                                )}
                         </div>
                     </Container>
                     <div className={cardsWrapper}>
@@ -266,8 +268,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                     ) : null
                                 ) : null
                             ) : (
-                                <Skeleton key="card" height="300px" width={"260px"} />
-                            )}
+                                    <Skeleton key="card" height="300px" width={"260px"} />
+                                )}
                         </div>
                     </div>
                 </ContentWrapper>

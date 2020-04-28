@@ -12,13 +12,13 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
             if (error) {
                 // console.log("Exhange error: ", error, error.networkError, typeof (error.networkError))
                 if (error.message.includes("unauthorized")) {
-                    window.location.replace(window.location.href.split("?")[0] + "login");
+                    window.location.assign(window.location.href.split("?")[0] + "login");
                     console.log("STATUS ", error.response.status, "LOGOUT");
                     deleteToken();
                 }
                 if (typeof error.networkError !== "undefined") {
                     if (error.response?.status === 403) {
-                        window.location.replace(window.location.href.split("?")[0] + "login");
+                        window.location.assign(window.location.href.split("?")[0] + "login");
                         console.log("STATUS ", error.response.status, "LOGOUT");
                         deleteToken();
                     } else {
