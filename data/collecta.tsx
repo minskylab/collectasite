@@ -334,6 +334,30 @@ export type AnswerQuestionMutation = (
   ) }
 );
 
+export type BackwardSurveyMutationVariables = {
+  surveyID: Scalars['ID'];
+};
+
+
+export type BackwardSurveyMutation = (
+  { __typename?: 'Mutation' }
+  & { backwardSurvey: (
+    { __typename?: 'Survey' }
+    & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
+    & { flow: (
+      { __typename?: 'Flow' }
+      & { questions: Array<(
+        { __typename?: 'Question' }
+        & Pick<Question, 'id' | 'title' | 'description'>
+        & { input: (
+          { __typename?: 'Input' }
+          & Pick<Input, 'kind'>
+        ) }
+      )> }
+    ) }
+  ) }
+);
+
 export type LoginByPasswordMutationVariables = {
   username: Scalars['String'];
   password: Scalars['String'];
@@ -360,14 +384,7 @@ export type SurveyQuery = (
     & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
     & { flow: (
       { __typename?: 'Flow' }
-      & { questions: Array<(
-        { __typename?: 'Question' }
-        & Pick<Question, 'id' | 'title' | 'description'>
-        & { input: (
-          { __typename?: 'Input' }
-          & Pick<Input, 'kind'>
-        ) }
-      )> }
+      & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
     ) }
   ) }
 );
@@ -494,6 +511,36 @@ export const AnswerQuestionComponent = (props: Omit<Urql.MutationProps<AnswerQue
 export function useAnswerQuestionMutation() {
   return Urql.useMutation<AnswerQuestionMutation, AnswerQuestionMutationVariables>(AnswerQuestionDocument);
 };
+export const BackwardSurveyDocument = gql`
+    mutation BackwardSurvey($surveyID: ID!) {
+  backwardSurvey(surveyID: $surveyID) {
+    id
+    dueDate
+    title
+    description
+    tags
+    flow {
+      questions {
+        id
+        title
+        description
+        input {
+          kind
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const BackwardSurveyComponent = (props: Omit<Urql.MutationProps<BackwardSurveyMutation, BackwardSurveyMutationVariables>, 'query'> & { variables?: BackwardSurveyMutationVariables }) => (
+  <Urql.Mutation {...props} query={BackwardSurveyDocument} />
+);
+
+
+export function useBackwardSurveyMutation() {
+  return Urql.useMutation<BackwardSurveyMutation, BackwardSurveyMutationVariables>(BackwardSurveyDocument);
+};
 export const LoginByPasswordDocument = gql`
     mutation LoginByPassword($username: String!, $password: String!) {
   loginByPassword(username: $username, password: $password) {
@@ -519,14 +566,9 @@ export const SurveyDocument = gql`
     description
     tags
     flow {
-      questions {
-        id
-        title
-        description
-        input {
-          kind
-        }
-      }
+      state
+      initialState
+      terminationState
     }
   }
 }

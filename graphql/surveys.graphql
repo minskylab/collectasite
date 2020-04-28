@@ -6,14 +6,9 @@ query Survey($id: ID!) {
         description
         tags
         flow {
-            questions {
-                id
-                title
-                description
-                input {
-                    kind
-                }
-            }
+            state
+            initialState
+            terminationState
         }
     }
 }

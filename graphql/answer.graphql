@@ -17,3 +17,23 @@ mutation AnswerQuestion($questionID: ID!, $answer: [String!]!) {
         }
     }
 }
+
+mutation BackwardSurvey($surveyID: ID!) {
+    backwardSurvey(surveyID: $surveyID) {
+        id
+        dueDate
+        title
+        description
+        tags
+        flow {
+            questions {
+                id
+                title
+                description
+                input {
+                    kind
+                }
+            }
+        }
+    }
+}

@@ -2,8 +2,12 @@ import App from "next/app";
 import React from "react";
 import { createClient, Provider, Exchange, dedupExchange, cacheExchange, fetchExchange } from "urql";
 import { pipe, tap } from "wonka";
-
+import relativeTime from "dayjs/plugin/relativeTime";
 import { getToken, deleteToken } from "../general/auth";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+dayjs.extend(relativeTime);
+dayjs.locale("es");
 
 const errorExchange: Exchange = ({ forward }) => (ops$) => {
     return pipe(
@@ -18,7 +22,16 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                 } else if (typeof error.networkError === "undefined") {
                     console.log("ERROR: undefined network error : ", error.message);
                 } else {
-                    console.log("ERROR: ", "Respuesta de servidor", " o ", "Query mal hecho", " | network: ", error.networkError, " | message: ", error.message);
+                    console.log(
+                        "ERROR: ",
+                        "Respuesta de servidor",
+                        " o ",
+                        "Query mal hecho",
+                        " | network: ",
+                        error.networkError,
+                        " | message: ",
+                        error.message
+                    );
                 }
             }
         })
