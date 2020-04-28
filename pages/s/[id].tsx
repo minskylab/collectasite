@@ -99,8 +99,6 @@ const Survey: NextPage = () => {
 	const [questionId, setQuestionId] = useState<any>(null);
 	const [updateSurveyResult, updateAnswer] = useMutation(answerQuestion);
 
-	console.log("isSurveyCompleted: ", isSurveyCompleted);
-
 	useEffect(
 		() => {
 			if (isSurveyCompleted) {
@@ -116,7 +114,7 @@ const Survey: NextPage = () => {
 				if (questionPosition === "first") {
 					setPage("begin");
 				} else {
-					setPage("final");
+					setPage("questions");
 				}
 			}
 		},
