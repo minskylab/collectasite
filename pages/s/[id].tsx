@@ -91,13 +91,13 @@ const questionButtonRight = css`
 const Survey: NextPage = () => {
 	const router = useRouter();
 	const surveyId = typeof router.query.id === "string" ? router.query.id : "";
-	const [ page, setPage ] = useState<string>("");
-	const [ isCompleted, setIsCompleted ] = useState<boolean>(false);
-	const [ isSurveyCompleted, setIsSurveyCompleted ] = useState<boolean>(false);
-	const [ questionPosition, setQuestionPosition ] = useState<string>("");
-	const [ answer, setAnswer ] = useState<any>(null);
-	const [ questionId, setQuestionId ] = useState<any>(null);
-	const [ updateSurveyResult, updateAnswer ] = useMutation(answerQuestion);
+	const [page, setPage] = useState<string>("");
+	const [isCompleted, setIsCompleted] = useState<boolean>(false);
+	const [isSurveyCompleted, setIsSurveyCompleted] = useState<boolean>(false);
+	const [questionPosition, setQuestionPosition] = useState<string>("");
+	const [answer, setAnswer] = useState<any>(null);
+	const [questionId, setQuestionId] = useState<any>(null);
+	const [updateSurveyResult, updateAnswer] = useMutation(answerQuestion);
 
 	console.log("isSurveyCompleted: ", isSurveyCompleted);
 
@@ -107,7 +107,7 @@ const Survey: NextPage = () => {
 				router.push("/s/done");
 			}
 		},
-		[ isSurveyCompleted ]
+		[isSurveyCompleted]
 	);
 
 	useEffect(
@@ -120,7 +120,7 @@ const Survey: NextPage = () => {
 				}
 			}
 		},
-		[ questionPosition ]
+		[questionPosition]
 	);
 
 	const submitAnswer = () => {
@@ -141,6 +141,8 @@ const Survey: NextPage = () => {
 		console.log("Obteniendo datos de la encuesta...");
 		return <div />;
 	}
+
+	console.log("Datos obtenidos.. Survey Id: ", surveyId);
 
 	return (
 		<div>
@@ -180,7 +182,7 @@ interface ViewSurveyBeginProps {
 	onNextClick?: () => void;
 }
 const ViewSurveyBegin: FC<ViewSurveyBeginProps> = (props: ViewSurveyBeginProps) => {
-	const [ { data, fetching, error }, run ] = useQuery({
+	const [{ data, fetching, error }, run] = useQuery({
 		query: querySurvey,
 		variables: { id: props.id },
 		pause: true
@@ -236,19 +238,19 @@ interface ViewSurveyQuestionProps {
 const ViewSurveyQuestion: FC<ViewSurveyQuestionProps> = (props: ViewSurveyQuestionProps) => {
 	const router = useRouter();
 
-	const [ { data, fetching, error }, run ] = useQuery({
+	const [{ data, fetching, error }, run] = useQuery({
 		query: queryLastQuestionOfSurvey,
 		variables: { surveyID: props.id },
 		pause: true
 	});
 
-	const [ { data: dataFirstQuestion, fetching: fetchingFirstQuestion }, runFirstQuestion ] = useQuery({
+	const [{ data: dataFirstQuestion, fetching: fetchingFirstQuestion }, runFirstQuestion] = useQuery({
 		query: queryIsFirstQuestion,
 		variables: { questionID: data ? data.lastQuestionOfSurvey.lastQuestion.id : "" },
 		pause: true
 	});
 
-	const [ { data: dataFinalQuestion, fetching: fetchingFinalQuestion }, runFinalQuestion ] = useQuery({
+	const [{ data: dataFinalQuestion, fetching: fetchingFinalQuestion }, runFinalQuestion] = useQuery({
 		query: queryIsFinalQuestion,
 		variables: { questionID: data ? data.lastQuestionOfSurvey.lastQuestion.id : "" },
 		pause: true
@@ -275,7 +277,7 @@ const ViewSurveyQuestion: FC<ViewSurveyQuestionProps> = (props: ViewSurveyQuesti
 				}
 			}
 		},
-		[ data ]
+		[data]
 	);
 
 	useEffect(
@@ -294,7 +296,7 @@ const ViewSurveyQuestion: FC<ViewSurveyQuestionProps> = (props: ViewSurveyQuesti
 				}
 			}
 		},
-		[ dataFirstQuestion, dataFinalQuestion ]
+		[dataFirstQuestion, dataFinalQuestion]
 	);
 
 	if (fetching) {
