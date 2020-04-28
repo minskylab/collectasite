@@ -1,0 +1,11 @@
+schema: https://core.collecta.site/graphql
+documents: ./graphql/**/*.graphql
+generates:
+    data/collecta.tsx:
+        plugins:
+            - typescript
+            - typescript-operations
+            - typescript-urql
+        config:
+            withComponent: true
+            withHooks: true
