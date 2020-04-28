@@ -319,7 +319,7 @@ const ViewSurveyQuestion: FC<ViewSurveyQuestionProps> = (props: ViewSurveyQuesti
 			<Layout>
 				<SurveyQuestion
 					id={data.lastQuestionOfSurvey.lastQuestion.id}
-					percentage={data.lastQuestionOfSurvey.percent * 100}
+					percentage={Math.round(data.lastQuestionOfSurvey.percent * 100)}
 					title={data.lastQuestionOfSurvey.lastQuestion.title}
 					description={data.lastQuestionOfSurvey.lastQuestion.description}
 					anonymous={data.lastQuestionOfSurvey.lastQuestion.anonymous}
