@@ -4,15 +4,21 @@ import { styled } from "linaria/react";
 import Skeleton from "react-loading-skeleton";
 import { CircleProgressBar } from "../CircleProgressBar";
 import OptionsInput from "./Inputs/Options";
+import BooleanInput from "./Inputs/Boolean";
+import TextInput from "./Inputs/Text";
+import SatisfactionInput from "./Inputs/Satisfaction";
 
 const Top = styled.div`
     position: fixed;
     width: 100%;
-    top: 2rem;
+    top: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     justify-content: flex-start;
     left: 2rem;
     right: 2rem;
+    background-color: white;
     @media only screen and (max-width: 680px) {
         left: 0;
         justify-content: center;
@@ -30,9 +36,11 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
+    width: 100%;
     display: flex;
     flex-flow: column;
     max-width: 35rem;
+    align-items: center;
 `;
 
 const Title = styled.h1`
@@ -54,6 +62,10 @@ const Description = styled.div`
 
 const Input = styled.div`
     margin-top: 4rem;
+    width: 80%;
+    @media only screen and (max-width: 680px) {
+        width: 100%;
+    }
 `;
 
 interface QuestionViewProps {
@@ -64,11 +76,13 @@ interface QuestionViewProps {
 
 const QuestionView: FC<QuestionViewProps> = (props) => {
     let options = new Map<string, string>();
-    if (props.question) {
-        for (let k in props.question.lastQuestionOfSurvey.lastQuestion.input.options) {
-            options.set(k, props.question.lastQuestionOfSurvey.lastQuestion.input.options[k]);
-        }
+
+    for (let k in props.question?.lastQuestionOfSurvey.lastQuestion.input.options) {
+        options.set(k, props.question?.lastQuestionOfSurvey.lastQuestion.input.options[k]);
     }
+
+    const inputKind = props.question?.lastQuestionOfSurvey.lastQuestion.input.kind;
+    const multiple = props.question?.lastQuestionOfSurvey.lastQuestion.input.multiple;
 
     return (
         <>
@@ -103,12 +117,37 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                     </Description>
                     <Input>
                         {props.question ? (
-                            <OptionsInput
-                                options={options}
-                                multiple={props.question.lastQuestionOfSurvey.lastQuestion.input.multiple}
-                                answers={props.answers}
-                                onChangeAnswers={props.onAnswerChange}
-                            />
+                            <>
+                                {inputKind?.toLowerCase() === "options" && (
+                                    <OptionsInput
+                                        options={options}
+                                        multiple={multiple}
+                                        answers={props.answers}
+                                        onChangeAnswers={props.onAnswerChange}
+                                    />
+                                )}
+                                {inputKind?.toLowerCase() === "text" && (
+                                    <TextInput
+                                        multiple={multiple}
+                                        answers={props.answers}
+                                        onChangeAnswers={props.onAnswerChange}
+                                    />
+                                )}
+                                {inputKind?.toLowerCase() === "boolean" && (
+                                    <BooleanInput
+                                        multiple={multiple}
+                                        answers={props.answers}
+                                        onChangeAnswers={props.onAnswerChange}
+                                    />
+                                )}
+                                {inputKind?.toLowerCase() === "satisfaction" && (
+                                    <SatisfactionInput
+                                        multiple={multiple}
+                                        answers={props.answers}
+                                        onChangeAnswers={props.onAnswerChange}
+                                    />
+                                )}
+                            </>
                         ) : (
                             <Skeleton height="20px" width="100%" count={3} />
                         )}

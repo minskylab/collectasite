@@ -23,9 +23,9 @@ const SurveyPage: NextPage = () => {
         pause: true,
     });
 
-    const [mut, answerQuestion] = useAnswerQuestionMutation();
+    const [{ fetching: executingMutation }, answerQuestion] = useAnswerQuestionMutation();
 
-    // useAnswerQuestionMutation()
+    const anyLoading: boolean = loading || fetchingQuestion || fetchingSurvey || executingMutation;
 
     useEffect(() => {
         if (typeof router.query.id === "string") {
@@ -72,10 +72,14 @@ const SurveyPage: NextPage = () => {
             console.log("no answer");
             return;
         }
+
+        const answers = [...currentAnswers];
         answerQuestion({
             questionID: lastQuestion.lastQuestionOfSurvey.lastQuestion.id,
-            answer: currentAnswers,
+            answer: answers,
         });
+
+        setCurrentAnswers([]);
     };
 
     if (loading) {
@@ -92,6 +96,7 @@ const SurveyPage: NextPage = () => {
                 onNext={onNext}
                 survey={survey}
                 currentQuestion={lastQuestion}
+                disabled={anyLoading}
             />
         </div>
     );

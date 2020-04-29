@@ -18,7 +18,6 @@ const Screen = styled.div`
 const CurrentView = styled.div`
     width: 100%;
     height: 100%;
-
     @media only screen and (max-width: 680px) {
         width: 80%;
         margin-left: 10%;
@@ -50,6 +49,7 @@ interface SurveyTemplateProps {
     onStart?: () => void;
     onNext?: () => void;
     onBack?: () => void;
+    disabled?: boolean;
 }
 
 const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
@@ -68,18 +68,23 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
             <ButtonsWrapper>
                 {props.begin ? (
                     <NextButtonContainer>
-                        <StartButton onStartClick={props.onStart} />
+                        <StartButton onStartClick={props.onStart} disabled={props.disabled} />
                     </NextButtonContainer>
                 ) : (
                     <>
                         {props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
                         props.survey?.survey.flow.initialState ? null : (
                             <BackButtonContainer>
-                                <BackButton onBackClick={props.onBack} experimental />
+                                <BackButton onBackClick={props.onBack} experimental disabled={props.disabled} />
                             </BackButtonContainer>
                         )}
                         <NextButtonContainer>
-                            <NextButton onNextClick={props.onNext} isFinalQuestion={false} experimental />
+                            <NextButton
+                                onNextClick={props.onNext}
+                                isFinalQuestion={false}
+                                experimental
+                                disabled={props.disabled}
+                            />
                         </NextButtonContainer>
                     </>
                 )}

@@ -27,8 +27,8 @@ interface CircleProgressBarBaseProps {
 const CircleProgressBar: FC<CircleProgressBarBaseProps> = (props: CircleProgressBarBaseProps) => {
     let percent = props.percentage;
     if (props.percentage) {
-        if (props.percentage < 1) {
-            percent = 100 * props.percentage;
+        if (props.percentage <= 1) {
+            percent = Math.round(100 * props.percentage);
         }
     }
 
