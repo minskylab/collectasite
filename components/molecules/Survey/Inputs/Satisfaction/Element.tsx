@@ -4,6 +4,7 @@ import { css } from "linaria";
 
 const wheel = css`
     display: flex;
+    touch-action: none;
 `;
 
 const getSectorPath = (x: number, y: number, outerDiameter: number, a1: number, a2: number): string => {
