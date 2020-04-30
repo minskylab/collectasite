@@ -28,50 +28,58 @@ interface SatisfactionInputProps {
 let lastValue: number = 0;
 
 const totalSections = 5;
-
+let counter = 0;
 const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
-    const bounds = [-200, 200];
+    // const bounds = [-200, 200];
+    const nBound = 200;
     const r = useMotionValue(0);
-
-    // useEffect(
-    //     () =>
-    //         r.onChange((latest) => {
-    //             console.log(latest);
-    //         }),
-    //     []
-    // );
-
-    const onPan = (event: Event, info: PanInfo) => {
-        const norm = info.offset.x < 0 ? info.offset.x / Math.abs(bounds[0]) : info.offset.x / Math.abs(bounds[1]);
-        let rot = 0.5 * 360 * norm;
-        // console.log(`norm: ${norm} | rot: ${rot}`);
-        // if (rot > -50 && rot < 50 && info.velocity.x < 5) {
-        //     rot = 0;
-        // } else {
-
-        // }
-        r.set(lastValue + rot);
-    };
-
-    const onPanEnd = (event: Event, info: PanInfo) => {
-        if (r.get() > -90 && r.get() < 90) {
-            r.set(0);
-        }
-        lastValue = r.get();
-    };
-
     const d = 800;
 
     const arr = new Array(totalSections).fill(0);
     const ratio = 360 / totalSections;
     const angles = arr.map((v, i) => Math.round((i + 1) * ratio - ratio / 4));
     console.log(angles);
-    const colors = ["#ff7a84", "#ff9c85", "#ffd7a1", "#b8f7a1", "#89eeae"];
-    const names = ["NADA", "POCO", "REGULAR", "SUFICIENTE", "BASTANTE"];
+    const colors = { 0: "#ff7a84", 1: "#ff9c85", 2: "#ffd7a1", 3: "#b8f7a1", 4: "#89eeae" };
+    const names = { 0: "NADA", 1: "POCO", 2: "REGULAR", 3: "SUFICIENTE", 4: "BASTANTE" };
+
+    const onPan = (event: Event, info: PanInfo) => {
+        const alpha = 0.0025;
+        let rot = alpha * info.offset.x * 360;
+        r.set(lastValue + rot);
+    };
+
+    const onPanEnd = (event: Event, info: PanInfo) => {
+        console.log("----------------");
+        const angle = Math.abs(r.get() % 360);
+        for (let i = 0; i < totalSections; i++) {
+            const ci = i * ratio;
+            const left = ci - 20;
+            const right = ci + 20;
+            console.log(`ci: ${ci} | l: ${left} | r: ${right}, angle: ${angle} `);
+            if (angle > left && angle < right) {
+                r.set(i * ratio);
+            }
+        }
+
+        lastValue = r.get();
+    };
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <motion.div onPan={onPan} onPanEnd={onPanEnd} className={wheel} style={{ rotate: r }}>
+            <motion.div
+                onPan={onPan}
+                onPanEnd={onPanEnd}
+                className={wheel}
+                style={{ rotate: r }}
+                transition={{
+                    type: "inertia",
+                    power: 0.6,
+                    bounceStiffness: 400,
+                    bounceDamping: 20,
+                    max: 1000,
+                    min: -1000,
+                }}
+            >
                 <svg width={d} height={d}>
                     <g>
                         {angles.map((angle, i) => {
@@ -85,7 +93,7 @@ const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
                                         angle,
                                         angles[i + 1 === angles.length ? 0 : i + 1]
                                     )}
-                                    fill={colors[i]}
+                                    fill={colors[i as keyof typeof colors]}
                                 />
                             );
                         })}
@@ -100,10 +108,10 @@ const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
                                         fontWeight="bold"
                                         fontSize="32"
                                         opacity={"0.42"}
-                                        x={d / 2 - Math.round(10 * names[i].length)}
+                                        x={d / 2 - Math.round(10 * names[i as keyof typeof names].length)}
                                         y={88}
                                     >
-                                        {names[i]}
+                                        {names[i as keyof typeof names]}
                                     </text>
                                 </g>
                             );
