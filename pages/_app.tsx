@@ -17,7 +17,11 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                 // console.log("Exhange error: ", error, error.networkError, typeof (error.networkError))
                 console.log(error.message);
                 console.log(error.networkError?.message);
-                if (error.message.includes("unauthorized") || error.response?.statusCode === 403) {
+                if (
+                    error.message.includes("Network") ||
+                    error.message.includes("unauthorized") ||
+                    error.response?.statusCode === 403
+                ) {
                     window.location.assign(window.location.href.split("?")[0] + "login");
                     console.log("STATUS ", error.response.status, "LOGOUT");
                     deleteToken();
