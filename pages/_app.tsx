@@ -22,10 +22,14 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                     error.message.includes("unauthorized") ||
                     error.response?.statusCode === 403
                 ) {
+                    console.log("1. ", error);
+                    console.log(window.location);
                     window.location.assign("/login");
                     console.log("STATUS ", error.response.status, "LOGOUT");
-                    deleteToken();
+                    console.log("deleteToken()");
+                    // deleteToken();
                 } else {
+                    console.log("2. ", error);
                     console.log(
                         "ERROR: ",
                         "Respuesta de servidor",
