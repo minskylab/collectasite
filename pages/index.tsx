@@ -195,7 +195,6 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
         console.log("ERROR....");
     }
 
-
     return (
         <div>
             <Head>

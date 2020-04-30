@@ -6,8 +6,6 @@ import { motion } from "framer-motion";
 import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../general/theming";
-import { BaseButton } from "../../components/atoms/Button";
-import { ArrowRightIcon, ArrowLeftIcon } from "../../components/atoms/Icon";
 import {
 	querySurvey,
 	queryLastQuestionOfSurvey,
@@ -16,6 +14,7 @@ import {
 } from "../../general/queries";
 import { answerQuestion } from "../../general/mutations";
 import { SurveyBegin, SurveyQuestion } from "../../components/organisms/SurveyFlow";
+import { BaseButton, ArrowRightIcon, ArrowLeftIcon } from "components";
 import Head from "next/head";
 
 const Layout = styled.div`

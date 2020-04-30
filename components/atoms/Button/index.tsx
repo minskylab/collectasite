@@ -1,6 +1,4 @@
-import BaseButton from "./BaseButton";
-import GoogleButton from "./GoogleButton";
-import ChoiceButton from "./ChoiceButton";
-import YesNoButton from "./YesNoButton";
-
-export { BaseButton, GoogleButton, ChoiceButton, YesNoButton };
+export { default as BaseButton } from "./BaseButton";
+export { default as GoogleButton } from "./GoogleButton";
+export { default as ChoiceButton } from "./ChoiceButton";
+export { default as YesNoButton } from "./YesNoButton";
