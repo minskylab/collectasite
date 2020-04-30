@@ -30,7 +30,7 @@ const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
     return (
         <div>
             <div>{`ANSWER: ${answer[0] || "nodata"}`}</div>
-            <SatisfactionElement options={defaultOptions} onChangeValue={onSatisfactionSelect} />
+            <SatisfactionElement options={defaultOptions} onChangeValue={onSatisfactionSelect} dynamicRatio={0.6} />
         </div>
     );
 };

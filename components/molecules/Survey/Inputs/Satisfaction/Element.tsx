@@ -36,7 +36,7 @@ let lastValue: number = 0;
 const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
     const d = props.diameter || 700;
     const totalSections = props.options.length || 5;
-    const alpha = props.dynamicRatio || 0.0025;
+    const alpha = 0.0025;
 
     const arr = new Array(totalSections).fill(0);
     const ratio = 360 / totalSections;
@@ -61,14 +61,14 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
     }, [value]);
 
     const onPan = (event: Event, info: PanInfo) => {
-        let rot = alpha * info.offset.x * 360;
+        let rot = (props.dynamicRatio || 1) * alpha * info.offset.x * 360;
         r.set(lastValue + rot);
     };
 
     const onPanEnd = (event: Event, info: PanInfo) => {
         const neg = r.get() / Math.abs(r.get());
         const angle = Math.abs(r.get() % 360);
-        const bound = 40;
+        const bound = 45;
         for (let i = 0; i < totalSections; i++) {
             const ci = i * ratio;
             const left = ci - bound;
@@ -123,7 +123,7 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
                                 />
                             );
                         })}
-                        <circle cx={d / 2} cy={d / 2} r={d / 2.6} strokeWidth="0" fill="white" />
+                        <circle cx={d / 2} cy={d / 2} r={d / 2.8} strokeWidth="0" fill="white" />
                     </g>
                     <g>
                         {angles.map((angle, i) => {
@@ -136,7 +136,7 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
                                         opacity={"0.42"}
                                         textAnchor="middle"
                                         x={d / 2}
-                                        y={50}
+                                        y={61}
                                     >
                                         {names[i] || "Nothing"}
                                     </text>
