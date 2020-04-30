@@ -142,6 +142,7 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                                 )}
                                 {inputKind?.toLowerCase() === "satisfaction" && (
                                     <SatisfactionInput
+                                        options={options}
                                         multiple={multiple}
                                         answers={props.answers}
                                         onChangeAnswers={props.onAnswerChange}
