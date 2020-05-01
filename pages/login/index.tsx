@@ -2,12 +2,15 @@ import React, { FC, useState } from "react";
 import Head from "next/head";
 import { styled } from "linaria/react";
 import { css } from "linaria";
-import { GoogleButton, BaseButton } from "../../components/atoms/Button";
-import CollectaLogo from "../../components/atoms/CollectaLogo";
 import { motion } from "framer-motion";
 import { useTheme } from "../../general/theming";
-import { BaseInput } from "../../components/atoms/Input";
-import { ArrowRightIcon } from "../../components/atoms/Icon";
+import {
+  BaseInput,
+  CollectaLogo,
+  GoogleButton,
+  BaseButton,
+  ArrowRightIcon
+} from "components";
 
 interface LoginProps {
   color?: string;
@@ -149,6 +152,7 @@ const Login: FC<LoginProps> = props => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, stiffness: 8, duration: 0.7 }}
             >
+
               <BaseInput
                 textAlign={"center"}
                 placeholder={"Escribe tu código aquí"}

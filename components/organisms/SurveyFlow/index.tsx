@@ -1,5 +1,3 @@
-import SurveyBegin from "./SurveyBegin";
-import SurveyQuestion from "./SurveyQuestion";
-import SurveyEnd from "./SurveyEnd";
-
-export { SurveyBegin, SurveyQuestion, SurveyEnd }
+export { default as SurveyBegin } from "./SurveyBegin";
+export { default as SurveyQuestion } from "./SurveyQuestion";
+export { default as SurveyEnd } from "./SurveyEnd";
