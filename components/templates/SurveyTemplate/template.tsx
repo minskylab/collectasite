@@ -5,10 +5,8 @@ import {
     useLastQuestionOfSurveyQuery,
     LastQuestionOfSurveyQuery,
 } from "../../../data/collecta";
-import { StartSurvey } from "../../molecules/Survey/Start";
 import { styled } from "linaria/react";
-import { NextButton, BackButton, StartButton } from "../../molecules/Survey/Buttons";
-import { QuestionView } from "../../molecules/Survey/Question";
+import { QuestionView, NextButton, BackButton, StartButton, StartSurvey } from "../../molecules";
 
 const Screen = styled.div`
     width: 100vw;

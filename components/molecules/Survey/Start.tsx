@@ -79,4 +79,4 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
     );
 };
 
-export { StartSurvey };
+export default StartSurvey;

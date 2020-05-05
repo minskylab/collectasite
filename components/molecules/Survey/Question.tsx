@@ -159,4 +159,4 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
     );
 };
 
-export { QuestionView };
+export default QuestionView;
