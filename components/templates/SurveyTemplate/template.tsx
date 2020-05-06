@@ -1,8 +1,6 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC } from "react";
 import {
-    QuestionQuery,
     SurveyQuery,
-    useLastQuestionOfSurveyQuery,
     LastQuestionOfSurveyQuery,
 } from "../../../data/collecta";
 import { styled } from "linaria/react";
