@@ -18,8 +18,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                 console.log(error.message);
                 console.log(error.networkError?.message);
                 if (
-                    (error.message.includes("Network") &&
-                        error.message.includes("unauthorized")) ||
+                    error.message.includes("unauthorized") ||
                     error.response?.status === 403
                 ) {
                     console.log("1. ", error);
