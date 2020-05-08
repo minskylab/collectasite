@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { GoogleButton, BaseButton } from "../../../components/atoms/Button";
-import {
-	ArrowRightIcon,
-	ArrowLeftIcon,
-	AlertFilledIcon,
-	MenuIcon,
-	CheckIcon,
-	CheckFilledIcon
-} from "../../../components/atoms/Icon";
-import { BaseInput } from "../../../components/atoms/Input";
-import { ClassroomCard } from "../../../components/molecules/Cards";
-import { Choices, YesNoChoice, SatisfactionChoice } from "../../../components/molecules/Choices";
 import { OptionValue } from "../../../components/atoms/Button/ChoiceButton";
 import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
 import { SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
-import { CircleProgressBar } from "../../../components/molecules/CircleProgressBar";
+
+import {
+  ArrowRightIcon,
+  ArrowLeftIcon,
+  AlertFilledIcon,
+  MenuIcon,
+  CheckIcon,
+  CheckFilledIcon,
+  BaseInput,
+  GoogleButton,
+  BaseButton,
+  ClassroomCard,
+  Choices,
+  YesNoChoice,
+  SatisfactionChoice,
+  CircleProgressBar,
+} from "components";
 
 const surveys = [
 	{

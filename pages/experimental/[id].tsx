@@ -3,7 +3,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useSurveyQuery, Survey, useLastQuestionOfSurveyQuery, useAnswerQuestionMutation } from "../../data/collecta";
 
-import SurveyTemplate from "../../components/templates/SurveyTemplate/template";
+// import SurveyTemplate from "../../components/templates/SurveyTemplate/template";
+import { SurveyTemplate } from "components";
 
 const SurveyPage: NextPage = () => {
     const [loading, setLoading] = useState<boolean>(true);

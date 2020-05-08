@@ -1,7 +1,7 @@
+import Head from "next/head";
 import { NextPage } from "next";
 import { styled } from "linaria/react";
-import { SurveyEnd } from "../../components/organisms/SurveyFlow";
-import Head from "next/head";
+import { SurveyEnd } from "components";
 
 const Layout = styled.div`
 	position: relative;
