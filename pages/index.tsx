@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect, FC, useState } from "react";
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -14,6 +14,7 @@ import { ClassroomCard, CollectaCard } from "../components/molecules/Cards";
 import { setToken } from "../general/auth";
 import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
+import { Tabs } from "components";
 
 // import dynamic from "next/dynamic";
 // const Skeleton = dynamic(() => import("react-loading-skeleton"), { ssr: false });
@@ -34,6 +35,18 @@ const WrapperText = styled.div`
     @media (min-width: 601px) {
         padding-left: 4rem;
         padding-right: 2.5rem;
+    }
+    @media (max-width: 600px) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+`;
+
+const WrapperTab = styled.div`
+    position: relative;
+    @media (min-width: 601px) {
+        padding-left: 0;
+        padding-right: 0;
     }
     @media (max-width: 600px) {
         padding-left: 2rem;
@@ -202,6 +215,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
     const [{ data, fetching, error }, run] = useProfileQuery({
         pause: true,
     });
+    const [tabSelected, setTabSelected] = useState<string>("Nuevos")
 
     useEffect(() => {
         run();
@@ -268,8 +282,10 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                         </WrapperText>
                     </LeftPart>
                     <RightPart>
-                        <div>Nuevos | En progreso | Completados</div>
-                        <div> Filtrar y buscar</div>
+                        <WrapperTab>
+                            <Tabs onClick={(s) => { if (s) { setTabSelected(s) } }} selected={tabSelected} />
+                        </WrapperTab>
+                        {/* <div> Filtrar y buscar</div> */}
                         <div className={cardsWrapper}>
                             <div className={cardsContainer}>
                                 {data ? (
