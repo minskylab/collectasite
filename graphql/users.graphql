@@ -1,24 +1,30 @@
 query Profile {
-    profile {
-        id
-        name
-        picture
-        username
-        lastActivity
-        surveys {
-            id
-            dueDate
-            title
-            description
-            tags
-        }
-        domains {
-            name
-            domain
-        }
-        contacts {
-            kind
-            value
-        }
-    }
+	profile {
+		id
+		name
+		picture
+		username
+		lastActivity
+		surveys {
+			id
+			dueDate
+			title
+			done
+			flow {
+				state
+				initialState
+				terminationState
+			}
+			description
+			tags
+		}
+		domains {
+			name
+			domain
+		}
+		contacts {
+			kind
+			value
+		}
+	}
 }

@@ -14,16 +14,6 @@ export type Scalars = {
   Map: any;
 };
 
-export type Input = {
-   __typename?: 'Input';
-  id: Scalars['ID'];
-  kind: Scalars['String'];
-  multiple: Scalars['Boolean'];
-  defaults: Array<Maybe<Scalars['String']>>;
-  options: Scalars['Map'];
-  question: Question;
-};
-
 export type Survey = {
    __typename?: 'Survey';
   id: Scalars['ID'];
@@ -257,11 +247,6 @@ export type QueryLastQuestionOfSurveyArgs = {
   surveyID: Scalars['ID'];
 };
 
-export type SurveyDomain = {
-  byID?: Maybe<Scalars['ID']>;
-  byDomainName?: Maybe<Scalars['String']>;
-};
-
 export type Pair = {
   key: Scalars['String'];
   value: Scalars['String'];
@@ -286,6 +271,11 @@ export enum SurveyAudenceKind {
   Close = 'CLOSE'
 }
 
+export type SurveyDomain = {
+  byID?: Maybe<Scalars['ID']>;
+  byDomainName?: Maybe<Scalars['String']>;
+};
+
 export type Account = {
    __typename?: 'Account';
   id: Scalars['ID'];
@@ -308,6 +298,16 @@ export enum InputType {
   Boolean = 'BOOLEAN',
   Satisfaction = 'SATISFACTION'
 }
+
+export type Input = {
+   __typename?: 'Input';
+  id: Scalars['ID'];
+  kind: Scalars['String'];
+  multiple: Scalars['Boolean'];
+  defaults: Array<Maybe<Scalars['String']>>;
+  options: Scalars['Map'];
+  question: Question;
+};
 
 export type AnswerQuestionMutationVariables = {
   questionID: Scalars['ID'];
@@ -487,7 +487,11 @@ export type ProfileQuery = (
     & Pick<User, 'id' | 'name' | 'picture' | 'username' | 'lastActivity'>
     & { surveys: Array<(
       { __typename?: 'Survey' }
-      & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
+      & Pick<Survey, 'id' | 'dueDate' | 'title' | 'done' | 'description' | 'tags'>
+      & { flow: (
+        { __typename?: 'Flow' }
+        & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
+      ) }
     )>, domains: Array<(
       { __typename?: 'Domain' }
       & Pick<Domain, 'name' | 'domain'>
@@ -732,6 +736,12 @@ export const ProfileDocument = gql`
       id
       dueDate
       title
+      done
+      flow {
+        state
+        initialState
+        terminationState
+      }
       description
       tags
     }

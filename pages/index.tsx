@@ -293,7 +293,29 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                     data.profile ? (
                                         data.profile.surveys ? (
                                             data.profile.surveys.filter((survey) => {
-                                                return dayjs(survey.dueDate).isAfter(new Date());
+                                                let filteredSurvey = dayjs(survey.dueDate).isAfter(new Date());
+                                                if (tabSelected === "Nuevos") {
+                                                    if (survey.flow.state === survey.flow.initialState) {
+                                                        return filteredSurvey;
+                                                    } else {
+                                                        return
+                                                    }
+                                                } else if (tabSelected === "En progreso") {
+                                                    if (survey.flow.state !== survey.flow.initialState && survey.flow.state !== survey.flow.terminationState) {
+                                                        return filteredSurvey;
+                                                    } else {
+                                                        return
+                                                    }
+                                                } else if (tabSelected === "Completados") {
+                                                    if (survey.flow.state === survey.flow.terminationState || survey.done) {
+                                                        return filteredSurvey;
+                                                    } else {
+                                                        return
+                                                    }
+                                                } else {
+                                                    return;
+                                                }
+                                                ;
                                             }).map((survey: any, s: number) => (
                                                 <div key={s} className={cardItem}>
                                                     <CollectaCard
@@ -302,7 +324,9 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                                         onSelected={(id) => {
                                                             router.push(`/s/${id}`);
                                                         }}
+                                                        disable={tabSelected === "Completados"}
                                                     />
+                                                    {/* <div>{survey.flow.state}, {survey.flow.initialState}, {survey.flow.terminationState}</div> */}
                                                 </div>
                                             ))
                                         ) : null

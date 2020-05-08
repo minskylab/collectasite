@@ -15,7 +15,6 @@ const Container = styled.div`
     padding-left: 1.2em;
     padding-right: 1.2em;
     text-align: left;
-    cursor: pointer;
     border: 1px solid #F0F0F7;
     border-radius: 5px;
     box-sizing: border-box;
@@ -93,19 +92,20 @@ const WrapperBottom = styled.div`
     }
 `;
 
-interface CardClassroomProps {
+interface CardProps {
   id: string | number;
   onSelected: (id?: string | number) => void;
   dueDate?: string;
   title?: string;
   tags?: string[];
   isShadow?: boolean;
+  disable?: boolean;
 }
 
 dayjs.extend(relativeTime);
 dayjs.locale("es");
 
-const CollectaCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
+const CollectaCard: FC<CardProps> = (props: CardProps) => {
   const theme = useTheme();
   const expiredIn = dayjs().to(dayjs(props.dueDate));
   const handleClick = (id: string | number) => {
@@ -114,8 +114,8 @@ const CollectaCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
   const isMobile: boolean = window.innerWidth < 600;
 
   return (
-    <Layout>
-      <Container onClick={() => handleClick(props.id)}>
+    <Layout disable={props.disable}>
+      <Container style={{ cursor: !props.disable ? "cursor" : "arrow" }} onClick={() => { if (!props.disable) { handleClick(props.id) } }}>
         <div
           className={textdueDate}
           style={{
@@ -152,15 +152,17 @@ const CollectaCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
               ))
               : null}
           </TagsWrapper>
+          {!props.disable &&
+            <ButtonWrapper>
+              <BaseButton
+                iconElement={<ArrowRightIcon color={theme.primaryColor} size={20} />}
+                text={isMobile ? "" : "INICIAR"}
+                colorText={theme.primaryColor}
+                backgroundColor={"transparent"}
+              />
+            </ButtonWrapper>
+          }
 
-          <ButtonWrapper>
-            <BaseButton
-              iconElement={<ArrowRightIcon color={theme.primaryColor} size={20} />}
-              text={isMobile ? "" : "INICIAR"}
-              colorText={theme.primaryColor}
-              backgroundColor={"transparent"}
-            />
-          </ButtonWrapper>
         </WrapperBottom>
       </Container>
 
