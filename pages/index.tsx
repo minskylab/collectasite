@@ -291,7 +291,9 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                 {data ? (
                                     data.profile ? (
                                         data.profile.surveys ? (
-                                            data.profile.surveys.map((survey: any, s: number) => (
+                                            data.profile.surveys.filter((survey) => {
+                                                return survey;
+                                            }).map((survey: any, s: number) => (
                                                 <div key={s} className={cardItem}>
                                                     <CollectaCard
                                                         {...survey}

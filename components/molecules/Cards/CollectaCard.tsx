@@ -115,7 +115,7 @@ const CollectaCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
 
   return (
     <Layout>
-      <Container>
+      <Container onClick={() => handleClick(props.id)}>
         <div
           className={textdueDate}
           style={{
@@ -159,7 +159,6 @@ const CollectaCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
               text={isMobile ? "" : "INICIAR"}
               colorText={theme.primaryColor}
               backgroundColor={"transparent"}
-              onClick={() => handleClick(props.id)}
             />
           </ButtonWrapper>
         </WrapperBottom>
