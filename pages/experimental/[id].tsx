@@ -83,22 +83,21 @@ const SurveyPage: NextPage = () => {
     };
 
     if (loading) {
-        return <div>Loading</div>;
+        // return <div>Loading</div>;
+        return <div/>;
     }
 
     return (
-        <div>
-            <SurveyTemplate
-                answers={currentAnswers}
-                onAnswersChange={(ans) => setCurrentAnswers(ans)}
-                begin={isBegin}
-                onStart={onStart}
-                onNext={onNext}
-                survey={survey}
-                currentQuestion={lastQuestion}
-                disabled={anyLoading}
-            />
-        </div>
+        <SurveyTemplate
+            answers={currentAnswers}
+            onAnswersChange={(ans) => setCurrentAnswers(ans)}
+            begin={isBegin}
+            onStart={onStart}
+            onNext={onNext}
+            survey={survey}
+            currentQuestion={lastQuestion}
+            disabled={anyLoading}
+        />
     );
 };
 

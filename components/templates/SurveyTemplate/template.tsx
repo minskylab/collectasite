@@ -62,7 +62,7 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
                     <QuestionView
                         question={props.currentQuestion}
                         answers={props.answers}
-                        onAnswerChange={props.onAnswersChange}
+                        onChangeAnswer={props.onAnswersChange}
                     />
                 )}
             </CurrentView>

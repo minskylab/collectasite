@@ -3,10 +3,7 @@ import { LastQuestionOfSurveyQuery } from "../../../data/collecta";
 import { styled } from "linaria/react";
 import Skeleton from "react-loading-skeleton";
 import { CircleProgressBar } from "../CircleProgressBar";
-import OptionsInput from "./Inputs/Options";
-import BooleanInput from "./Inputs/Boolean";
-import TextInput from "./Inputs/Text";
-import SatisfactionInput from "./Inputs/Satisfaction";
+import GenericInput from "./Inputs";
 
 const Top = styled.div`
     position: fixed;
@@ -47,8 +44,7 @@ const Title = styled.h1`
     font-family: "Lora", serif;
     font-size: 2.4rem;
     font-weight: 400;
-    margin: 0;
-    margin-bottom: 0.6rem;
+    margin: 0 0 0.6rem;
     color: #023046;
 `;
 
@@ -71,14 +67,14 @@ const Input = styled.div`
 interface QuestionViewProps {
     question: LastQuestionOfSurveyQuery | undefined;
     answers: string[];
-    onAnswerChange: (answers: string[]) => void;
+    onChangeAnswer: (answers: string[]) => void;
 }
 
 const QuestionView: FC<QuestionViewProps> = (props) => {
     let options = new Map<string, string>();
 
     for (let k in props.question?.lastQuestionOfSurvey.lastQuestion.input.options) {
-        options.set(k, props.question?.lastQuestionOfSurvey.lastQuestion.input.options[k]);
+        options.set(k || "", props.question?.lastQuestionOfSurvey.lastQuestion.input.options[k || ""]);
     }
 
     const inputKind = props.question?.lastQuestionOfSurvey.lastQuestion.input.kind;
@@ -118,36 +114,12 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                     <Input>
                         {props.question ? (
                             <>
-                                {inputKind?.toLowerCase() === "options" && (
-                                    <OptionsInput
-                                        options={options}
-                                        multiple={multiple}
-                                        answers={props.answers}
-                                        onChangeAnswers={props.onAnswerChange}
-                                    />
-                                )}
-                                {inputKind?.toLowerCase() === "text" && (
-                                    <TextInput
-                                        multiple={multiple}
-                                        answers={props.answers}
-                                        onChangeAnswers={props.onAnswerChange}
-                                    />
-                                )}
-                                {inputKind?.toLowerCase() === "boolean" && (
-                                    <BooleanInput
-                                        multiple={multiple}
-                                        answers={props.answers}
-                                        onChangeAnswers={props.onAnswerChange}
-                                    />
-                                )}
-                                {inputKind?.toLowerCase() === "satisfaction" && (
-                                    <SatisfactionInput
-                                        options={options}
-                                        multiple={multiple}
-                                        answers={props.answers}
-                                        onChangeAnswers={props.onAnswerChange}
-                                    />
-                                )}
+                                <GenericInput kind={inputKind || ""}
+                                              options={options}
+                                              multiple={multiple}
+                                              answers={props.answers}
+                                              onChangeAnswer={props.onChangeAnswer}
+                                />
                             </>
                         ) : (
                             <Skeleton height="20px" width="100%" count={3} />
