@@ -10,3 +10,6 @@ export { default as Satisfaction2FilledIcon } from "./Satisfaction2FilledIcon";
 export { default as Satisfaction3FilledIcon } from "./Satisfaction3FilledIcon";
 export { default as Satisfaction4FilledIcon } from "./Satisfaction4FilledIcon";
 export { default as Satisfaction5FilledIcon } from "./Satisfaction5FilledIcon";
+export { default as CompletedSurveysIcon } from "./CompletedSurveysIcon";
+export { default as InProgressSurveysIcon } from "./InProgressSurveysIcon";
+export { default as NewSurveysIcon } from "./NewSurveysIcon";

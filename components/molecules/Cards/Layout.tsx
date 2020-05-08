@@ -18,6 +18,9 @@ const Wrapper = styled.div<WrapperProps>`
   -ms-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  @media (max-width: 600px) {
+      margin: 0;
+  }
 `;
 
 interface LayoutProps {

@@ -10,7 +10,7 @@ import { Avatar } from "../components/atoms/Avatar";
 import { MenuIcon } from "../components/atoms/Icon";
 import { useTheme } from "../general/theming";
 
-import { ClassroomCard } from "../components/molecules/Cards";
+import { ClassroomCard, CollectaCard } from "../components/molecules/Cards";
 import { setToken } from "../general/auth";
 import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
@@ -20,7 +20,7 @@ import Skeleton from "react-loading-skeleton";
 
 const WrapperHome = styled.div`
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     overflow: hidden;
     -webkit-user-select: none;
@@ -29,11 +29,16 @@ const WrapperHome = styled.div`
     user-select: none;
 `;
 
-const Container = styled.div`
+const WrapperText = styled.div`
     position: relative;
-
-    padding-left: 1.8rem;
-    padding-right: 1.8rem;
+    @media (min-width: 601px) {
+        padding-left: 4rem;
+        padding-right: 2.5rem;
+    }
+    @media (max-width: 600px) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
 `;
 
 const AvatarPosition = styled.div`
@@ -43,7 +48,7 @@ const AvatarPosition = styled.div`
 `;
 
 const menuWrapper = css`
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     bottom: 0;
@@ -62,44 +67,43 @@ const background = css`
 
 const ContentWrapper = styled.div`
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
     width: 100%;
-    overflow: hidden;
-    padding-top: 2.5rem;
-    @media (max-width: 400px) {
-        padding-top: 0rem;
+    @media (min-width: 601px) {
+        padding-top: 2.5rem;
+        display: flex;
+    }
+    @media (max-width: 600px) {
+        display: block;
+        padding-top: 3rem;
         align-items: flex-start;
     }
+    
 `;
 
 const textTitle = css`
-    font-family: var(--font-family);
+    font-family: "Lora";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2.3rem;
+    line-height: 3rem;    
     color: var(--color-text);
-    font-size: 2rem;
-    text-align: center;
+    text-align: left;
     width: 100%;
-    @media (max-width: 400px) {
-        text-align: left;
-    }
 `;
 
 const text = css`
-    font-family: var(--font-family);
-    line-height: 145%;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 150%;
     width: 100%;
     color: var(--color-text);
-    opacity: 0.68;
-    font-size: 1.1rem;
-    text-align: center;
+    text-align: left;
     max-width: 20rem;
     padding-bottom: 1.5rem;
     max-width: 18rem;
     @media (max-width: 400px) {
-        text-align: left;
         padding-bottom: 2rem;
         max-width: 300px;
     }
@@ -109,34 +113,52 @@ const cardsWrapper = css`
     display: flex;
     width: 100vw;
     overflow-x: scroll;
-    justify-content: center;
+    justify-content: flex-start;
     -webkit-overflow-scrolling: touch;
     ::-webkit-scrollbar {
         height: 0px;
         width: 0px;
     }
-
-    @media (max-width: 400px) {
-        justify-content: flex-start;
+    @media (max-width: 600px) {
+        display: block;
     }
 `;
 
 const cardsContainer = css`
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: dense;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    @media (max-width: 400px) {
-        padding-left: 1.25rem;
+    @media (max-width: 600px) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        display: block;
     }
 `;
 
 const cardItem = css`
-    width: 240px;
-    font-size: 16px;
-    margin: 0.3rem;
-    @media (max-width: 400px) {
-        width: 70vw;
-        font-size: 19px;
+    @media (min-width: 601px) {
+        width: 220px;
+        font-size: 16px;
+        margin: 0.3rem;
+    }
+    @media (max-width: 600px) {
+        font-size: 16px;
+        margin: 0rem;
+        padding-bottom: 0.75rem;
+    }
+`;
+
+const LeftPart = styled.div`
+    @media (min-width: 601px) {
+        width: 40%;
+    }
+`;
+
+const RightPart = styled.div`
+    @media (min-width: 601px) {
+        width: 60%;
     }
 `;
 
@@ -192,14 +214,14 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
     return (
         <div>
             <Head>
-                <title>Collecta Surveys | {data?.profile.name}</title>
+                <title>{data?.profile.name ? `Surveys | ${data?.profile.name}` : "Collecta Surveys"}</title>
             </Head>
-            <motion.div className={menuWrapper} initial={false}>
-                <div style={{ padding: 30 }}>
-                    <MenuIcon size={30} color={theme.textColor} />
-                </div>
-            </motion.div>
-            <WrapperHome>
+            <div>
+                <motion.div className={menuWrapper} initial={false}>
+                    <div style={{ padding: 30 }}>
+                        <MenuIcon size={30} color={"#023146"} />
+                    </div>
+                </motion.div>
                 <AvatarPosition>
                     {data ? (
                         <Avatar size={"2.5rem"} image={data.profile.picture} />
@@ -207,64 +229,71 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             <Skeleton key="avatar" height="42px" width="42px" />
                         )}
                 </AvatarPosition>
+            </div>
+            <WrapperHome>
+
                 <ContentWrapper>
-                    <Container>
-                        <div
-                            className={textTitle}
-                            style={{
-                                //@ts-ignore
-                                "--font-family": theme.fontFamilyTitle,
-                                "--color-text": theme.textColor,
-                                paddingBottom: "1.8rem",
-                            }}
-                        >
-                            {data ? (
-                                <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
-                            ) : (
-                                    <Skeleton height="30px" width="260px" />
-                                )}
-                        </div>
-                        <div
-                            className={text}
-                            style={{
-                                //@ts-ignore
-                                "--font-family": theme.fontFamilyText,
-                                "--color-text": theme.textColor,
-                            }}
-                        >
-                            {data ? (
-                                <>
-                                    Esta es una lista de tus <b>encuestas pendientes</b>, trata de contestarlas antes de
+                    <LeftPart>
+                        <WrapperText>
+                            <div
+                                className={textTitle}
+                                style={{
+                                    //@ts-ignore
+                                    "--color-text": "#023146",
+                                    paddingBottom: "1.8rem",
+                                }}
+                            >
+                                {data ? (
+                                    <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
+                                ) : (
+                                        <Skeleton height="30px" width="260px" />
+                                    )}
+                            </div>
+                            <div
+                                className={text}
+                                style={{
+                                    //@ts-ignore
+                                    "--color-text": "#3C5763",
+                                }}
+                            >
+                                {data ? (
+                                    <>
+                                        Esta es una lista de tus <b>encuestas pendientes</b>, trata de contestarlas antes de
                                     que se acabe el tiempo.
                                 </>
-                            ) : (
-                                    <Skeleton key="head" height="80px" width="280px"></Skeleton>
-                                )}
-                        </div>
-                    </Container>
-                    <div className={cardsWrapper}>
-                        <div className={cardsContainer}>
-                            {data ? (
-                                data.profile ? (
-                                    data.profile.surveys ? (
-                                        data.profile.surveys.map((survey: any, s: number) => (
-                                            <div key={s} className={cardItem}>
-                                                <ClassroomCard
-                                                    {...survey}
-                                                    isShadow={true}
-                                                    onSelected={(id) => {
-                                                        router.push(`/s/${id}`);
-                                                    }}
-                                                />
-                                            </div>
-                                        ))
+                                ) : (
+                                        <Skeleton key="head" height="80px" width="280px"></Skeleton>
+                                    )}
+                            </div>
+                        </WrapperText>
+                    </LeftPart>
+                    <RightPart>
+                        <div>Nuevos | En progreso | Completados</div>
+                        <div> Filtrar y buscar</div>
+                        <div className={cardsWrapper}>
+                            <div className={cardsContainer}>
+                                {data ? (
+                                    data.profile ? (
+                                        data.profile.surveys ? (
+                                            data.profile.surveys.map((survey: any, s: number) => (
+                                                <div key={s} className={cardItem}>
+                                                    <CollectaCard
+                                                        {...survey}
+                                                        isShadow={true}
+                                                        onSelected={(id) => {
+                                                            router.push(`/s/${id}`);
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))
+                                        ) : null
                                     ) : null
-                                ) : null
-                            ) : (
-                                    <Skeleton key="card" height="300px" width={"260px"} />
-                                )}
+                                ) : (
+                                        <Skeleton key="card" height="300px" width={"260px"} />
+                                    )}
+                            </div>
                         </div>
-                    </div>
+                    </RightPart>
                 </ContentWrapper>
             </WrapperHome>
         </div>
