@@ -25,7 +25,7 @@ const BackButton: FC<BackButtonProps> = (props: BackButtonProps) => {
 interface NextButtonProps {
     onNextClick?: () => void;
     disabled?: boolean;
-    isFinalQuestion: boolean;
+    text: string;
     experimental?: boolean;
 }
 const NextButton: FC<NextButtonProps> = (props: NextButtonProps) => {
@@ -33,7 +33,7 @@ const NextButton: FC<NextButtonProps> = (props: NextButtonProps) => {
     return (
         <BaseButton
             iconElement={<ArrowRightIcon color={props.disabled ? theme.textColor : "#ffffff95"} size={20} />}
-            text={props.isFinalQuestion ? "FINALIZAR" : "SIGUIENTE"}
+            text={props.text}
             onClick={props.onNextClick}
             disabled={props.disabled}
             fontFamily={props.experimental ? "Montserrat" : undefined}

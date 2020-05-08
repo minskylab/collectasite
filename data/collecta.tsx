@@ -14,6 +14,16 @@ export type Scalars = {
   Map: any;
 };
 
+export type Input = {
+   __typename?: 'Input';
+  id: Scalars['ID'];
+  kind: Scalars['String'];
+  multiple: Scalars['Boolean'];
+  defaults: Array<Maybe<Scalars['String']>>;
+  options: Scalars['Map'];
+  question: Question;
+};
+
 export type Survey = {
    __typename?: 'Survey';
   id: Scalars['ID'];
@@ -247,6 +257,16 @@ export type QueryLastQuestionOfSurveyArgs = {
   surveyID: Scalars['ID'];
 };
 
+export type SurveyDomain = {
+  byID?: Maybe<Scalars['ID']>;
+  byDomainName?: Maybe<Scalars['String']>;
+};
+
+export type Pair = {
+  key: Scalars['String'];
+  value: Scalars['String'];
+};
+
 
 export type Flow = {
    __typename?: 'Flow';
@@ -265,16 +285,6 @@ export enum SurveyAudenceKind {
   Domain = 'DOMAIN',
   Close = 'CLOSE'
 }
-
-export type SurveyDomain = {
-  byID?: Maybe<Scalars['ID']>;
-  byDomainName?: Maybe<Scalars['String']>;
-};
-
-export type Pair = {
-  key: Scalars['String'];
-  value: Scalars['String'];
-};
 
 export type Account = {
    __typename?: 'Account';
@@ -298,16 +308,6 @@ export enum InputType {
   Boolean = 'BOOLEAN',
   Satisfaction = 'SATISFACTION'
 }
-
-export type Input = {
-   __typename?: 'Input';
-  id: Scalars['ID'];
-  kind: Scalars['String'];
-  multiple: Scalars['Boolean'];
-  defaults: Array<Maybe<Scalars['String']>>;
-  options: Scalars['Map'];
-  question: Question;
-};
 
 export type AnswerQuestionMutationVariables = {
   questionID: Scalars['ID'];
@@ -372,6 +372,24 @@ export type LoginByPasswordMutation = (
   ) }
 );
 
+export type FisrtScreenSurveyQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type FisrtScreenSurveyQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'surveyPercent'>
+  & { survey: (
+    { __typename?: 'Survey' }
+    & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags' | 'done'>
+    & { flow: (
+      { __typename?: 'Flow' }
+      & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
+    ) }
+  ) }
+);
+
 export type SurveyQueryVariables = {
   id: Scalars['ID'];
 };
@@ -381,7 +399,7 @@ export type SurveyQuery = (
   { __typename?: 'Query' }
   & { survey: (
     { __typename?: 'Survey' }
-    & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
+    & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags' | 'done'>
     & { flow: (
       { __typename?: 'Flow' }
       & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
@@ -557,6 +575,33 @@ export const LoginByPasswordComponent = (props: Omit<Urql.MutationProps<LoginByP
 export function useLoginByPasswordMutation() {
   return Urql.useMutation<LoginByPasswordMutation, LoginByPasswordMutationVariables>(LoginByPasswordDocument);
 };
+export const FisrtScreenSurveyDocument = gql`
+    query FisrtScreenSurvey($id: ID!) {
+  surveyPercent(surveyID: $id)
+  survey(id: $id) {
+    id
+    dueDate
+    title
+    description
+    tags
+    done
+    flow {
+      state
+      initialState
+      terminationState
+    }
+  }
+}
+    `;
+
+export const FisrtScreenSurveyComponent = (props: Omit<Urql.QueryProps<FisrtScreenSurveyQuery, FisrtScreenSurveyQueryVariables>, 'query'> & { variables: FisrtScreenSurveyQueryVariables }) => (
+  <Urql.Query {...props} query={FisrtScreenSurveyDocument} />
+);
+
+
+export function useFisrtScreenSurveyQuery(options: Omit<Urql.UseQueryArgs<FisrtScreenSurveyQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<FisrtScreenSurveyQuery>({ query: FisrtScreenSurveyDocument, ...options });
+};
 export const SurveyDocument = gql`
     query Survey($id: ID!) {
   survey(id: $id) {
@@ -565,6 +610,7 @@ export const SurveyDocument = gql`
     title
     description
     tags
+    done
     flow {
       state
       initialState

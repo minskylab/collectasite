@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useSurveyQuery, Survey, useLastQuestionOfSurveyQuery, useAnswerQuestionMutation } from "../../data/collecta";
+import { useFisrtScreenSurveyQuery, Survey, useLastQuestionOfSurveyQuery, useAnswerQuestionMutation } from "data/collecta";
 
-// import SurveyTemplate from "../../components/templates/SurveyTemplate/template";
 import { SurveyTemplate } from "components";
 
 const SurveyPage: NextPage = () => {
@@ -14,7 +13,7 @@ const SurveyPage: NextPage = () => {
     const [currentAnswers, setCurrentAnswers] = useState<string[]>([]);
     const router = useRouter();
 
-    const [{ data: survey, fetching: fetchingSurvey }, getSurvey] = useSurveyQuery({
+    const [{ data: firstScreen, fetching: fetchingSurvey }, getSurvey] = useFisrtScreenSurveyQuery({
         variables: { id: surveyID },
         pause: true,
     });
@@ -46,13 +45,13 @@ const SurveyPage: NextPage = () => {
         if (!fetchingSurvey) {
             setLoading(false);
             // console.log(survey?.survey);
-            if (survey) {
-                if (survey.survey.flow.initialState === survey.survey.flow.state) {
+            if (firstScreen) {
+                if (firstScreen.survey.flow.initialState === firstScreen.survey.flow.state) {
                     setIsBegin(true);
                 }
             }
         }
-    }, [survey]);
+    }, [firstScreen]);
 
     useEffect(() => {
         if (lastQuestion && !fetchingQuestion) {
@@ -69,18 +68,18 @@ const SurveyPage: NextPage = () => {
             console.log("invalid last question");
             return;
         }
+
         if (currentAnswers.length === 0) {
             console.log("no answer");
             return;
         }
 
         const answers = [...currentAnswers];
+        setCurrentAnswers([]); // TODO: Review this
         answerQuestion({
             questionID: lastQuestion.lastQuestionOfSurvey.lastQuestion.id,
             answer: answers,
         });
-
-        setCurrentAnswers([]);
     };
 
     if (loading) {
@@ -95,7 +94,7 @@ const SurveyPage: NextPage = () => {
             begin={isBegin}
             onStart={onStart}
             onNext={onNext}
-            survey={survey}
+            firstScreen={firstScreen}
             currentQuestion={lastQuestion}
             disabled={anyLoading}
         />

@@ -1,3 +1,20 @@
+query FisrtScreenSurvey($id: ID!) {
+    surveyPercent(surveyID: $id)
+    survey(id: $id) {
+        id
+        dueDate
+        title
+        description
+        tags
+        done
+        flow {
+            state
+            initialState
+            terminationState
+        }
+    }
+}
+
 query Survey($id: ID!) {
     survey(id: $id) {
         id
@@ -5,6 +22,7 @@ query Survey($id: ID!) {
         title
         description
         tags
+        done
         flow {
             state
             initialState

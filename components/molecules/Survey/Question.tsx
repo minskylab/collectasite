@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { LastQuestionOfSurveyQuery } from "../../../data/collecta";
+import { LastQuestionOfSurveyQuery } from "data/collecta";
 import { styled } from "linaria/react";
 import Skeleton from "react-loading-skeleton";
 import { CircleProgressBar } from "../CircleProgressBar";

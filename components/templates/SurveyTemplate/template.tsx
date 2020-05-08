@@ -1,10 +1,8 @@
-import React, { FC } from "react";
-import {
-    SurveyQuery,
-    LastQuestionOfSurveyQuery,
-} from "../../../data/collecta";
-import { styled } from "linaria/react";
-import { QuestionView, NextButton, BackButton, StartButton, StartSurvey } from "../../molecules";
+import React, {FC} from "react";
+import {LastQuestionOfSurveyQuery, FisrtScreenSurveyQuery} from "data/collecta";
+import {styled} from "linaria/react";
+import {QuestionView, NextButton, BackButton, StartButton, StartSurvey} from "components/molecules";
+import dayjs from "dayjs";
 
 const Screen = styled.div`
     width: 100vw;
@@ -39,7 +37,7 @@ const NextButtonContainer = styled.div`
 
 interface SurveyTemplateProps {
     begin: boolean;
-    survey: SurveyQuery | undefined;
+    firstScreen: FisrtScreenSurveyQuery | undefined;
     currentQuestion: LastQuestionOfSurveyQuery | undefined;
     answers: string[];
     onAnswersChange: (answers: string[]) => void;
@@ -50,10 +48,24 @@ interface SurveyTemplateProps {
 }
 
 const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
+    const isFirstQuestion = props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
+        props.firstScreen?.survey.flow.initialState;
+
+    const percent = (props.firstScreen?.surveyPercent as number);
+    const dueDate = dayjs(props.firstScreen?.survey.dueDate);
+    const surveyIsAvailable = percent == 1 || props.firstScreen?.survey.done || dueDate.isBefore(new Date());
+    const surveyIsInProgress = percent < 1;
+
+    let nextButtonText = "COMENZAR";
+
+    if (surveyIsInProgress) {
+        nextButtonText = "CONTINUAR"
+    }
+
     return (
         <Screen>
             <CurrentView>
-                {props.begin && <StartSurvey survey={props.survey} />}
+                {props.begin && <StartSurvey data={props.firstScreen}/>}
                 {!props.begin && (
                     <QuestionView
                         question={props.currentQuestion}
@@ -63,28 +75,21 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
                 )}
             </CurrentView>
             <ButtonsWrapper>
-                {props.begin ? (
-                    <NextButtonContainer>
-                        <StartButton onStartClick={props.onStart} disabled={props.disabled} />
-                    </NextButtonContainer>
-                ) : (
-                    <>
-                        {props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
-                        props.survey?.survey.flow.initialState ? null : (
-                            <BackButtonContainer>
-                                <BackButton onBackClick={props.onBack} experimental disabled={props.disabled} />
-                            </BackButtonContainer>
-                        )}
-                        <NextButtonContainer>
-                            <NextButton
+                {!isFirstQuestion && surveyIsAvailable ? <BackButtonContainer>
+                    <BackButton onBackClick={props.onBack} experimental disabled={props.disabled}/>
+                </BackButtonContainer> : null}
+                <NextButtonContainer>
+                    {!surveyIsAvailable?
+                        props.begin?
+                            <StartButton onStartClick={props.onStart} disabled={props.disabled}/>
+                            : <NextButton
                                 onNextClick={props.onNext}
-                                isFinalQuestion={false}
+                                text={nextButtonText}
                                 experimental
                                 disabled={props.disabled}
-                            />
-                        </NextButtonContainer>
-                    </>
-                )}
+                            /> : null}
+                </NextButtonContainer>
+
             </ButtonsWrapper>
         </Screen>
     );

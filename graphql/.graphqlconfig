@@ -1,0 +1,14 @@
+{
+  "name": "Collecta GraphQL Schema",
+  "extensions": {
+    "endpoints": {
+      "Core GraphQL API Collecta Endpoint": {
+        "url": "https://core.collecta.site/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}
