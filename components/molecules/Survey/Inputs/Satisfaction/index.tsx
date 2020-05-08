@@ -22,32 +22,16 @@ const WrapperFace = styled.div`
     padding-bottom: 2rem;
     height: 5rem;
     width: 5rem;
-    position: "relative";
+    position: relative;
 `;
 
-const lerpColor = (color1: string, color2: string, amount: number) => {
-    var ah = +color1.replace("#", "0x"),
-        ar = ah >> 16,
-        ag = (ah >> 8) & 0xff,
-        ab = ah & 0xff,
-        bh = +color2.replace("#", "0x"),
-        br = bh >> 16,
-        bg = (bh >> 8) & 0xff,
-        bb = bh & 0xff,
-        rr = ar + amount * (br - ar),
-        rg = ag + amount * (bg - ag),
-        rb = ab + amount * (bb - ab);
 
-    return "#" + (((1 << 24) + (rr << 16) + (rg << 8) + rb) | 0).toString(16).slice(1);
-};
-
-interface SatisfactionInputProps {
-    options?: Map<string, string>;
-    defaults?: string[];
-    answers?: string[];
-    multiple?: boolean;
-    onChangeAnswers?: (answers: string[]) => void;
-}
+let defaultColors: Map<number, string> = new Map<number, string>();
+defaultColors.set(-1, "#ff7a84");
+defaultColors.set(-0.5, "#ff9c85");
+defaultColors.set(0, "#ffd7a1");
+defaultColors.set(0.5, "#b8f7a1");
+defaultColors.set(1, "#89eeae");
 
 const defaultOptions: SatisfactionOption[] = [
     { value: -1, text: "NADA", color: "#ff7a84" },
@@ -65,12 +49,13 @@ const defaultFaces: SatisfactionIcon[] = [
     { value: 1.0, face: <Satisfaction5FilledIcon color={"#89eeae"} size={80} /> },
 ];
 
-let defaultColors: Map<number, string> = new Map<number, string>();
-defaultColors.set(-1, "#ff7a84");
-defaultColors.set(-0.5, "#ff9c85");
-defaultColors.set(0, "#ffd7a1");
-defaultColors.set(0.5, "#b8f7a1");
-defaultColors.set(1, "#89eeae");
+interface SatisfactionInputProps {
+    options?: Map<string, string>;
+    defaults?: string[];
+    answers?: string[];
+    multiple?: boolean;
+    onChangeAnswers?: (answers: string[]) => void;
+}
 
 const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
     let satisfactionOptions: SatisfactionOption[] = defaultOptions;
@@ -92,18 +77,11 @@ const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
         satisfactionOptions = [...translated];
     }
 
-    const [answer, setAnswer] = useState<string[]>(props.answers || []);
-
-    useEffect(() => {
-        console.log(answer);
-    }, [answer]);
-
     const onSatisfactionSelect = (satisfaction: number) => {
-        setAnswer([satisfaction.toFixed(1)]);
+        props.onChangeAnswers && props.onChangeAnswers([satisfaction.toFixed(1)]);
     };
 
-    const currentFace = parseFloat(answer[0]) || 0.0;
-    console.log(currentFace);
+    const currentFace = parseFloat(props.answers?props.answers[0]:"0.0") || 0.0;
 
     return (
         <Container>

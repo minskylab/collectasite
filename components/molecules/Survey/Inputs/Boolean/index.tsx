@@ -8,7 +8,7 @@ const WrapperYesNoButtons = styled.div`
     justify-content: space-evenly;
 `;
 const ContainerOption = styled.div`
-    padding: 0em;
+    padding: 0;
 `;
 
 export enum YesNoValue {

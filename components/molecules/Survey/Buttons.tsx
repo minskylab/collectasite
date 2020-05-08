@@ -45,12 +45,13 @@ interface StartButtonProps {
     onStartClick?: () => void;
     disabled?: boolean;
     experimental?: boolean;
+    text?: string;
 }
 const StartButton: FC<StartButtonProps> = (props: StartButtonProps) => {
     return (
         <BaseButton
             iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
-            text={"INICIAR"}
+            text={props.text || "INICIAR"}
             onClick={props.onStartClick}
             disabled={props.disabled}
             fontFamily={props.experimental ? "Montserrat" : undefined}

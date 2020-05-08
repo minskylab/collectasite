@@ -15,6 +15,7 @@ import { setToken } from "../general/auth";
 import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
 import { Tabs } from "components";
+import dayjs from "dayjs";
 
 // import dynamic from "next/dynamic";
 // const Skeleton = dynamic(() => import("react-loading-skeleton"), { ssr: false });
@@ -292,7 +293,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                     data.profile ? (
                                         data.profile.surveys ? (
                                             data.profile.surveys.filter((survey) => {
-                                                return survey;
+                                                return dayjs(survey.dueDate).isAfter(new Date());
                                             }).map((survey: any, s: number) => (
                                                 <div key={s} className={cardItem}>
                                                     <CollectaCard

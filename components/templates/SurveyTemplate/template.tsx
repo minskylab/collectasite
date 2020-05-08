@@ -53,7 +53,7 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
 
     const percent = (props.firstScreen?.surveyPercent as number);
     const dueDate = dayjs(props.firstScreen?.survey.dueDate);
-    const surveyIsAvailable = percent == 1 || props.firstScreen?.survey.done || dueDate.isBefore(new Date());
+    const surveyIsNotAvailable = percent == 1 || props.firstScreen?.survey.done || dueDate.isBefore(new Date());
     const surveyIsInProgress = percent < 1;
 
     let nextButtonText = "COMENZAR";
@@ -75,13 +75,13 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
                 )}
             </CurrentView>
             <ButtonsWrapper>
-                {!isFirstQuestion && surveyIsAvailable ? <BackButtonContainer>
+                {!isFirstQuestion && !surveyIsNotAvailable && !props.begin ? <BackButtonContainer>
                     <BackButton onBackClick={props.onBack} experimental disabled={props.disabled}/>
                 </BackButtonContainer> : null}
                 <NextButtonContainer>
-                    {!surveyIsAvailable?
+                    {!surveyIsNotAvailable?
                         props.begin?
-                            <StartButton onStartClick={props.onStart} disabled={props.disabled}/>
+                            <StartButton onStartClick={props.onStart} disabled={props.disabled} text={nextButtonText}/>
                             : <NextButton
                                 onNextClick={props.onNext}
                                 text={nextButtonText}
@@ -89,7 +89,6 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
                                 disabled={props.disabled}
                             /> : null}
                 </NextButtonContainer>
-
             </ButtonsWrapper>
         </Screen>
     );

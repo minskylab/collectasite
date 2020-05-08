@@ -43,9 +43,10 @@ const Description = styled.h3`
 `;
 
 const ToCompleteMessage = styled.div`
+    margin-top: 1rem;
     font-family: "Montserrat", sans-serif;
     line-height: 150%;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 400;
     color: #4259ee;
 `;
@@ -63,7 +64,7 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
     const percent = (props.data?.surveyPercent as number);
     const surveyIsExpired = dueDate.isBefore(new Date());
     const surveyIsDone = percent == 1 || props.data?.survey.done; // TODO: Use that to splash a "completed survey" message
-    const surveyIsInProgress = percent < 1;
+    const surveyIsInProgress = percent < 1 && 0 < percent;
 
     let dueMessage: string;
     let titleMessage: string;
@@ -71,7 +72,7 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
 
     if (surveyIsExpired) {
         dueMessage =`Vencio el ${day} de ${month}.`;
-        titleMessage = "Encuesta no vigente";
+        titleMessage = "Encuesta no disponible";
     } else {
         dueMessage =`Vence ${expiredIn}, el ${day} de ${month}.`;
         titleMessage = props.data?.survey.title || "";
@@ -94,7 +95,7 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
                 </Description>
                 {surveyIsInProgress && !surveyIsExpired?<ToCompleteMessage>
                     Su encuesta esta completada al <b>{`${(percent*100).toFixed(0)}%`}</b>.<br/>
-                    Puede continuarla donde la dejo la última vez.
+                    Puede continuarla donde la dejo por última vez.
                 </ToCompleteMessage>:<></>}
             </Content>
         </Wrapper>

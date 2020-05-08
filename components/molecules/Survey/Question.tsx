@@ -22,7 +22,7 @@ const Top = styled.div`
     }
 `;
 
-const Wrapper = styled.div`
+const InputContainer = styled.div`
     width: 100%;
     /* height: 100%; */
     margin-top: calc(2rem + 6rem + 1rem);
@@ -91,7 +91,7 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                     fontFamily={"Lora"}
                 />
             </Top>
-            <Wrapper>
+            <InputContainer>
                 <Content>
                     <Title>
                         {props.question ? (
@@ -113,20 +113,18 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                     </Description>
                     <Input>
                         {props.question ? (
-                            <>
-                                <GenericInput kind={inputKind || ""}
-                                              options={options}
-                                              multiple={multiple}
-                                              answers={props.answers}
-                                              onChangeAnswer={props.onChangeAnswer}
-                                />
-                            </>
+                            <GenericInput kind={inputKind || ""}
+                                          options={options}
+                                          multiple={multiple}
+                                          answers={props.answers}
+                                          onChangeAnswer={props.onChangeAnswer}
+                            />
                         ) : (
                             <Skeleton height="20px" width="100%" count={3} />
                         )}
                     </Input>
                 </Content>
-            </Wrapper>
+            </InputContainer>
         </>
     );
 };
