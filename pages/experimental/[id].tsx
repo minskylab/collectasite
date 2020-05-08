@@ -3,7 +3,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useSurveyQuery, Survey, useLastQuestionOfSurveyQuery, useAnswerQuestionMutation } from "../../data/collecta";
 
-import SurveyTemplate from "../../components/templates/SurveyTemplate/template";
+// import SurveyTemplate from "../../components/templates/SurveyTemplate/template";
+import { SurveyTemplate } from "components";
 
 const SurveyPage: NextPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -83,22 +84,21 @@ const SurveyPage: NextPage = () => {
     };
 
     if (loading) {
-        return <div>Loading</div>;
+        // return <div>Loading</div>;
+        return <div/>;
     }
 
     return (
-        <div>
-            <SurveyTemplate
-                answers={currentAnswers}
-                onAnswersChange={(ans) => setCurrentAnswers(ans)}
-                begin={isBegin}
-                onStart={onStart}
-                onNext={onNext}
-                survey={survey}
-                currentQuestion={lastQuestion}
-                disabled={anyLoading}
-            />
-        </div>
+        <SurveyTemplate
+            answers={currentAnswers}
+            onAnswersChange={(ans) => setCurrentAnswers(ans)}
+            begin={isBegin}
+            onStart={onStart}
+            onNext={onNext}
+            survey={survey}
+            currentQuestion={lastQuestion}
+            disabled={anyLoading}
+        />
     );
 };
 

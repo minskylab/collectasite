@@ -1,3 +1,1 @@
-import ClassroomCard from "./ClassroomCard";
-
-export { ClassroomCard }
+export { default as ClassroomCard } from "./ClassroomCard";

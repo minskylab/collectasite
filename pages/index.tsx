@@ -2,22 +2,16 @@ import React, { useEffect, FC } from "react";
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useQuery } from "urql";
 
 import { styled } from "linaria/react";
 import { css } from "linaria";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 import { Avatar } from "../components/atoms/Avatar";
 import { MenuIcon } from "../components/atoms/Icon";
 import { useTheme } from "../general/theming";
 
-import { useDimensions } from "../components/atoms/Menu/use-dimensions";
-import MenuToggle from "../components/atoms/Menu/MenuToogle";
-import { Navigation } from "../components/atoms/Menu/Navigation";
 import { ClassroomCard } from "../components/molecules/Cards";
-import { profile } from "../general/queries";
 import { setToken } from "../general/auth";
-import ContentLoader from "react-content-loader";
 import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
 

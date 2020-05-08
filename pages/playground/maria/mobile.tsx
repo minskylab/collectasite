@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { GoogleButton, BaseButton } from "../../../components/atoms/Button";
-import {
-  ArrowRightIcon,
-  ArrowLeftIcon,
-  AlertFilledIcon,
-  MenuIcon,
-  CheckIcon,
-  CheckFilledIcon
-} from "../../../components/atoms/Icon";
-import { SatisfactionChoice, SatisfactionChoiceMobile } from "../../../components/molecules/Choices";
 import { SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
+import { SatisfactionChoice, SatisfactionChoiceMobile } from "components";
 
 const surveys = [
   {
@@ -86,7 +77,7 @@ const PlaygroundMobile = () => {
             unitValue={satisfactionValue}
             iconSize={100}
             satisfactionOptionsSize={SatisfactionMode.Large}
-          // alternativeNames={["a", "b", 'c']} 
+          // alternativeNames={["a", "b", 'c']}
           />
         </div>
       </div>
