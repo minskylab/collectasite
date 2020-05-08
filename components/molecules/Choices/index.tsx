@@ -1,6 +1,4 @@
-import Choices from "./Choices";
-import YesNoChoice from "./YesNoChoice";
-import SatisfactionChoice from "./SatisfactionChoice";
-import SatisfactionChoiceMobile from "./SatisfactionChoiceMobile";
-
-export { Choices, YesNoChoice, SatisfactionChoice, SatisfactionChoiceMobile };
+export { default as Choices } from "./Choices";
+export { default as YesNoChoice } from "./YesNoChoice";
+export { default as SatisfactionChoice } from "./SatisfactionChoice";
+export { default as SatisfactionChoiceMobile } from "./SatisfactionChoiceMobile";
