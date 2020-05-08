@@ -77,21 +77,21 @@ const Tabs: FC<TabsProps> = (props: TabsProps) => {
 
   return (
     <Wrapper>
-      <TabItem style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[0])} active={props.selected === options[0]}>
+      <TabItem key={options[0]} style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[0])} active={props.selected === options[0]}>
         <InLine>
           <NewSurveysIcon color={props.selected === options[0] ? defaults.activeColor : defaults.disableColor} />
           <Name active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[0]}</Name>
         </InLine>
         {props.selected === options[0] && <Line active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
       </TabItem>
-      <TabItem style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[1])} active={props.selected === options[1]}>
+      <TabItem key={options[1]} style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[1])} active={props.selected === options[1]}>
         <InLine>
           <InProgressSurveysIcon color={props.selected === options[1] ? defaults.activeColor : defaults.disableColor} />
           <Name active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[1]}</Name>
         </InLine>
         {props.selected === options[1] && <Line active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
       </TabItem>
-      <TabItem onClick={() => handleClick(options[2])} active={props.selected === options[2]}>
+      <TabItem key={options[2]} onClick={() => handleClick(options[2])} active={props.selected === options[2]}>
         <InLine>
           <CompletedSurveysIcon color={props.selected === options[2] ? defaults.activeColor : defaults.disableColor} />
           <Name active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[2]}</Name>
