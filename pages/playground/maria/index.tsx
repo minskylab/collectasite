@@ -5,10 +5,6 @@ import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
 import { SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
 
 import {
-  ArrowRightIcon,
-  ArrowLeftIcon,
-  AlertFilledIcon,
-  MenuIcon,
   CheckIcon,
   CheckFilledIcon,
   BaseInput,
@@ -19,6 +15,7 @@ import {
   YesNoChoice,
   SatisfactionChoice,
   CircleProgressBar,
+  Icon
 } from "components";
 
 const surveys = [
@@ -87,12 +84,15 @@ const Playground = () => {
 				</div>
 				<br />
 				<div>
-					<BaseButton iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />} text={"SIGUIENTE"} />
+					<BaseButton
+            iconElement={<Icon name='arrow-right' color='#ffffff95' size={20} />}
+            text='SIGUIENTE'
+          />
 				</div>
 				<br />
 				<div>
 					<BaseButton
-						iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
+						iconElement={<Icon name='arrow-left' color='#BBBBBB' size={20} />}
 						iconPosition={"left"}
 						text={"Anterior"}
 						colorText={"#B1B1B1"}
@@ -105,8 +105,8 @@ const Playground = () => {
 				</div>
 				<br />
 				<div>
-					<AlertFilledIcon />
-					<MenuIcon />
+					<Icon name='alert-filled' />
+					<Icon name='menu' />
 					<CheckIcon />
 					<CheckFilledIcon color={"#4258ED"} />
 				</div>

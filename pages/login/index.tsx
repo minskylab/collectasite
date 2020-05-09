@@ -9,7 +9,7 @@ import {
   CollectaLogo,
   GoogleButton,
   BaseButton,
-  ArrowRightIcon
+  Icon
 } from "components";
 
 interface LoginProps {
@@ -170,11 +170,14 @@ const Login: FC<LoginProps> = props => {
               transition={{ delay: 1.3, stiffness: 8, duration: 0.8 }}
             >
               <BaseButton
+                text='Ingresar'
                 iconElement={
-                  //@ts-ignore
-                  <ArrowRightIcon color={"#ffffff95"} size={20} />
+                  <Icon
+                    name='arrow-right'
+                    color='#ffffff95'
+                    size={20}
+                  />
                 }
-                text={"Ingresar"}
               />
             </motion.div>
           </WrapperCode>

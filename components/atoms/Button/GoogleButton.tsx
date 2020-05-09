@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { motion } from "framer-motion";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
-import { GoogleIcon } from "../Icon";
+import { Icon } from "../Icon";
 
 const buttonContainer = css`
 	background-size: 200% 100%;
@@ -49,7 +49,7 @@ const GoogleButton: FC<ButtonGoogleProps> = (props: ButtonGoogleProps) => {
 					}
 					transition={{ type: "spring", damping: 0 }}
 				>
-					<GoogleIcon />
+          <Icon name='google' />
 				</motion.div>
 
 				<div
