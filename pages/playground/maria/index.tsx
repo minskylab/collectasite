@@ -5,8 +5,6 @@ import { YesNoValue } from "../../../components/molecules/Choices/YesNoChoice";
 import { SatisfactionMode } from "../../../components/molecules/Choices/SatisfactionChoice";
 
 import {
-  CheckIcon,
-  CheckFilledIcon,
   BaseInput,
   GoogleButton,
   BaseButton,
@@ -107,8 +105,8 @@ const Playground = () => {
 				<div>
 					<Icon name='alert-filled' />
 					<Icon name='menu' />
-					<CheckIcon />
-					<CheckFilledIcon color={"#4258ED"} />
+					<Icon name='check' />
+					<Icon name='check-filled' color='#4258ED' />
 				</div>
 				<br />
 				<div style={{ width: "217px" }}>

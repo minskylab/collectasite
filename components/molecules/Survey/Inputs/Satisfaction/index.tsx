@@ -1,14 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
-import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import React, { FC } from "react";
 import SatisfactionElement, { SatisfactionOption } from "./Element";
 import Faces, { SatisfactionIcon } from "./Faces";
-import {
-    Satisfaction1FilledIcon,
-    Satisfaction2FilledIcon,
-    Satisfaction3FilledIcon,
-    Satisfaction4FilledIcon,
-    Satisfaction5FilledIcon,
-} from "../../../../atoms/Icon";
+import { Icon } from 'components';
 import { styled } from "linaria/react";
 
 const Container = styled.div`
@@ -42,11 +35,11 @@ const defaultOptions: SatisfactionOption[] = [
 ];
 
 const defaultFaces: SatisfactionIcon[] = [
-    { value: -1, face: <Satisfaction1FilledIcon color={"#ff7a84"} size={80} /> },
-    { value: -0.5, face: <Satisfaction2FilledIcon color={"#ff9c85"} size={80} /> },
-    { value: 0, face: <Satisfaction3FilledIcon color={"#ffd7a1"} size={80} /> },
-    { value: 0.5, face: <Satisfaction4FilledIcon color={"#b8f7a1"} size={80} /> },
-    { value: 1.0, face: <Satisfaction5FilledIcon color={"#89eeae"} size={80} /> },
+    { value: -1, face: <Icon name='satisfaction-1-filled' color='#ff7a84' size={80} /> },
+    { value: -0.5, face: <Icon name='satisfaction-2-filled' color={"#ff9c85"} size={80} /> },
+    { value: 0, face: <Icon name='satisfaction-3-filled' color={"#ffd7a1"} size={80} /> },
+    { value: 0.5, face: <Icon name='satisfaction-4-filled' color={"#b8f7a1"} size={80} /> },
+    { value: 1.0, face: <Icon name='satisfaction-5-filled' color={"#89eeae"} size={80} /> },
 ];
 
 interface SatisfactionInputProps {

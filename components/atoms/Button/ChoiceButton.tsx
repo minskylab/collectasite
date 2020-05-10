@@ -3,7 +3,7 @@ import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 import { motion } from "framer-motion";
-import { CheckFilledIcon } from "../Icon";
+import { Icon } from "../Icon";
 
 const buttonContainer = css`
 	background-color: var(--background-color);
@@ -103,7 +103,12 @@ function ChoiceButton(props: ChoiceProps): ReactElement {
 					}}
 					transition={{ duration: 0.4 }}
 				>
-					<CheckFilledIcon color={props.option.checked ? theme.primaryColorText : theme.secondaryColor} checkColor={props.option.checked ? theme.primaryColor : theme.textColor} size={20} />
+					<Icon
+            name='check-filled'
+            color={props.option.checked ? theme.primaryColorText : theme.secondaryColor}
+            checkColor={props.option.checked ? theme.primaryColor : theme.textColor}
+            size={20}
+          />
 				</motion.div>
 			</div>
 		</div>
