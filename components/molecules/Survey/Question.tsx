@@ -86,7 +86,7 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                 <CircleProgressBar
                     strokeWidth={2}
                     percentage={props.question?.lastQuestionOfSurvey.percent}
-                    speed={3}
+                    speed={5}
                     size={90}
                     fontFamily={"Lora"}
                 />

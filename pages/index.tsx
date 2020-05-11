@@ -246,7 +246,6 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                 </AvatarPosition>
             </div>
             <WrapperHome>
-
                 <ContentWrapper>
                     <LeftPart>
                         <WrapperText>
@@ -315,7 +314,6 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                                 } else {
                                                     return;
                                                 }
-                                                ;
                                             }).map((survey: any, s: number) => (
                                                 <div key={s} className={cardItem}>
                                                     <CollectaCard
