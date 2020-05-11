@@ -1,15 +1,8 @@
 import React, { FC, useState } from "react";
 import { styled } from "linaria/react";
-import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 import { motion } from "framer-motion";
-import {
-	Satisfaction1FilledIcon,
-	Satisfaction2FilledIcon,
-	Satisfaction3FilledIcon,
-	Satisfaction4FilledIcon,
-	Satisfaction5FilledIcon
-} from "../../atoms/Icon";
+import { Icon } from 'components';
 
 interface SatisfactionButtonProps {
 	focus?: boolean;
@@ -130,16 +123,16 @@ const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => 
 		let icons =
 			sizeMode === SatisfactionMode.Short
 				? [
-					<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-					<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-					<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
+					<Icon name='satisfaction-1-filled' color={theme.satisfactionColors[0]} size={iconSize || 70} />,
+					<Icon name='satisfaction-3-filled' color={theme.satisfactionColors[2]} size={iconSize || 70} />,
+					<Icon name='satisfaction-5-filled' color={theme.satisfactionColors[4]} size={iconSize || 70} />
 				]
 				: [
-					<Satisfaction1FilledIcon color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-					<Satisfaction2FilledIcon color={theme.satisfactionColors[1]} size={iconSize || 70} />,
-					<Satisfaction3FilledIcon color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-					<Satisfaction4FilledIcon color={theme.satisfactionColors[3]} size={iconSize || 70} />,
-					<Satisfaction5FilledIcon color={theme.satisfactionColors[4]} size={iconSize || 70} />
+					<Icon name='satisfaction-1-filled' color={theme.satisfactionColors[0]} size={iconSize || 70} />,
+					<Icon name='satisfaction-2-filled' color={theme.satisfactionColors[1]} size={iconSize || 70} />,
+					<Icon name='satisfaction-3-filled' color={theme.satisfactionColors[2]} size={iconSize || 70} />,
+					<Icon name='satisfaction-4-filled' color={theme.satisfactionColors[3]} size={iconSize || 70} />,
+					<Icon name='satisfaction-5-filled' color={theme.satisfactionColors[4]} size={iconSize || 70} />
 				];
 		return icons.map((icon, key) => (
 			<motion.div

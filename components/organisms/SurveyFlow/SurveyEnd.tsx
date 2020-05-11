@@ -3,7 +3,6 @@ import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 import { BaseButton } from "../../atoms/Button";
-import { ArrowLeftIcon } from "../../atoms/Icon";
 import { useRouter } from "next/router";
 import { CircleProgressBar } from "../../molecules/CircleProgressBar";
 

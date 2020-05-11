@@ -3,7 +3,7 @@ import QuestionInput, { QuestionInputProps, QuestionType } from "./QuestionInput
 import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../general/theming";
-import { AlertFilledIcon } from "../atoms/Icon";
+import { Icon } from "../atoms/Icon";
 
 const QuestionWrapper = styled.div`
 	text-align: center;
@@ -180,7 +180,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 				</div>
 				{props.input && props.anonymous ? (
 					<div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", paddingTop: "1rem" }}>
-						<AlertFilledIcon color={theme.primaryColor} size={20} />
+						<Icon name='alert-filled' color={theme.primaryColor} size={20} />
 						<div
 							className={anonymous}
 							style={{

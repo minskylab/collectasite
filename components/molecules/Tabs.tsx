@@ -1,9 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { styled } from "linaria/react";
 import { useTheme } from "../../general/theming";
-import { css } from "linaria";
-import { motion } from "framer-motion";
-import { NewSurveysIcon, InProgressSurveysIcon, CompletedSurveysIcon } from "components/atoms";
+import { Icon } from 'components';
 
 const Wrapper = styled.div`
   display: flex; 
@@ -79,21 +77,30 @@ const Tabs: FC<TabsProps> = (props: TabsProps) => {
     <Wrapper>
       <TabItem key={options[0]} style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[0])} active={props.selected === options[0]}>
         <InLine>
-          <NewSurveysIcon color={props.selected === options[0] ? defaults.activeColor : defaults.disableColor} />
+          <Icon
+            name='new-surveys'
+            color={props.selected === options[0] ? defaults.activeColor : defaults.disableColor}
+          />
           <Name active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[0]}</Name>
         </InLine>
         {props.selected === options[0] && <Line active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
       </TabItem>
       <TabItem key={options[1]} style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[1])} active={props.selected === options[1]}>
         <InLine>
-          <InProgressSurveysIcon color={props.selected === options[1] ? defaults.activeColor : defaults.disableColor} />
+          <Icon
+            name='in-progress-surveys'
+            color={props.selected === options[1] ? defaults.activeColor : defaults.disableColor}
+          />
           <Name active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[1]}</Name>
         </InLine>
         {props.selected === options[1] && <Line active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
       </TabItem>
       <TabItem key={options[2]} onClick={() => handleClick(options[2])} active={props.selected === options[2]}>
         <InLine>
-          <CompletedSurveysIcon color={props.selected === options[2] ? defaults.activeColor : defaults.disableColor} />
+          <Icon
+            name='completed-surveys'
+            color={props.selected === options[2] ? defaults.activeColor : defaults.disableColor}
+          />
           <Name active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[2]}</Name>
         </InLine>
         {props.selected === options[2] && <Line active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}

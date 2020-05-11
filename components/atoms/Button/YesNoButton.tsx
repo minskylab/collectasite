@@ -3,7 +3,7 @@ import { styled } from "linaria/react";
 import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 import { motion } from "framer-motion";
-import { CheckFilledIcon } from "../Icon";
+import { Icon } from "../Icon";
 
 const buttonContainer = css`
 	position: relative;
@@ -104,7 +104,12 @@ const YesNoButton: FC<YesNoProps> = (props: YesNoProps) => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <CheckFilledIcon color={props.selected ? theme.primaryColorText : theme.secondaryColor} checkColor={props.selected ? theme.primaryColor : theme.textColor} size={20} />
+            <Icon
+              name='check-filled'
+              color={props.selected ? theme.primaryColorText : theme.secondaryColor}
+              checkColor={props.selected ? theme.primaryColor : theme.textColor}
+              size={20}
+            />
           </motion.div>
 
         </CheckIcon>

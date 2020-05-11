@@ -7,10 +7,10 @@ import { styled } from "linaria/react";
 import { css } from "linaria";
 import { motion } from "framer-motion";
 import { Avatar } from "../components/atoms/Avatar";
-import { MenuIcon } from "../components/atoms/Icon";
+import { Icon } from "../components/atoms/Icon";
 import { useTheme } from "../general/theming";
 
-import { ClassroomCard, CollectaCard } from "../components/molecules/Cards";
+import { CollectaCard } from "../components/molecules/Cards";
 import { setToken } from "../general/auth";
 import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
@@ -234,7 +234,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
             <div>
                 <motion.div className={menuWrapper} initial={false}>
                     <div style={{ padding: 30 }}>
-                        <MenuIcon size={30} color={"#023146"} />
+                        <Icon name='menu' color='#023146' size={30} />
                     </div>
                 </motion.div>
                 <AvatarPosition>

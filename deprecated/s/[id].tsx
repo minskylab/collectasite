@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { useQuery, useMutation } from "urql";
@@ -14,8 +15,7 @@ import {
 } from "../../general/queries";
 import { answerQuestion } from "../../general/mutations";
 import { SurveyBegin, SurveyQuestion } from "../../components/organisms/SurveyFlow";
-import { BaseButton, ArrowRightIcon, ArrowLeftIcon } from "components";
-import Head from "next/head";
+import { BaseButton, Icon } from "components";
 
 const Layout = styled.div`
 	position: relative;
@@ -212,7 +212,7 @@ const ViewSurveyBegin: FC<ViewSurveyBeginProps> = (props: ViewSurveyBeginProps) 
 						<BaseButton
 							text={"INICIAR"}
 							onClick={props.onNextClick}
-							iconElement={<ArrowRightIcon color={"#ffffff95"} size={20} />}
+							iconElement={<Icon name='arrow-right' color='#ffffff95' size={20} />}
 						/>
 					</motion.div>
 				</QuestionButtonFirst>
@@ -346,7 +346,7 @@ interface ButtonBackProps {
 const ButtonBack: FC<ButtonBackProps> = (props: ButtonBackProps) => {
 	return (
 		<BaseButton
-			iconElement={<ArrowLeftIcon color={"#BBBBBB"} size={20} />}
+			iconElement={<Icon name='arrow-left' color='#BBBBBB' size={20} />}
 			iconPosition={"left"}
 			text={"Anterior"}
 			colorText={"#B1B1B1"}
@@ -365,8 +365,8 @@ const ButtonNext: FC<ButtonNextProps> = (props: ButtonNextProps) => {
 	const theme = useTheme();
 	return (
 		<BaseButton
-			iconElement={<ArrowRightIcon color={!props.isComplete ? theme.textColor : "#ffffff95"} size={20} />}
-			text={props.isFinalQuestion ? "FINALIZAR" : "SIGUIENTE"}
+			iconElement={<Icon name='arrow-right' color={!props.isComplete ? theme.textColor : '#ffffff95'} size={20} />}
+			text={props.isFinalQuestion ? 'FINALIZAR' : 'SIGUIENTE'}
 			onClick={props.onNextClick}
 			disabled={!props.isComplete}
 		/>

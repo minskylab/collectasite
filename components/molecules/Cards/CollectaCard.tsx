@@ -3,11 +3,13 @@ import { styled } from "linaria/react";
 import Layout from "./Layout";
 import { useTheme } from "../../../general/theming";
 import { css } from "linaria";
-import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
-import { BaseButton, ArrowRightIcon } from "components/atoms";
+import {
+  BaseButton,
+  Icon
+} from 'components';
 
 const Container = styled.div`
     padding-top: 1.5em;
@@ -155,10 +157,10 @@ const CollectaCard: FC<CardProps> = (props: CardProps) => {
           {!props.disable &&
             <ButtonWrapper>
               <BaseButton
-                iconElement={<ArrowRightIcon color={theme.primaryColor} size={20} />}
-                text={isMobile ? "" : "INICIAR"}
+                iconElement={<Icon name='arrow-right' color={theme.primaryColor} size={20} />}
+                text={isMobile ? 'INICIAR' : 'INICIAR'}
                 colorText={theme.primaryColor}
-                backgroundColor={"transparent"}
+                backgroundColor='transparent'
               />
             </ButtonWrapper>
           }
