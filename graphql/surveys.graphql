@@ -1,84 +1,94 @@
 query FisrtScreenSurvey($id: ID!) {
-    surveyPercent(surveyID: $id)
-    survey(id: $id) {
-        id
-        dueDate
-        title
-        description
-        tags
-        done
-        flow {
-            state
-            initialState
-            terminationState
-        }
-    }
+	surveyPercent(surveyID: $id)
+	survey(id: $id) {
+		id
+		dueDate
+		title
+		description
+		tags
+		done
+		flow {
+			state
+			initialState
+			terminationState
+		}
+	}
 }
 
 query Survey($id: ID!) {
-    survey(id: $id) {
-        id
-        dueDate
-        title
-        description
-        tags
-        done
-        flow {
-            state
-            initialState
-            terminationState
-        }
-    }
+	survey(id: $id) {
+		id
+		dueDate
+		title
+		description
+		tags
+		done
+		flow {
+			state
+			initialState
+			terminationState
+		}
+	}
 }
 
 query Question($id: ID!) {
-    question(id: $id) {
-        id
-        title
-        description
-        input {
-            kind
-            options
-        }
-        answers {
-            id
-            responses
-        }
-        flow {
-            state
-        }
-    }
+	question(id: $id) {
+		id
+		title
+		description
+		input {
+			kind
+			options {
+				content {
+					key
+					value
+				}
+			}
+		}
+		answers {
+			id
+			responses
+		}
+		flow {
+			state
+		}
+	}
 }
 
 query LastQuestionOfSurvey($surveyID: ID!) {
-    lastQuestionOfSurvey(surveyID: $surveyID) {
-        lastQuestion {
-            id
-            title
-            description
-            anonymous
-            input {
-                kind
-                multiple
-                defaults
-                options
-            }
-            answers {
-                id
-                responses
-            }
-            flow {
-                state
-            }
-        }
-        percent
-    }
+	lastQuestionOfSurvey(surveyID: $surveyID) {
+		lastQuestion {
+			id
+			title
+			description
+			anonymous
+			input {
+				kind
+				multiple
+				defaults
+				options {
+					content {
+						key
+						value
+					}
+				}
+			}
+			answers {
+				id
+				responses
+			}
+			flow {
+				state
+			}
+		}
+		percent
+	}
 }
 
 query IsFirstQuestion($questionID: ID!) {
-    isFirstQuestion(questionID: $questionID)
+	isFirstQuestion(questionID: $questionID)
 }
 
 query IsFinalQuestion($questionID: ID!) {
-    isFinalQuestion(questionID: $questionID)
+	isFinalQuestion(questionID: $questionID)
 }

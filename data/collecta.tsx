@@ -11,29 +11,73 @@ export type Scalars = {
   Int: number;
   Float: number;
   Time: any;
-  Map: any;
 };
 
-export type Survey = {
-   __typename?: 'Survey';
-  id: Scalars['ID'];
-  tags: Array<Scalars['String']>;
-  lastInteraction: Scalars['Time'];
-  dueDate: Scalars['Time'];
-  title: Scalars['String'];
-  description: Scalars['String'];
-  metadata: Array<MetadataPair>;
-  done: Scalars['Boolean'];
-  isPublic: Scalars['Boolean'];
-  flow: Flow;
-  for: User;
-  owner: Domain;
+export type SuveyGenerationResult = {
+   __typename?: 'SuveyGenerationResult';
+  how: Scalars['Int'];
+  surveys: Array<Survey>;
 };
 
 export type LoginResponse = {
    __typename?: 'LoginResponse';
   token: Scalars['String'];
 };
+
+export type LastSurveyState = {
+   __typename?: 'LastSurveyState';
+  lastQuestion: Question;
+  percent: Scalars['Float'];
+};
+
+export type Input = {
+   __typename?: 'Input';
+  id: Scalars['ID'];
+  kind: InputKind;
+  multiple?: Maybe<Scalars['Boolean']>;
+  defaults?: Maybe<Array<Scalars['String']>>;
+  options?: Maybe<Map>;
+  question?: Maybe<Question>;
+};
+
+export type Ip = {
+   __typename?: 'IP';
+  ip: Scalars['String'];
+};
+
+export type Person = {
+   __typename?: 'Person';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  lastActivity: Scalars['Time'];
+  username?: Maybe<Scalars['String']>;
+  picture?: Maybe<Scalars['String']>;
+  roles?: Maybe<Array<Scalars['String']>>;
+  accounts: Array<Account>;
+  contacts: Array<Contact>;
+  surveys: Array<Survey>;
+  domains: Array<Domain>;
+  adminOf: Array<Domain>;
+};
+
+export type Flow = {
+   __typename?: 'Flow';
+  id: Scalars['ID'];
+  state: Scalars['ID'];
+  stateTable: Scalars['String'];
+  initialState: Scalars['ID'];
+  terminationState: Scalars['ID'];
+  pastState?: Maybe<Scalars['ID']>;
+  inputs?: Maybe<Array<Scalars['String']>>;
+  survey: Survey;
+  questions: Array<Maybe<Question>>;
+};
+
+export enum SurveyAudenceKind {
+  Public = 'PUBLIC',
+  Domain = 'DOMAIN',
+  Close = 'CLOSE'
+}
 
 export type QuestionCreator = {
   title: Scalars['String'];
@@ -42,6 +86,35 @@ export type QuestionCreator = {
   multiple?: Maybe<Scalars['Boolean']>;
   anonymous?: Maybe<Scalars['Boolean']>;
   options?: Maybe<Array<Pair>>;
+};
+
+export type DomainCreator = {
+  name: Scalars['String'];
+  email: Scalars['String'];
+  domain: Scalars['String'];
+  callback: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']>>;
+};
+
+export enum AccountType {
+  Google = 'Google',
+  Anonymous = 'Anonymous',
+  Email = 'Email'
+}
+
+export enum ContactKind {
+  Email = 'Email',
+  Phone = 'Phone'
+}
+
+export type Account = {
+   __typename?: 'Account';
+  id: Scalars['ID'];
+  type: AccountType;
+  sub: Scalars['String'];
+  remoteID: Scalars['String'];
+  secret?: Maybe<Scalars['String']>;
+  owner: Person;
 };
 
 export type SurveyGenerator = {
@@ -55,25 +128,57 @@ export type SurveyGenerator = {
   due?: Maybe<Scalars['Time']>;
 };
 
-export type LastSurveyState = {
-   __typename?: 'LastSurveyState';
-  lastQuestion: Question;
-  percent: Scalars['Float'];
+export type Query = {
+   __typename?: 'Query';
+  domain: Domain;
+  survey: Survey;
+  question: Question;
+  person: Person;
+  profile: Person;
+  isFirstQuestion: Scalars['Boolean'];
+  isFinalQuestion: Scalars['Boolean'];
+  surveyPercent: Scalars['Float'];
+  lastQuestionOfSurvey: LastSurveyState;
 };
 
-export type User = {
-   __typename?: 'User';
+
+export type QueryDomainArgs = {
   id: Scalars['ID'];
-  name: Scalars['String'];
-  username: Scalars['String'];
-  lastActivity: Scalars['Time'];
-  picture: Scalars['String'];
-  roles: Array<Scalars['String']>;
-  accounts: Account;
-  contacts: Contact;
-  surveys: Array<Survey>;
-  domains: Array<Domain>;
-  adminOf: Array<Domain>;
+};
+
+
+export type QuerySurveyArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryQuestionArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryPersonArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryIsFirstQuestionArgs = {
+  questionID: Scalars['ID'];
+};
+
+
+export type QueryIsFinalQuestionArgs = {
+  questionID: Scalars['ID'];
+};
+
+
+export type QuerySurveyPercentArgs = {
+  surveyID: Scalars['ID'];
+};
+
+
+export type QueryLastQuestionOfSurveyArgs = {
+  surveyID: Scalars['ID'];
 };
 
 export type Question = {
@@ -82,26 +187,75 @@ export type Question = {
   hash: Scalars['String'];
   title: Scalars['String'];
   description: Scalars['String'];
+  metadata?: Maybe<Map>;
+  validator?: Maybe<Scalars['String']>;
   anonymous: Scalars['Boolean'];
-  metadata: Array<MetadataPair>;
-  validator: Scalars['String'];
   answers: Array<Answer>;
   input: Input;
   flow: Flow;
 };
+
+
+export type Answer = {
+   __typename?: 'Answer';
+  id: Scalars['ID'];
+  at: Scalars['Time'];
+  responses: Array<Scalars['String']>;
+  valid?: Maybe<Scalars['Boolean']>;
+  question?: Maybe<Question>;
+};
+
+export type Map = {
+   __typename?: 'Map';
+  content: Array<PairMap>;
+};
+
+export enum InputType {
+  Option = 'OPTION',
+  Text = 'TEXT',
+  Boolean = 'BOOLEAN',
+  Satisfaction = 'SATISFACTION'
+}
 
 export type SurveyTargetUsers = {
   targetKind: SurveyAudenceKind;
   whitelist?: Maybe<Array<Scalars['ID']>>;
 };
 
-export type DomainCreator = {
+export type SurveyDomain = {
+  byID?: Maybe<Scalars['ID']>;
+  byDomainName?: Maybe<Scalars['String']>;
+};
+
+export type Device = {
+   __typename?: 'Device';
+  device: Scalars['String'];
+};
+
+export type Domain = {
+   __typename?: 'Domain';
+  id: Scalars['ID'];
   name: Scalars['String'];
   email: Scalars['String'];
   domain: Scalars['String'];
-  collectaDomain: Scalars['String'];
-  tags?: Maybe<Array<Scalars['String']>>;
+  callback: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  surveys: Array<Survey>;
+  users: Array<Person>;
+  admins: Array<Person>;
 };
+
+export type Pair = {
+  key: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export enum InputKind {
+  Text = 'Text',
+  Options = 'Options',
+  Satisfaction = 'Satisfaction',
+  Boolean = 'Boolean'
+}
 
 export type Mutation = {
    __typename?: 'Mutation';
@@ -147,166 +301,44 @@ export type MutationGenerateSurveysArgs = {
   draft: SurveyGenerator;
 };
 
-
-export type SuveyGenerationResult = {
-   __typename?: 'SuveyGenerationResult';
-  how: Scalars['Int'];
-  surveys: Array<Survey>;
-};
-
-export type MetadataPair = {
-   __typename?: 'MetadataPair';
-  key: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type Domain = {
-   __typename?: 'Domain';
-  id: Scalars['ID'];
-  tags: Array<Scalars['String']>;
-  name: Scalars['String'];
-  email: Scalars['String'];
-  domain: Scalars['String'];
-  collectaDomain: Scalars['String'];
-  surveys: Array<Survey>;
-  users: Array<User>;
-  admins: Array<User>;
-};
-
-export type Contact = {
-   __typename?: 'Contact';
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  value: Scalars['String'];
-  kind: Scalars['String'];
-  principal: Scalars['Boolean'];
-  validated: Scalars['Boolean'];
-  fromAccount: Scalars['Boolean'];
-  owner: User;
-};
-
-export type Answer = {
-   __typename?: 'Answer';
-  id: Scalars['ID'];
-  at: Scalars['Time'];
-  responses: Array<Scalars['String']>;
-  valid: Scalars['Boolean'];
-  question: Question;
-};
-
-export type Query = {
-   __typename?: 'Query';
-  domain: Domain;
-  survey: Survey;
-  question: Question;
-  user: User;
-  profile: User;
-  isFirstQuestion: Scalars['Boolean'];
-  isFinalQuestion: Scalars['Boolean'];
-  surveyPercent: Scalars['Float'];
-  lastQuestionOfSurvey: LastSurveyState;
-};
-
-
-export type QueryDomainArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QuerySurveyArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryQuestionArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryIsFirstQuestionArgs = {
-  questionID: Scalars['ID'];
-};
-
-
-export type QueryIsFinalQuestionArgs = {
-  questionID: Scalars['ID'];
-};
-
-
-export type QuerySurveyPercentArgs = {
-  surveyID: Scalars['ID'];
-};
-
-
-export type QueryLastQuestionOfSurveyArgs = {
-  surveyID: Scalars['ID'];
-};
-
-export type Pair = {
-  key: Scalars['String'];
-  value: Scalars['String'];
-};
-
-
-export type Flow = {
-   __typename?: 'Flow';
-  id: Scalars['ID'];
-  state: Scalars['ID'];
-  stateTable: Scalars['String'];
-  initialState: Scalars['ID'];
-  terminationState: Scalars['ID'];
-  pastState: Scalars['ID'];
-  inputs: Array<Scalars['String']>;
-  questions: Array<Question>;
-};
-
-export enum SurveyAudenceKind {
-  Public = 'PUBLIC',
-  Domain = 'DOMAIN',
-  Close = 'CLOSE'
-}
-
-export type SurveyDomain = {
-  byID?: Maybe<Scalars['ID']>;
-  byDomainName?: Maybe<Scalars['String']>;
-};
-
-export type Account = {
-   __typename?: 'Account';
-  id: Scalars['ID'];
-  type: Scalars['String'];
-  sub: Scalars['String'];
-  remoteID: Scalars['String'];
-  secret: Scalars['String'];
-  owner: User;
-};
-
 export type Short = {
    __typename?: 'Short';
   key: Scalars['String'];
   value: Scalars['ID'];
 };
 
-export enum InputType {
-  Option = 'OPTION',
-  Text = 'TEXT',
-  Boolean = 'BOOLEAN',
-  Satisfaction = 'SATISFACTION'
-}
+export type PairMap = {
+   __typename?: 'PairMap';
+  key: Scalars['String'];
+  value: Scalars['String'];
+};
 
-export type Input = {
-   __typename?: 'Input';
+export type Contact = {
+   __typename?: 'Contact';
   id: Scalars['ID'];
-  kind: Scalars['String'];
-  multiple: Scalars['Boolean'];
-  defaults: Array<Maybe<Scalars['String']>>;
-  options: Scalars['Map'];
-  question: Question;
+  name: Scalars['String'];
+  value: Scalars['String'];
+  kind: ContactKind;
+  principal: Scalars['Boolean'];
+  validated: Scalars['Boolean'];
+  fromAccount: Scalars['Boolean'];
+  owner?: Maybe<Person>;
+};
+
+export type Survey = {
+   __typename?: 'Survey';
+  id: Scalars['ID'];
+  tags: Array<Scalars['String']>;
+  lastInteraction: Scalars['Time'];
+  dueDate: Scalars['Time'];
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  metadata?: Maybe<Map>;
+  done?: Maybe<Scalars['Boolean']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  flow?: Maybe<Flow>;
+  for?: Maybe<Person>;
+  owner: Domain;
 };
 
 export type AnswerQuestionMutationVariables = {
@@ -320,17 +352,17 @@ export type AnswerQuestionMutation = (
   & { answerQuestion: (
     { __typename?: 'Survey' }
     & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
-    & { flow: (
+    & { flow?: Maybe<(
       { __typename?: 'Flow' }
-      & { questions: Array<(
+      & { questions: Array<Maybe<(
         { __typename?: 'Question' }
         & Pick<Question, 'id' | 'title' | 'description'>
         & { input: (
           { __typename?: 'Input' }
           & Pick<Input, 'kind'>
         ) }
-      )> }
-    ) }
+      )>> }
+    )> }
   ) }
 );
 
@@ -344,17 +376,17 @@ export type BackwardSurveyMutation = (
   & { backwardSurvey: (
     { __typename?: 'Survey' }
     & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags'>
-    & { flow: (
+    & { flow?: Maybe<(
       { __typename?: 'Flow' }
-      & { questions: Array<(
+      & { questions: Array<Maybe<(
         { __typename?: 'Question' }
         & Pick<Question, 'id' | 'title' | 'description'>
         & { input: (
           { __typename?: 'Input' }
           & Pick<Input, 'kind'>
         ) }
-      )> }
-    ) }
+      )>> }
+    )> }
   ) }
 );
 
@@ -383,10 +415,10 @@ export type FisrtScreenSurveyQuery = (
   & { survey: (
     { __typename?: 'Survey' }
     & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags' | 'done'>
-    & { flow: (
+    & { flow?: Maybe<(
       { __typename?: 'Flow' }
       & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
-    ) }
+    )> }
   ) }
 );
 
@@ -400,10 +432,10 @@ export type SurveyQuery = (
   & { survey: (
     { __typename?: 'Survey' }
     & Pick<Survey, 'id' | 'dueDate' | 'title' | 'description' | 'tags' | 'done'>
-    & { flow: (
+    & { flow?: Maybe<(
       { __typename?: 'Flow' }
       & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
-    ) }
+    )> }
   ) }
 );
 
@@ -419,7 +451,14 @@ export type QuestionQuery = (
     & Pick<Question, 'id' | 'title' | 'description'>
     & { input: (
       { __typename?: 'Input' }
-      & Pick<Input, 'kind' | 'options'>
+      & Pick<Input, 'kind'>
+      & { options?: Maybe<(
+        { __typename?: 'Map' }
+        & { content: Array<(
+          { __typename?: 'PairMap' }
+          & Pick<PairMap, 'key' | 'value'>
+        )> }
+      )> }
     ), answers: Array<(
       { __typename?: 'Answer' }
       & Pick<Answer, 'id' | 'responses'>
@@ -445,7 +484,14 @@ export type LastQuestionOfSurveyQuery = (
       & Pick<Question, 'id' | 'title' | 'description' | 'anonymous'>
       & { input: (
         { __typename?: 'Input' }
-        & Pick<Input, 'kind' | 'multiple' | 'defaults' | 'options'>
+        & Pick<Input, 'kind' | 'multiple' | 'defaults'>
+        & { options?: Maybe<(
+          { __typename?: 'Map' }
+          & { content: Array<(
+            { __typename?: 'PairMap' }
+            & Pick<PairMap, 'key' | 'value'>
+          )> }
+        )> }
       ), answers: Array<(
         { __typename?: 'Answer' }
         & Pick<Answer, 'id' | 'responses'>
@@ -483,22 +529,22 @@ export type ProfileQueryVariables = {};
 export type ProfileQuery = (
   { __typename?: 'Query' }
   & { profile: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'picture' | 'username' | 'lastActivity'>
+    { __typename?: 'Person' }
+    & Pick<Person, 'id' | 'name' | 'picture' | 'username' | 'lastActivity'>
     & { surveys: Array<(
       { __typename?: 'Survey' }
       & Pick<Survey, 'id' | 'dueDate' | 'title' | 'done' | 'description' | 'tags'>
-      & { flow: (
+      & { flow?: Maybe<(
         { __typename?: 'Flow' }
         & Pick<Flow, 'state' | 'initialState' | 'terminationState'>
-      ) }
+      )> }
     )>, domains: Array<(
       { __typename?: 'Domain' }
       & Pick<Domain, 'name' | 'domain'>
-    )>, contacts: (
+    )>, contacts: Array<(
       { __typename?: 'Contact' }
       & Pick<Contact, 'kind' | 'value'>
-    ) }
+    )> }
   ) }
 );
 
@@ -640,7 +686,12 @@ export const QuestionDocument = gql`
     description
     input {
       kind
-      options
+      options {
+        content {
+          key
+          value
+        }
+      }
     }
     answers {
       id
@@ -673,7 +724,12 @@ export const LastQuestionOfSurveyDocument = gql`
         kind
         multiple
         defaults
-        options
+        options {
+          content {
+            key
+            value
+          }
+        }
       }
       answers {
         id

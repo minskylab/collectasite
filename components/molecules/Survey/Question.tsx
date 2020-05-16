@@ -73,12 +73,12 @@ interface QuestionViewProps {
 const QuestionView: FC<QuestionViewProps> = (props) => {
     let options = new Map<string, string>();
 
-    for (let k in props.question?.lastQuestionOfSurvey.lastQuestion.input.options) {
-        options.set(k || "", props.question?.lastQuestionOfSurvey.lastQuestion.input.options[k || ""]);
-    }
+    props.question?.lastQuestionOfSurvey.lastQuestion.input.options?.content?.map(pair => {
+        options.set(pair.key || "", pair.value || pair.key);
+    })
 
     const inputKind = props.question?.lastQuestionOfSurvey.lastQuestion.input.kind;
-    const multiple = props.question?.lastQuestionOfSurvey.lastQuestion.input.multiple;
+    const multiple = props.question?.lastQuestionOfSurvey.lastQuestion.input.multiple || false;
 
     return (
         <>
@@ -97,8 +97,8 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                         {props.question ? (
                             props.question.lastQuestionOfSurvey.lastQuestion.title
                         ) : (
-                            <Skeleton height="40px" width="320px" />
-                        )}
+                                <Skeleton height="40px" width="320px" />
+                            )}
                     </Title>
                     <Description>
                         {props.question ? (
@@ -108,20 +108,20 @@ const QuestionView: FC<QuestionViewProps> = (props) => {
                                 }}
                             />
                         ) : (
-                            <Skeleton height="20px" width="100%" count={3} />
-                        )}
+                                <Skeleton height="20px" width="100%" count={3} />
+                            )}
                     </Description>
                     <Input>
                         {props.question ? (
                             <GenericInput kind={inputKind || ""}
-                                          options={options}
-                                          multiple={multiple}
-                                          answers={props.answers}
-                                          onChangeAnswer={props.onChangeAnswer}
+                                options={options}
+                                multiple={multiple}
+                                answers={props.answers}
+                                onChangeAnswer={props.onChangeAnswer}
                             />
                         ) : (
-                            <Skeleton height="20px" width="100%" count={3} />
-                        )}
+                                <Skeleton height="20px" width="100%" count={3} />
+                            )}
                     </Input>
                 </Content>
             </InputContainer>

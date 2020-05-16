@@ -1,7 +1,7 @@
-import React, {FC} from "react";
-import {LastQuestionOfSurveyQuery, FisrtScreenSurveyQuery} from "data/collecta";
-import {styled} from "linaria/react";
-import {QuestionView, NextButton, BackButton, StartButton, StartSurvey} from "components/molecules";
+import React, { FC } from "react";
+import { LastQuestionOfSurveyQuery, FisrtScreenSurveyQuery } from "data/collecta";
+import { styled } from "linaria/react";
+import { QuestionView, NextButton, BackButton, StartButton, StartSurvey } from "components/molecules";
 import dayjs from "dayjs";
 
 const Screen = styled.div`
@@ -49,7 +49,7 @@ interface SurveyTemplateProps {
 
 const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
     const isFirstQuestion = props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
-        props.firstScreen?.survey.flow.initialState;
+        props.firstScreen?.survey.flow?.initialState;
 
     const percent = (props.firstScreen?.surveyPercent as number);
     const dueDate = dayjs(props.firstScreen?.survey.dueDate);
@@ -65,7 +65,7 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
     return (
         <Screen>
             <CurrentView>
-                {props.begin && <StartSurvey data={props.firstScreen}/>}
+                {props.begin && <StartSurvey data={props.firstScreen} />}
                 {!props.begin && (
                     <QuestionView
                         question={props.currentQuestion}
@@ -76,12 +76,12 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
             </CurrentView>
             <ButtonsWrapper>
                 {!isFirstQuestion && !surveyIsNotAvailable && !props.begin ? <BackButtonContainer>
-                    <BackButton onBackClick={props.onBack} experimental disabled={props.disabled}/>
+                    <BackButton onBackClick={props.onBack} experimental disabled={props.disabled} />
                 </BackButtonContainer> : null}
                 <NextButtonContainer>
-                    {!surveyIsNotAvailable?
-                        props.begin?
-                            <StartButton onStartClick={props.onStart} disabled={props.disabled} text={nextButtonText}/>
+                    {!surveyIsNotAvailable ?
+                        props.begin ?
+                            <StartButton onStartClick={props.onStart} disabled={props.disabled} text={nextButtonText} />
                             : <NextButton
                                 onNextClick={props.onNext}
                                 text={nextButtonText}

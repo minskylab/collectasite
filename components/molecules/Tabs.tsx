@@ -17,7 +17,7 @@ interface ActiveProps {
 const TabItem = styled.div <ActiveProps>`
   display: block;
   //@ts-ignore
-  color: ${props => props.active ? props.activeColor : props.disableColor};
+  color: ${props => props.active ? props.activeColor || "" : props.disableColor || ""};
   cursor: pointer;
 `;
 

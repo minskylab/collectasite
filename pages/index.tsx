@@ -238,7 +238,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                 </motion.div>
                 <AvatarPosition>
                     {data ? (
-                        <Avatar size={"2.5rem"} image={data.profile.picture} />
+                        <Avatar size={"2.5rem"} image={data.profile.picture || ""} />
                     ) : (
                             <Skeleton key="avatar" height="42px" width="42px" />
                         )}
@@ -293,19 +293,19 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                             data.profile.surveys.filter((survey) => {
                                                 let filteredSurvey = dayjs(survey.dueDate).isAfter(new Date());
                                                 if (tabSelected === "Nuevos") {
-                                                    if (survey.flow.state === survey.flow.initialState) {
+                                                    if (survey.flow?.state === survey.flow?.initialState) {
                                                         return filteredSurvey;
                                                     } else {
                                                         return
                                                     }
                                                 } else if (tabSelected === "En progreso") {
-                                                    if (survey.flow.state !== survey.flow.initialState && survey.flow.state !== survey.flow.terminationState) {
+                                                    if (survey.flow?.state !== survey.flow?.initialState && survey.flow?.state !== survey.flow?.terminationState) {
                                                         return filteredSurvey;
                                                     } else {
                                                         return
                                                     }
                                                 } else if (tabSelected === "Completados") {
-                                                    if (survey.flow.state === survey.flow.terminationState || survey.done) {
+                                                    if (survey.flow?.state === survey.flow?.terminationState || survey.done) {
                                                         return filteredSurvey;
                                                     } else {
                                                         return
