@@ -22,9 +22,8 @@ import dayjs from "dayjs";
 
 const WrapperHome = styled.div`
     position: relative;
-    min-height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -227,7 +226,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
     }
 
     return (
-        <div>
+        <div style={{ minHeight: "100vh", overflow: "hidden" }}>
             <Head>
                 <title>{data?.profile.name ? `Surveys | ${data?.profile.name}` : "Collecta Surveys"}</title>
             </Head>

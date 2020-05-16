@@ -25,12 +25,18 @@ const Name = styled.div <ActiveProps>`
   display: block; 
   font-family: "Montserrat";
   font-style: normal;
-  font-weight: ${props => props.active ? "600" : "normal"};
+  font-weight: ${props => props.active ? "500" : "500"};
   font-size: 1rem;
   line-height: 1.2rem;
   //@ts-ignore
   color: ${props => props.active ? props.activeColor : props.disableColor};
-  padding-left: 0.3rem;
+  /* transition: 1.3s; */
+`;
+
+const WrapperName = styled.div`
+  display: block; 
+  margin-left: 0.3rem;
+  position: relative;
   @media (max-width: 600px) {
     display: none;
   }
@@ -38,14 +44,21 @@ const Name = styled.div <ActiveProps>`
 
 const Line = styled.div <ActiveProps>`
   display: block; 
-  height: 2px;
   width: 100%;
+  height: 100%;
   border-radius: 2px;
   //@ts-ignore
-  background-color: ${props => props.active ? `${props.activeColor}dd` : `${props.disableColor}dd`};
+  background-color: ${props => props.active ? `${props.activeColor}aa` : `${props.disableColor}dd`};
+  transition: 0.3s;
+  opacity:  ${props => props.active ? 1 : 0}
 `;
 
-const InLine = styled.dev`
+const WrapperLine = styled.div`
+   width: 100%;
+   height: 2px;
+`;
+
+const InLine = styled.div`
   display: flex; 
   align-items: center;
   padding-bottom: 0.65rem;
@@ -81,9 +94,14 @@ const Tabs: FC<TabsProps> = (props: TabsProps) => {
             name='new-surveys'
             color={props.selected === options[0] ? defaults.activeColor : defaults.disableColor}
           />
-          <Name active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[0]}</Name>
+          <WrapperName>
+            <Name key={"01"} style={{ opacity: 0, position: "relative" }} active={true} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[0]}</Name>
+            <Name key={"10"} style={{ position: "absolute", top: 0 }} active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[0]}</Name>
+          </WrapperName>
         </InLine>
-        {props.selected === options[0] && <Line active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
+        <WrapperLine>
+          <Line active={props.selected === options[0]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />
+        </WrapperLine>
       </TabItem>
       <TabItem key={options[1]} style={{ paddingRight: "1.5rem" }} onClick={() => handleClick(options[1])} active={props.selected === options[1]}>
         <InLine>
@@ -91,9 +109,14 @@ const Tabs: FC<TabsProps> = (props: TabsProps) => {
             name='in-progress-surveys'
             color={props.selected === options[1] ? defaults.activeColor : defaults.disableColor}
           />
-          <Name active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[1]}</Name>
+          <WrapperName>
+            <Name key={10} style={{ opacity: 0, position: "relative" }} active={true} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[1]}</Name>
+            <Name key={11} style={{ position: "absolute", top: 0 }} active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[1]}</Name>
+          </WrapperName>
         </InLine>
-        {props.selected === options[1] && <Line active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
+        <WrapperLine>
+          <Line active={props.selected === options[1]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />
+        </WrapperLine>
       </TabItem>
       <TabItem key={options[2]} onClick={() => handleClick(options[2])} active={props.selected === options[2]}>
         <InLine>
@@ -101,11 +124,16 @@ const Tabs: FC<TabsProps> = (props: TabsProps) => {
             name='completed-surveys'
             color={props.selected === options[2] ? defaults.activeColor : defaults.disableColor}
           />
-          <Name active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[2]}</Name>
+          <WrapperName>
+            <Name key={20} style={{ opacity: 0, position: "relative" }} active={true} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[2]}</Name>
+            <Name key={21} style={{ position: "absolute", top: 0 }} active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor}>{options[2]}</Name>
+          </WrapperName>
         </InLine>
-        {props.selected === options[2] && <Line active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />}
+        <WrapperLine>
+          <Line active={props.selected === options[2]} activeColor={defaults.activeColor} disableColor={defaults.disableColor} />
+        </WrapperLine>
       </TabItem>
-    </Wrapper>
+    </Wrapper >
   );
 };
 
