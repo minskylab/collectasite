@@ -30,7 +30,7 @@ const SurveyPage: NextPage = () => {
 
     const [{ fetching: executingAnswerMutation }, answerQuestion] = useAnswerQuestionMutation();
 
-    const [{fetching: executingBackwardMutation}, backwardQuestion] = useBackwardSurveyMutation();
+    const [{ fetching: executingBackwardMutation }, backwardQuestion] = useBackwardSurveyMutation();
 
     const anyLoading: boolean = loading || fetchingQuestion || fetchingSurvey || executingAnswerMutation || executingBackwardMutation;
 
@@ -53,7 +53,7 @@ const SurveyPage: NextPage = () => {
             setLoading(false);
             // console.log(survey?.survey);
             if (firstScreen) {
-                if (firstScreen.survey.flow.initialState === firstScreen.survey.flow.state) {
+                if (firstScreen.survey.flow?.initialState === firstScreen.survey.flow?.state) {
                     setIsBegin(true);
                 }
             }
@@ -75,7 +75,7 @@ const SurveyPage: NextPage = () => {
             console.log("invalid last question");
             return;
         }
-        
+
         if (currentAnswers.length === 0) {
             console.log("no answer");
             return;
@@ -95,7 +95,7 @@ const SurveyPage: NextPage = () => {
         console.log("back")
         // setLoading(true);
         backwardQuestion({
-            surveyID:surveyID,
+            surveyID: surveyID,
         }).finally(() => {
             setLoading(false);
         });
@@ -103,7 +103,7 @@ const SurveyPage: NextPage = () => {
 
     if (loading) {
         // return <div>Loading</div>;
-        return <div/>;
+        return <div />;
     }
 
     return (

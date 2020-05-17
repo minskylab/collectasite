@@ -16,6 +16,7 @@ import { useProfileQuery } from "../data/collecta";
 import Skeleton from "react-loading-skeleton";
 import { Tabs } from "components";
 import dayjs from "dayjs";
+import Search from "components/molecules/Search";
 
 // import dynamic from "next/dynamic";
 // const Skeleton = dynamic(() => import("react-loading-skeleton"), { ssr: false });
@@ -216,6 +217,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
         pause: true,
     });
     const [tabSelected, setTabSelected] = useState<string>("Nuevos")
+    const [searchSelected, setSearchSelected] = useState<string>("CardMode")
 
     useEffect(() => {
         run();
@@ -284,7 +286,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                         <WrapperTab>
                             <Tabs onClick={(s) => { if (s) { setTabSelected(s) } }} selected={tabSelected} />
                         </WrapperTab>
-                        {/* <div> Filtrar y buscar</div> */}
+                        <br />
+                        <Search onClick={(s) => { if (s) { setSearchSelected(s) } }} selected={searchSelected} />
                         <div className={cardsWrapper}>
                             <div className={cardsContainer}>
                                 {data ? (
