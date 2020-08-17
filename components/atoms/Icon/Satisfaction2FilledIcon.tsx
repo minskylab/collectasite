@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const Satisfaction2FilledIcon: FC<IconProps> = (props) => {
+const Satisfaction2FilledIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

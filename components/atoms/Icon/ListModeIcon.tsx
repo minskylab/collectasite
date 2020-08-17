@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const ListModeIcon: FC<IconProps> = (props) => {
+const ListModeIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

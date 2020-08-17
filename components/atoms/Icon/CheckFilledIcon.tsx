@@ -6,7 +6,7 @@ interface IconProps {
     checkColor?: string;
 }
 
-const CheckFilledIcon: FC<IconProps> = (props) => {
+const CheckFilledIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

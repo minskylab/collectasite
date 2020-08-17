@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const MenuIcon: FC<IconProps> = (props) => {
+const MenuIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

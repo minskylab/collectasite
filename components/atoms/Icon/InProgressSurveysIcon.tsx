@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const InProgressSurveysIcon: FC<IconProps> = (props) => {
+const InProgressSurveysIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

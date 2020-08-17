@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const CardModeIcon: FC<IconProps> = (props) => {
+const CardModeIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}

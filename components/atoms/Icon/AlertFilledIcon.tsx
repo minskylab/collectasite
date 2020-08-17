@@ -5,7 +5,7 @@ interface IconProps {
     size?: number;
 }
 
-const AlertFilledIcon: FC<IconProps> = (props) => {
+const AlertFilledIcon: FC<IconProps> = (props: IconProps) => {
     return (
         <svg
             width={props.size ? props.size : 24}
