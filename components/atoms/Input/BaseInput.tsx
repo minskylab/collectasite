@@ -62,9 +62,7 @@ interface LabelProps {
 const Label = styled.label<LabelProps>`
     font-size: 0.75rem;
     transition: 0.3s;
-    //@ts-ignore
     font-family: ${(props) => props.fontFamily || ""};
-    //@ts-ignore
     color: ${(props) => (props.focus ? "#3D3D3D" : "#939393")};
     margin-left: 0.1rem;
     margin-bottom: 0.1rem;
@@ -82,7 +80,6 @@ const InputWrapper = styled.div<InputWrapperProps>`
     font-family: "Karla", sans-serif;
     margin: 0.2rem 0;
     border-bottom: 1px;
-    //@ts-ignore
     border-bottom-color: ${(props) =>
         props.focus ? props.borderBottomFocusColor || "" : props.borderBottomColor || ""};
     border-bottom-style: solid;
@@ -106,7 +103,7 @@ const HelpMessage = styled.div`
 
 export interface InputProps {
     value?: string | number | string[];
-    onChange?: React.ChangeEventHandler;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onFocusChange?: (focus: boolean) => void;
     type?: InputType;
     name?: string;
@@ -155,16 +152,17 @@ function BaseInput(props: InputProps): ReactElement {
                 onChange={props.onChange}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
-                style={{
-                    //@ts-ignore
-                    "--main-color": theme.inputColor,
-                    "--font-family": theme.fontFamilyText,
-                    "--text-color": theme.textColor,
-                    "--focus-color": theme.inputFocusColor,
-                    "--placeholder-color": theme.inputPlaceholderColor,
-                    "--placeholder-focus-color": theme.inputPlaceholderFocusColor,
-                    "--text-align": props.textAlign || "left",
-                }}
+                style={
+                    {
+                        "--main-color": theme.inputColor,
+                        "--font-family": theme.fontFamilyText,
+                        "--text-color": theme.textColor,
+                        "--focus-color": theme.inputFocusColor,
+                        "--placeholder-color": theme.inputPlaceholderColor,
+                        "--placeholder-focus-color": theme.inputPlaceholderFocusColor,
+                        "--text-align": props.textAlign || "left",
+                    } as React.CSSProperties
+                }
             />
             {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
             {!props.errorMessage && props.helperText && <HelpMessage>{props.helperText}</HelpMessage>}

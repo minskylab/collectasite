@@ -44,7 +44,6 @@ const QuestionInput: FC<QuestionInputProps> = (props: QuestionInputProps) => {
                     placeholder={"Escribe tu respuesta aquí"}
                     type={"text"}
                     value={valueText}
-                    //@ts-ignore
                     onChange={(e) => props.onChangeValue(e.target.value)}
                 />
             </Layout>

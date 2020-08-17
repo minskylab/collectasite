@@ -55,7 +55,7 @@ interface StartSurveyProps {
     data: FisrtScreenSurveyQuery | undefined;
 }
 
-const StartSurvey: FC<StartSurveyProps> = (props) => {
+const StartSurvey: FC<StartSurveyProps> = (props: StartSurveyProps) => {
     const dueDate = dayjs(props.data?.survey.dueDate);
     const expiredIn = dayjs().to(dueDate);
     const day = dueDate.format("DD");

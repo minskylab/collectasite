@@ -86,12 +86,13 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.05, stiffness: 8, duration: 0.4 }}
                 className={surveyDueDate}
-                style={{
-                    //@ts-ignore
-                    "--font-family": theme.fontFamilyText,
-                    "--color-text": theme.darkSecondaryTextColor,
-                    paddingBottom: "0.7rem",
-                }}
+                style={
+                    {
+                        "--font-family": theme.fontFamilyText,
+                        "--color-text": theme.darkSecondaryTextColor,
+                        paddingBottom: "0.7rem",
+                    } as React.CSSProperties
+                }
             >
                 Vence {expiredIn}, el {expiredDay} de {expiredMonth}.
             </motion.div>
@@ -100,12 +101,13 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.08, stiffness: 8, duration: 0.5 }}
                 className={surveyTitle}
-                style={{
-                    //@ts-ignore
-                    "--font-family": theme.fontFamilyText,
-                    "--color-text": theme.textColor,
-                    paddingBottom: "1.8rem",
-                }}
+                style={
+                    {
+                        "--font-family": theme.fontFamilyText,
+                        "--color-text": theme.textColor,
+                        paddingBottom: "1.8rem",
+                    } as React.CSSProperties
+                }
             >
                 {props.title}
             </motion.div>
@@ -115,11 +117,12 @@ const SurveyBegin: FC<SurveyBeginProps> = (props: SurveyBeginProps) => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1, stiffness: 8, duration: 0.6 }}
                     className={surveyDescription}
-                    style={{
-                        //@ts-ignore
-                        "--font-family": theme.fontFamilyText,
-                        "--color-text": theme.textColor,
-                    }}
+                    style={
+                        {
+                            "--font-family": theme.fontFamilyText,
+                            "--color-text": theme.textColor,
+                        } as React.CSSProperties
+                    }
                 >
                     <div dangerouslySetInnerHTML={{ __html: desc }} />
                 </motion.div>

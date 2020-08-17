@@ -47,7 +47,7 @@ interface SurveyTemplateProps {
     disabled?: boolean;
 }
 
-const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
+const SurveyTemplate: FC<SurveyTemplateProps> = (props: SurveyTemplateProps) => {
     const isFirstQuestion =
         props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
         props.firstScreen?.survey.flow?.initialState;
