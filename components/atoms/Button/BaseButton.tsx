@@ -38,7 +38,7 @@ const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
     return (
         <motion.div
             whileHover={props.disabled ? {} : props.loading ? {} : { scale: 1.1 }}
-            onClick={props.disabled ? () => {} : props.onClick}
+            onClick={props.disabled ? (e) => {} : props.onClick}
             whileTap={props.disabled ? {} : props.loading ? {} : { scale: [1, 0.9, 1] }}
         >
             <motion.div

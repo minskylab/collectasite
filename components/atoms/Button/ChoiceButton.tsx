@@ -4,6 +4,7 @@ import { css } from "linaria";
 import { useTheme } from "../../../general/theming";
 import { motion } from "framer-motion";
 import { Icon } from "../Icon";
+import { Style } from "util";
 
 const buttonContainer = css`
     background-color: var(--background-color);
@@ -65,19 +66,21 @@ function ChoiceButton(props: ChoiceProps): ReactElement {
                     setOnMouse(false);
                 }}
                 className={buttonContainer}
-                style={{
-                    //@ts-ignore
-                    "--background-color": props.option.checked ? theme.primaryColor : "transparent",
-                    "--border-color": props.option.checked ? theme.primaryColor : theme.secondaryColor,
-                }}
+                style={
+                    {
+                        "--background-color": props.option.checked ? theme.primaryColor : "transparent",
+                        "--border-color": props.option.checked ? theme.primaryColor : theme.secondaryColor,
+                    } as React.CSSProperties
+                }
             >
                 <div
                     className={text}
-                    style={{
-                        //@ts-ignore
-                        "--text-color": props.option.checked ? theme.primaryColorText : theme.secondaryTextColor,
-                        "--font-family": theme.fontFamilyText,
-                    }}
+                    style={
+                        {
+                            "--text-color": props.option.checked ? theme.primaryColorText : theme.secondaryTextColor,
+                            "--font-family": theme.fontFamilyText,
+                        } as React.CSSProperties
+                    }
                 >
                     {props.option.text}
                 </div>

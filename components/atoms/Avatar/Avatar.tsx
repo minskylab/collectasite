@@ -9,9 +9,9 @@ interface AvatarProps {
 }
 
 const WrapperLogin = styled.div<AvatarProps>`
-    background-image: ${(props) => (props.image ? `url(${props.image})` : "")};
-    height: ${(props) => (props.size ? props.size : "3rem")};
-    width: ${(props) => (props.size ? props.size : "3rem")};
+    background-image: ${(props: AvatarProps) => (props.image ? `url(${props.image})` : "")};
+    height: ${(props: AvatarProps) => (props.size ? props.size : "3rem")};
+    width: ${(props: AvatarProps) => (props.size ? props.size : "3rem")};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -21,7 +21,7 @@ const WrapperLogin = styled.div<AvatarProps>`
     overflow: hidden;
 `;
 
-const Avatar: FC<AvatarProps> = (props) => {
+const Avatar: FC<AvatarProps> = (props: AvatarProps) => {
     return <WrapperLogin image={props.image} size={props.size} />;
 };
 
