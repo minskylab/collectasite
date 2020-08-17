@@ -37,18 +37,19 @@ const errorText = css`
     padding-top: 1rem;
 `;
 
-const ErrorMessage: FC<ErrorMessageProps> = (props) => {
+const ErrorMessage: FC<ErrorMessageProps> = (props: ErrorMessageProps) => {
     const theme = useTheme();
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
             {props.image && <Image src={props.image} alt={"Error image"} />}
             <div
                 className={text}
-                style={{
-                    //@ts-ignore
-                    "--text-color": theme.textColor,
-                    "--font-family": theme.fontFamilyText,
-                }}
+                style={
+                    {
+                        "--text-color": theme.textColor,
+                        "--font-family": theme.fontFamilyText,
+                    } as React.CSSProperties
+                }
             >
                 {props.title ? props.title : "Error"}
             </div>

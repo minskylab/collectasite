@@ -123,19 +123,21 @@ const CollectaCard: FC<CardProps> = (props: CardProps) => {
             >
                 <div
                     className={textdueDate}
-                    style={{
-                        //@ts-ignore
-                        "--text-color": "#023146",
-                    }}
+                    style={
+                        {
+                            "--text-color": "#023146",
+                        } as React.CSSProperties
+                    }
                 >
                     Expira {expiredIn}
                 </div>
                 <div
                     className={textSurveyName}
-                    style={{
-                        //@ts-ignore
-                        "--text-color": "#023146",
-                    }}
+                    style={
+                        {
+                            "--text-color": "#023146",
+                        } as React.CSSProperties
+                    }
                 >
                     {props.title}
                 </div>
@@ -146,11 +148,12 @@ const CollectaCard: FC<CardProps> = (props: CardProps) => {
                                   <div
                                       key={i}
                                       className={textTags}
-                                      style={{
-                                          //@ts-ignore
-                                          "--background-color": `${theme.primaryColor}20`,
-                                          "--text-color": "#023146",
-                                      }}
+                                      style={
+                                          {
+                                              "--background-color": `${theme.primaryColor}20`,
+                                              "--text-color": "#023146",
+                                          } as React.CSSProperties
+                                      }
                                   >
                                       {tag}
                                   </div>

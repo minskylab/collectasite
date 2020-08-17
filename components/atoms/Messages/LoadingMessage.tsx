@@ -38,11 +38,12 @@ const LoadingMessage: FC<LoadingMessageProps> = (props: LoadingMessageProps) => 
             {props.image ? <Image src={props.image} alt={"Loading image"} /> : <CollectaIsotype scale={0.5} />}
             <div
                 className={text}
-                style={{
-                    //@ts-ignore
-                    "--text-color": theme.textColor,
-                    "--font-family": theme.fontFamilyText,
-                }}
+                style={
+                    {
+                        "--text-color": theme.textColor,
+                        "--font-family": theme.fontFamilyText,
+                    } as React.CSSProperties
+                }
             >
                 {props.text ? props.text : "Cargando..."}
             </div>

@@ -286,10 +286,12 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                         <WrapperText>
                             <div
                                 className={textTitle}
-                                style={{
-                                    "--color-text": "#023146",
-                                    paddingBottom: "1.8rem",
-                                } as React.CSSProperties}
+                                style={
+                                    {
+                                        "--color-text": "#023146",
+                                        paddingBottom: "1.8rem",
+                                    } as React.CSSProperties
+                                }
                             >
                                 {data ? (
                                     <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
@@ -299,9 +301,11 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             </div>
                             <div
                                 className={text}
-                                style={{
-                                    "--color-text": "#3C5763",
-                                } as React.CSSProperties}
+                                style={
+                                    {
+                                        "--color-text": "#3C5763",
+                                    } as React.CSSProperties
+                                }
                             >
                                 {data ? (
                                     <>
