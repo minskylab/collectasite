@@ -16,7 +16,6 @@ interface ActiveProps {
 
 const TabItem = styled.div<ActiveProps>`
     display: block;
-    //@ts-ignore
     color: ${(props) => (props.active ? props.activeColor || "" : props.disableColor || "")};
     cursor: pointer;
 `;
@@ -28,8 +27,7 @@ const Name = styled.div<ActiveProps>`
     font-weight: ${(props) => (props.active ? "500" : "500")};
     font-size: 1rem;
     line-height: 1.2rem;
-    //@ts-ignore
-    color: ${(props) => (props.active ? props.activeColor : props.disableColor)};
+    color: ${(props) => (props.active ? props.activeColor || "" : props.disableColor || "")};
     /* transition: 1.3s; */
 `;
 
@@ -47,7 +45,6 @@ const Line = styled.div<ActiveProps>`
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    //@ts-ignore
     background-color: ${(props) => (props.active ? `${props.activeColor}aa` : `${props.disableColor}dd`)};
     transition: 0.3s;
     opacity: ${(props) => (props.active ? 1 : 0)};
