@@ -10,7 +10,7 @@ const classN = css`
 
 interface CircleProgressBarBaseProps {
     maxSize?: string;
-    className?: object;
+    className?: string;
     strokeColor?: string;
     strokeWidth?: number;
     innerText?: string;

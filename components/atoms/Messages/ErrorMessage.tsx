@@ -55,11 +55,12 @@ const ErrorMessage: FC<ErrorMessageProps> = (props: ErrorMessageProps) => {
             </div>
             <div
                 className={errorText}
-                style={{
-                    //@ts-ignore
-                    "--text-color": theme.textColor,
-                    "--font-family": theme.fontFamilyText,
-                }}
+                style={
+                    {
+                        "--text-color": theme.textColor,
+                        "--font-family": theme.fontFamilyText,
+                    } as React.CSSProperties
+                }
             >
                 {props.error}
             </div>
