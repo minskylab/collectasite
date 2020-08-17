@@ -1,4 +1,3 @@
-//@ts-ignore
 const AUTH_TOKEN_NAME = "jwtToken";
 
 const getToken: () => string = () => localStorage.getItem(AUTH_TOKEN_NAME) || "";
