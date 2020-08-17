@@ -244,7 +244,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
         );
     }
 
-    if (error) {
+    if (!error) {
         console.log(error, "ERROR....");
         return (
             <div

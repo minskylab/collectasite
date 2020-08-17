@@ -52,7 +52,7 @@ const text = css`
 
 const PaddingTop = styled.div`
     position: relative;
-    height: 48%;
+    height: 60%;
 `;
 
 const codeText = css`
@@ -60,6 +60,7 @@ const codeText = css`
     /* width: 25vw; */
     min-width: 12rem;
     max-width: 12rem;
+    padding-bottom: 1.5rem;
 `;
 
 const loginButton = css`
@@ -91,7 +92,7 @@ const Login: FC<LoginProps> = (props) => {
                 <motion.div
                     className={logo}
                     initial={{ transform: "translateY(0) scale(1)", opacity: 1 }}
-                    animate={{ transform: "translateY(-9rem) scale(0.7)", opacity: 1 }}
+                    animate={{ transform: "translateY(-4rem) scale(0.7)", opacity: 1 }}
                     transition={{ delay: 1.1, stiffness: 8, duration: 0.3 }}
                 >
                     <CollectaLogo scale={0.6} />
@@ -108,7 +109,7 @@ const Login: FC<LoginProps> = (props) => {
                             onClick={() => (window.location.href = "https://core.collecta.site/auth/google")}
                         />
                     </motion.div>
-                    <motion.div
+                    {/* <motion.div
                         className={text}
                         style={{
                             "--font-family": theme.fontFamilyText,
@@ -138,11 +139,6 @@ const Login: FC<LoginProps> = (props) => {
                     <WrapperCode>
                         <motion.div
                             className={codeText}
-                            style={{
-                                "--font-family": theme.fontFamilyText,
-                                "--color-text": theme.textColor,
-                                paddingBottom: "1.5rem",
-                            }}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.3, stiffness: 8, duration: 0.7 }}
@@ -167,7 +163,7 @@ const Login: FC<LoginProps> = (props) => {
                                 iconElement={<Icon name="arrow-right" color="#ffffff95" size={20} />}
                             />
                         </motion.div>
-                    </WrapperCode>
+                    </WrapperCode> */}
                 </WrapperBottom>
             </WrapperLogin>
         </>
