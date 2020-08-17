@@ -35,10 +35,15 @@ interface ButtonDefaultProps {
 const BaseButton: FC<ButtonDefaultProps> = (props: ButtonDefaultProps) => {
     const theme = useTheme();
 
+    const onClick = () => {
+        if (props.disabled) return;
+        props.onClick && props.onClick();
+    };
+
     return (
         <motion.div
             whileHover={props.disabled ? {} : props.loading ? {} : { scale: 1.1 }}
-            onClick={props.disabled ? (e) => {} : props.onClick}
+            onClick={onClick}
             whileTap={props.disabled ? {} : props.loading ? {} : { scale: [1, 0.9, 1] }}
         >
             <motion.div
