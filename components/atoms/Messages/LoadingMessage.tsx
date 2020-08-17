@@ -27,7 +27,7 @@ const text = css`
     padding-top: 1rem;
 `;
 
-const LoadingMessage: FC<LoadingMessageProps> = (props) => {
+const LoadingMessage: FC<LoadingMessageProps> = (props: LoadingMessageProps) => {
     const theme = useTheme();
     return (
         <motion.div

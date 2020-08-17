@@ -31,16 +31,21 @@ const WrapperIcon = styled.div<WrapperIconProps>`
 `;
 
 const SatisfactionButton = styled.div<SatisfactionButtonProps>`
-    //@ts-ignore
-    font-family: ${(props) => props.fontFamily};
-    //@ts-ignore
-    color: ${(props) =>
-        !props.selected ? (props.focus ? props.textFocusColor : props.textColor) : props.textFocusColor};
-    //@ts-ignore
+    font-family: ${(props: SatisfactionButtonProps) => props.fontFamily || ""};
+    color: ${(props: SatisfactionButtonProps) =>
+        !props.selected
+            ? props.focus
+                ? props.textFocusColor || ""
+                : props.textColor || ""
+            : props.textFocusColor || ""};
     border-color: ${(props) =>
-        !props.selected ? (props.focus ? props.borderFocusColor : props.borderColor) : props.borderFocusColor};
-    //@ts-ignore
-    background-color: ${(props) => (props.selected ? props.borderFocusColor : "transparent")};
+        !props.selected
+            ? props.focus
+                ? props.borderFocusColor || ""
+                : props.borderColor || ""
+            : props.borderFocusColor || ""};
+    background-color: ${(props: SatisfactionButtonProps) =>
+        props.selected ? props.borderFocusColor || "" : "transparent"};
     transition: 0.3s;
     padding-top: 0.9rem;
     padding-bottom: 0.95rem;
@@ -122,16 +127,56 @@ const SatisfactionChoice: FC<SatisfactionProps> = (props: SatisfactionProps) => 
         const icons =
             sizeMode === SatisfactionMode.Short
                 ? [
-                      <Icon name="satisfaction-1-filled" color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-3-filled" color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-5-filled" color={theme.satisfactionColors[4]} size={iconSize || 70} />,
+                      <Icon
+                          key={"s-1-f"}
+                          name="satisfaction-1-filled"
+                          color={theme.satisfactionColors[0]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-3-f"}
+                          name="satisfaction-3-filled"
+                          color={theme.satisfactionColors[2]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-5-f"}
+                          name="satisfaction-5-filled"
+                          color={theme.satisfactionColors[4]}
+                          size={iconSize || 70}
+                      />,
                   ]
                 : [
-                      <Icon name="satisfaction-1-filled" color={theme.satisfactionColors[0]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-2-filled" color={theme.satisfactionColors[1]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-3-filled" color={theme.satisfactionColors[2]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-4-filled" color={theme.satisfactionColors[3]} size={iconSize || 70} />,
-                      <Icon name="satisfaction-5-filled" color={theme.satisfactionColors[4]} size={iconSize || 70} />,
+                      <Icon
+                          key={"s-1-f"}
+                          name="satisfaction-1-filled"
+                          color={theme.satisfactionColors[0]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-2-f"}
+                          name="satisfaction-2-filled"
+                          color={theme.satisfactionColors[1]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-3-f"}
+                          name="satisfaction-3-filled"
+                          color={theme.satisfactionColors[2]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-4-f"}
+                          name="satisfaction-4-filled"
+                          color={theme.satisfactionColors[3]}
+                          size={iconSize || 70}
+                      />,
+                      <Icon
+                          key={"s-5-f"}
+                          name="satisfaction-5-filled"
+                          color={theme.satisfactionColors[4]}
+                          size={iconSize || 70}
+                      />,
                   ];
         return icons.map((icon, key) => (
             <motion.div

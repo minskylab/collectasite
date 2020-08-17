@@ -29,7 +29,7 @@ interface MenuToogleProps {
     toggle?: () => void;
 }
 
-const MenuToogle: FC<MenuToogleProps> = (props) => {
+const MenuToogle: FC<MenuToogleProps> = (props: MenuToogleProps) => {
     return (
         <div className={button} onClick={props.toggle}>
             <svg width="23" height="23" viewBox="0 0 23 23">

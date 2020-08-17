@@ -75,21 +75,23 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
                 <Container>
                     <div
                         className={textdueDate}
-                        style={{
-                            //@ts-ignore
-                            "--text-color": theme.textColor,
-                            "--font-family": theme.fontFamilyText,
-                        }}
+                        style={
+                            {
+                                "--text-color": theme.textColor,
+                                "--font-family": theme.fontFamilyText,
+                            } as React.CSSProperties
+                        }
                     >
                         Expira {expiredIn}
                     </div>
                     <div
                         className={textSurveyName}
-                        style={{
-                            //@ts-ignore
-                            "--text-color": theme.textColor,
-                            "--font-family": theme.fontFamilyTitle,
-                        }}
+                        style={
+                            {
+                                "--text-color": theme.textColor,
+                                "--font-family": theme.fontFamilyTitle,
+                            } as React.CSSProperties
+                        }
                     >
                         {props.title}
                     </div>
@@ -98,48 +100,18 @@ const ClassroomCard: FC<CardClassroomProps> = (props: CardClassroomProps) => {
                               <div
                                   key={i}
                                   className={textTags}
-                                  style={{
-                                      //@ts-ignore
-                                      "--font-family": theme.fontFamilyTitle,
-                                      "--background-color": `${theme.primaryColor}20`,
-                                      "--text-color": theme.textColor,
-                                  }}
+                                  style={
+                                      {
+                                          "--font-family": theme.fontFamilyTitle,
+                                          "--background-color": `${theme.primaryColor}20`,
+                                          "--text-color": theme.textColor,
+                                      } as React.CSSProperties
+                                  }
                               >
                                   {tag}
                               </div>
                           ))
                         : null}
-
-                    {/* <div
-						className={textTeacher}
-						style={{
-							//@ts-ignore
-							"--text-color": theme.darkSecondaryTextColor,
-							"--font-family": theme.fontFamilyText
-						}}
-					>
-						{props.teacher}
-					</div> */}
-                    {/* <div
-						className={textCreatedAt}
-						style={{
-							//@ts-ignore
-							"--text-color": theme.secondaryTextColor,
-							"--font-family": theme.fontFamilyText
-						}}
-					>
-						{props.createdAt}
-					</div> */}
-                    {/* <div
-						className={textAvailableFrom}
-						style={{
-							//@ts-ignore
-							"--text-color": theme.secondaryTextColor,
-							"--font-family": theme.fontFamilyText
-						}}
-					>
-						{props.availableFrom}
-					</div> */}
                 </Container>
             </Layout>
         </motion.div>

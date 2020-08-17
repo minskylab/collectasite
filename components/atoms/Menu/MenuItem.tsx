@@ -50,7 +50,7 @@ interface MenuItemProps {
 
 const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
 
-const MenuItem: FC<MenuItemProps> = (props) => {
+const MenuItem: FC<MenuItemProps> = (props: MenuItemProps) => {
     const style = { border: `2px solid ${colors[props.i]}` };
     return (
         <motion.li className={liClass} variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
