@@ -447,7 +447,7 @@ export type IsFinalQuestionQueryVariables = {
 
 export type IsFinalQuestionQuery = { __typename?: "Query" } & Pick<Query, "isFinalQuestion">;
 
-export type ProfileQueryVariables = {};
+export type ProfileQueryVariables = Record<string, unknown>;
 
 export type ProfileQuery = { __typename?: "Query" } & {
     profile: { __typename?: "Person" } & Pick<Person, "id" | "name" | "picture" | "username" | "lastActivity"> & {

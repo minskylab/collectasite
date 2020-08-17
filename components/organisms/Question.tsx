@@ -159,22 +159,24 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
             <TextWrapper>
                 <div
                     className={title}
-                    style={{
-                        //@ts-ignore
-                        "--font-family": theme.fontFamilyText,
-                        "--color-text": theme.secondaryTextColor,
-                        paddingBottom: "1.5rem",
-                    }}
+                    style={
+                        {
+                            "--font-family": theme.fontFamilyText,
+                            "--color-text": theme.secondaryTextColor,
+                            paddingBottom: "1.5rem",
+                        } as React.CSSProperties
+                    }
                 >
                     {props.title || ""}
                 </div>
                 <div
                     className={description}
-                    style={{
-                        //@ts-ignore
-                        "--font-family": theme.fontFamilyText,
-                        "--color-text": theme.textColor,
-                    }}
+                    style={
+                        {
+                            "--font-family": theme.fontFamilyText,
+                            "--color-text": theme.textColor,
+                        } as React.CSSProperties
+                    }
                 >
                     {props.description || ""}
                 </div>
@@ -190,12 +192,13 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
                         <Icon name="alert-filled" color={theme.primaryColor} size={20} />
                         <div
                             className={anonymous}
-                            style={{
-                                //@ts-ignore
-                                "--font-family": theme.fontFamilyText,
-                                "--color-text": theme.primaryColor,
-                                paddingLeft: "0.5rem",
-                            }}
+                            style={
+                                {
+                                    "--font-family": theme.fontFamilyText,
+                                    "--color-text": theme.primaryColor,
+                                    paddingLeft: "0.5rem",
+                                } as React.CSSProperties
+                            }
                         >
                             {props.anonymous ? "La respuesta a esta pregunta será almacenada como anónima." : null}
                         </div>

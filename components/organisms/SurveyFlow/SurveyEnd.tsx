@@ -21,9 +21,9 @@ const thanks = css`
     line-height: 150%;
 `;
 
-export interface SurveyEndProps {}
+// export interface SurveyEndProps {}
 
-const SurveyEnd: FC<SurveyEndProps> = (props: SurveyEndProps) => {
+const SurveyEnd: FC = () => {
     const theme = useTheme();
     const router = useRouter();
 
@@ -34,12 +34,13 @@ const SurveyEnd: FC<SurveyEndProps> = (props: SurveyEndProps) => {
             </CircleProgressWrapper>
             <div
                 className={thanks}
-                style={{
-                    //@ts-ignore
-                    "--font-family": theme.fontFamilyText,
-                    "--color-text": theme.textColor,
-                    paddingBottom: "3em",
-                }}
+                style={
+                    {
+                        "--font-family": theme.fontFamilyText,
+                        "--color-text": theme.textColor,
+                        paddingBottom: "3em",
+                    } as React.CSSProperties
+                }
             >
                 <b>Encuesta completada</b> <div style={{ fontSize: "1rem" }}>Gracias a ti continuaremos mejorando.</div>
             </div>
