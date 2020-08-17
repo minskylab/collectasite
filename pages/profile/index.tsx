@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import React, { NextPage } from "next";
 
 const Profile: NextPage = () => {
     return <p>Profile</p>;

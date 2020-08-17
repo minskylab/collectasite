@@ -111,7 +111,6 @@ const Login: FC<LoginProps> = (props) => {
                     <motion.div
                         className={text}
                         style={{
-                            //@ts-ignore
                             "--font-family": theme.fontFamilyText,
                             "--color-text": theme.textColor,
                             paddingTop: "1.3rem",
@@ -126,7 +125,6 @@ const Login: FC<LoginProps> = (props) => {
                     <motion.div
                         className={text}
                         style={{
-                            //@ts-ignore
                             "--font-family": theme.fontFamilyText,
                             "--color-text": theme.textColor,
                             paddingBottom: "0.5rem",
@@ -141,7 +139,6 @@ const Login: FC<LoginProps> = (props) => {
                         <motion.div
                             className={codeText}
                             style={{
-                                //@ts-ignore
                                 "--font-family": theme.fontFamilyText,
                                 "--color-text": theme.textColor,
                                 paddingBottom: "1.5rem",
@@ -155,7 +152,6 @@ const Login: FC<LoginProps> = (props) => {
                                 placeholder={"Escribe tu código aquí"}
                                 type={"text"}
                                 value={code}
-                                //@ts-ignore
                                 onChange={(e) => setCode(e.target.value)}
                             />
                         </motion.div>

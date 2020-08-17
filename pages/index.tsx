@@ -287,7 +287,6 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             <div
                                 className={textTitle}
                                 style={{
-                                    //@ts-ignore
                                     "--color-text": "#023146",
                                     paddingBottom: "1.8rem",
                                 }}
@@ -301,7 +300,6 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             <div
                                 className={text}
                                 style={{
-                                    //@ts-ignore
                                     "--color-text": "#3C5763",
                                 }}
                             >

@@ -114,7 +114,6 @@ const Playground = () => {
                         placeholder={"Pon tu código de ingreso aquí"}
                         type={"text"}
                         value={username}
-                        //@ts-ignore
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
