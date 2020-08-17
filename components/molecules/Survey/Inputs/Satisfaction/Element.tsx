@@ -129,7 +129,7 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props: SatisfactionEl
                     <g>
                         {angles.map((angle, i) => {
                             return (
-                                <g transform={`rotate(${ratio * (angles.length - i)} ${d / 2} ${d / 2})`}>
+                                <g key={i} transform={`rotate(${ratio * (angles.length - i)} ${d / 2} ${d / 2})`}>
                                     <text
                                         fontFamily="Montserrat"
                                         fontWeight="bold"
