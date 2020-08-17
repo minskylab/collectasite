@@ -244,7 +244,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
         );
     }
 
-    if (!error) {
+    if (error) {
         console.log(error, "ERROR....");
         return (
             <div
@@ -256,7 +256,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                     alignItems: "center",
                 }}
             >
-                <ErrorMessage title={"ERROR"} error={error.message} />
+                <ErrorMessage title={"ERROR"} error={error?.message} />
             </div>
         );
     }
@@ -289,7 +289,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                 style={{
                                     "--color-text": "#023146",
                                     paddingBottom: "1.8rem",
-                                }}
+                                } as React.CSSProperties}
                             >
                                 {data ? (
                                     <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
@@ -301,7 +301,7 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                 className={text}
                                 style={{
                                     "--color-text": "#3C5763",
-                                }}
+                                } as React.CSSProperties}
                             >
                                 {data ? (
                                     <>

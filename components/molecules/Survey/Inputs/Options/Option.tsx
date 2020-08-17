@@ -56,19 +56,20 @@ const Option: FC<OptionProps> = (props: OptionProps) => {
                     setOnMouse(false);
                 }}
                 className={buttonContainer}
-                style={{
-                    //@ts-ignore
-                    "--background-color": props.selected ? theme.primaryColor : "transparent",
-                    "--border-color": props.selected ? theme.primaryColor : theme.secondaryColor,
-                }}
+                style={
+                    {
+                        "--background-color": props.selected ? theme.primaryColor : "transparent",
+                        "--border-color": props.selected ? theme.primaryColor : theme.secondaryColor,
+                    } as React.CSSProperties
+                }
             >
                 <div
                     className={text}
-                    style={{
-                        //@ts-ignore
-                        "--text-color": props.selected ? theme.primaryColorText : theme.secondaryTextColor,
-                        "--font-family": theme.fontFamilyText,
-                    }}
+                    style={
+                        {
+                            "--text-color": props.selected ? theme.primaryColorText : theme.secondaryTextColor,
+                        } as React.CSSProperties
+                    }
                 >
                     {props.text}
                 </div>
