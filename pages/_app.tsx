@@ -14,31 +14,20 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
         forward(ops$),
         tap(({ error }) => {
             if (error) {
-                // console.log("Exhange error: ", error, error.networkError, typeof (error.networkError))
-                console.log(error.message);
-                console.log(error.networkError?.message);
-                if (
-                    error.message.includes("unauthorized") ||
-                    error.response?.status === 403
-                ) {
-                    console.log("1. ", error);
+                let msg = error.message;
+                const networkError = "Failed to fetch";
+                const unauthorizedError = "unauthorized";
+                if (msg.includes(networkError)) {
+                    console.log("networkError: " + error);
+                } else if (msg.includes(unauthorizedError) || error.response?.status === 403) {
+                    console.log("unauthorizedError: " + error);
                     console.log(window.location);
                     window.location.assign("/login");
                     console.log("STATUS ", error.response.status, "LOGOUT");
                     console.log("deleteToken()");
                     // deleteToken();
                 } else {
-                    console.log("2. ", error);
-                    console.log(
-                        "ERROR: ",
-                        "Respuesta de servidor",
-                        " o ",
-                        "Query mal hecho",
-                        " | network: ",
-                        error.networkError,
-                        " | message: ",
-                        error.message
-                    );
+                    console.log("Otro tipo de error: " + error);
                 }
             }
         })

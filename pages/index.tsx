@@ -17,6 +17,8 @@ import Skeleton from "react-loading-skeleton";
 import { Tabs } from "components";
 import dayjs from "dayjs";
 import Search from "components/molecules/Search";
+import LoadingMessage from "components/atoms/Messages/LoadingMessage";
+import ErrorMessage from "components/atoms/Messages/ErrorMessage";
 
 // import dynamic from "next/dynamic";
 // const Skeleton = dynamic(() => import("react-loading-skeleton"), { ssr: false });
@@ -191,7 +193,7 @@ const Home: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>Collecta Surveys</title>
+                <title>Home | Collecta Surveys</title>
             </Head>
             <div>
                 <HomeUserData />
@@ -213,18 +215,35 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
     const theme = useTheme();
     const router = useRouter();
 
-    const [{ data, fetching, error }, run] = useProfileQuery({
-        pause: true,
-    });
+    // const [{ data, fetching, error }, run] = useProfileQuery({
+    //     pause: true,
+    // });
+    const [{ data, fetching, error }] = useProfileQuery();
     const [tabSelected, setTabSelected] = useState<string>("Nuevos")
     const [searchSelected, setSearchSelected] = useState<string>("CardMode")
 
-    useEffect(() => {
-        run();
-    }, []);
+    // useEffect(() => {
+    //     run();
+    // }, []);
+
+    console.log(fetching, error, data)
+    // return <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}><LoadingMessage text={"CARGANDO..."} /></div>
+
+    if (fetching) {
+        return (
+            <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <LoadingMessage text={"CARGANDO..."} />
+            </div>
+        )
+    }
 
     if (error) {
-        console.log("ERROR....");
+        console.log(error, "ERROR....");
+        return (
+            <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <ErrorMessage title={"ERROR"} error={error.message}/>
+            </div>
+        )
     }
 
     return (
