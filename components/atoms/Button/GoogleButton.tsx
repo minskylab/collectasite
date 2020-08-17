@@ -32,8 +32,9 @@ const GoogleButton: FC<ButtonGoogleProps> = (props: ButtonGoogleProps) => {
             <motion.div
                 className={buttonContainer}
                 transition={{ type: "spring", damping: 0 }}
-                //@ts-ignore
-                style={{ "--bg-color": theme.backgroundCards, "--sec-color": theme.backgroundCards }}
+                style={
+                    { "--bg-color": theme.backgroundCards, "--sec-color": theme.backgroundCards } as React.CSSProperties
+                }
             >
                 <motion.div
                     animate={
