@@ -37,10 +37,11 @@ const CircleProgressBar: FC<CircleProgressBarBaseProps> = (props: CircleProgress
             {...props}
             className={classN}
             percentage={percent}
-            style={{
-                //@ts-ignore
-                "--max-size": props.maxSize || "100vh",
-            }}
+            style={
+                {
+                    "--max-size": props.maxSize || "100vh",
+                } as React.CSSProperties
+            }
             size={props.size}
         />
     );
