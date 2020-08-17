@@ -13,7 +13,7 @@ interface GenericInputProps {
     onChangeAnswer?: (answers: string[]) => void;
 }
 
-const GenericInput: FC<GenericInputProps> = (props) => {
+const GenericInput: FC<GenericInputProps> = (props: GenericInputProps) => {
     return (
         <>
             {props.kind?.toLowerCase() === "options" && (

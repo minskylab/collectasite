@@ -15,7 +15,7 @@ interface OptionsInputProps {
     onChangeAnswers?: (answers: string[]) => void;
 }
 
-const OptionsInput: FC<OptionsInputProps> = (props) => {
+const OptionsInput: FC<OptionsInputProps> = (props: OptionsInputProps) => {
     const options: string[] = [];
     props.options.forEach((_, optKey, __) => {
         options.push(optKey);

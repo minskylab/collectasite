@@ -11,7 +11,7 @@ interface FacesProps {
     currentFace: number;
 }
 
-const Faces: FC<FacesProps> = (props) => {
+const Faces: FC<FacesProps> = (props: FacesProps) => {
     return (
         <div>
             {props.faces.map((face, key) => {

@@ -37,7 +37,7 @@ interface OptionProps {
     onClick?: () => void;
 }
 
-const Option: FC<OptionProps> = (props) => {
+const Option: FC<OptionProps> = (props: OptionProps) => {
     const [mouseOver, setOnMouse] = useState<boolean>(false);
     const [render, setRender] = useState<number>(0);
     const theme = useTheme();

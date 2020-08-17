@@ -70,7 +70,7 @@ interface QuestionViewProps {
     onChangeAnswer: (answers: string[]) => void;
 }
 
-const QuestionView: FC<QuestionViewProps> = (props) => {
+const QuestionView: FC<QuestionViewProps> = (props: QuestionViewProps) => {
     const options = new Map<string, string>();
 
     props.question?.lastQuestionOfSurvey.lastQuestion.input.options?.content?.map((pair) => {

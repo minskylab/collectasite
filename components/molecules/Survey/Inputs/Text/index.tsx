@@ -32,7 +32,7 @@ interface TextInputProps {
     onChangeAnswers?: (answers: string[]) => void;
 }
 
-const TextInput: FC<TextInputProps> = (props) => {
+const TextInput: FC<TextInputProps> = (props: TextInputProps) => {
     let value = undefined;
     if (props.answers) {
         if (props.answers.length > 0) {

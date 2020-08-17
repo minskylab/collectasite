@@ -34,7 +34,7 @@ interface SatisfactionElementProps {
 
 let lastValue = 0;
 
-const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
+const SatisfactionElement: FC<SatisfactionElementProps> = (props: SatisfactionElementProps) => {
     const d = props.diameter || 700;
     const totalSections = props.options.length || 5;
     const alpha = 0.0025;

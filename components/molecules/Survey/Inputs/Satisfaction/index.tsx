@@ -49,7 +49,7 @@ interface SatisfactionInputProps {
     onChangeAnswers?: (answers: string[]) => void;
 }
 
-const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
+const SatisfactionInput: FC<SatisfactionInputProps> = (props: SatisfactionInputProps) => {
     let satisfactionOptions: SatisfactionOption[] = defaultOptions;
     const options: string[] = [];
 
