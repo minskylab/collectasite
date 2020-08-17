@@ -164,11 +164,12 @@ const CircleProgressBarBase: FC<CircleProgressBarBaseProps> = (props: CircleProg
                 />
                 <g
                     className={chartText}
-                    style={{
-                        //@ts-ignore
-                        "--text-color": theme.textColor,
-                        "--font-family": props.fontFamily || theme.fontFamilyText,
-                    }}
+                    style={
+                        {
+                            "--text-color": theme.textColor,
+                            "--font-family": props.fontFamily || theme.fontFamilyText,
+                        } as React.CSSProperties
+                    }
                 >
                     <text x="50%" y="50%" className={chartNumber}>
                         <tspan>{progressBar}</tspan>{" "}
@@ -187,10 +188,11 @@ const CircleProgressBarBase: FC<CircleProgressBarBaseProps> = (props: CircleProg
                         <li className={figureKeyListLi}>
                             <span
                                 className={shapeCircle}
-                                style={{
-                                    //@ts-ignore
-                                    "--stroke-color": strokeColor,
-                                }}
+                                style={
+                                    {
+                                        "--stroke-color": strokeColor,
+                                    } as React.CSSProperties
+                                }
                             />
                             <span>{legendText}</span>
                         </li>
