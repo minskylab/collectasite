@@ -16,7 +16,7 @@ interface OptionsInputProps {
 }
 
 const OptionsInput: FC<OptionsInputProps> = (props) => {
-    let options: string[] = [];
+    const options: string[] = [];
     props.options.forEach((_, optKey, __) => {
         options.push(optKey);
     });

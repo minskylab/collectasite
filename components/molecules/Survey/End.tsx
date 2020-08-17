@@ -44,8 +44,8 @@ interface EndSurveyProps {
     survey: SurveyQuery | undefined;
 }
 
-const EndSurvey: FC<EndSurveyProps> = (props) => {
-    const dueDate = dayjs(props.survey?.survey.dueDate);
+const EndSurvey: FC<EndSurveyProps> = ({ survey }: EndSurveyProps) => {
+    const dueDate = dayjs(survey?.survey.dueDate);
     const expiredIn = dayjs().to(dueDate);
     const day = dueDate.format("DD");
     const month = dueDate.format("MMMM");
@@ -54,16 +54,12 @@ const EndSurvey: FC<EndSurveyProps> = (props) => {
         <Wrapper>
             <Content>
                 <Due>
-                    {props.survey ? (
-                        `Vence ${expiredIn}, el ${day} de ${month}.`
-                    ) : (
-                        <Skeleton height="20px" width="200px" />
-                    )}
+                    {survey ? `Vence ${expiredIn}, el ${day} de ${month}.` : <Skeleton height="20px" width="200px" />}
                 </Due>
-                <Title>{props.survey ? props.survey.survey.title : <Skeleton height="20px" width="280px" />}</Title>
+                <Title>{survey ? survey.survey.title : <Skeleton height="20px" width="280px" />}</Title>
                 <Description>
-                    {props.survey ? (
-                        <div dangerouslySetInnerHTML={{ __html: props.survey.survey.description }} />
+                    {survey ? (
+                        <div dangerouslySetInnerHTML={{ __html: survey?.survey.description || "" }} />
                     ) : (
                         <Skeleton height="20px" width="100%" count={3} />
                     )}

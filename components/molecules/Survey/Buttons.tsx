@@ -11,7 +11,7 @@ interface BackButtonProps {
 const BackButton: FC<BackButtonProps> = (props: BackButtonProps) => {
     return (
         <BaseButton
-            iconElement={<Icon name='arrow-left' color='#BBBBBB' size={20} />}
+            iconElement={<Icon name="arrow-left" color="#BBBBBB" size={20} />}
             iconPosition={"left"}
             text={"Anterior"}
             colorText={"#B1B1B1"}
@@ -32,7 +32,7 @@ const NextButton: FC<NextButtonProps> = (props: NextButtonProps) => {
     const theme = useTheme();
     return (
         <BaseButton
-            iconElement={<Icon name='arrow-right' color={props.disabled ? theme.textColor : 'ffffff95'} size={20} />}
+            iconElement={<Icon name="arrow-right" color={props.disabled ? theme.textColor : "ffffff95"} size={20} />}
             text={props.text}
             onClick={props.onNextClick}
             disabled={props.disabled}
@@ -50,7 +50,7 @@ interface StartButtonProps {
 const StartButton: FC<StartButtonProps> = (props: StartButtonProps) => {
     return (
         <BaseButton
-            iconElement={<Icon name='arrow-right' color='#ffffff95' size={20} />}
+            iconElement={<Icon name="arrow-right" color="#ffffff95" size={20} />}
             text={props.text || "INICIAR"}
             onClick={props.onStartClick}
             disabled={props.disabled}

@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 import { css } from "linaria";
 import { useTheme } from "../../../../../general/theming";
 import { motion } from "framer-motion";
-import { Icon } from 'components';
+import { Icon } from "components";
 
 const buttonContainer = css`
     background-color: var(--background-color);
@@ -90,10 +90,10 @@ const Option: FC<OptionProps> = (props) => {
                     transition={{ duration: 0.4 }}
                 >
                     <Icon
-                      name='check-filled'
-                      color={props.selected ? theme.primaryColorText : theme.secondaryColor}
-                      checkColor={props.selected ? theme.primaryColor : theme.textColor}
-                      size={20}
+                        name="check-filled"
+                        color={props.selected ? theme.primaryColorText : theme.secondaryColor}
+                        checkColor={props.selected ? theme.primaryColor : theme.textColor}
+                        size={20}
                     />
                 </motion.div>
             </div>

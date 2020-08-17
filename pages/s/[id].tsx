@@ -5,7 +5,7 @@ import {
     useFisrtScreenSurveyQuery,
     useLastQuestionOfSurveyQuery,
     useAnswerQuestionMutation,
-    useBackwardSurveyMutation
+    useBackwardSurveyMutation,
 } from "data/collecta";
 
 import { SurveyTemplate } from "components";
@@ -32,7 +32,8 @@ const SurveyPage: NextPage = () => {
 
     const [{ fetching: executingBackwardMutation }, backwardQuestion] = useBackwardSurveyMutation();
 
-    const anyLoading: boolean = loading || fetchingQuestion || fetchingSurvey || executingAnswerMutation || executingBackwardMutation;
+    const anyLoading: boolean =
+        loading || fetchingQuestion || fetchingSurvey || executingAnswerMutation || executingBackwardMutation;
 
     useEffect(() => {
         if (typeof router.query.id === "string") {
@@ -92,14 +93,14 @@ const SurveyPage: NextPage = () => {
     };
 
     const onBack = () => {
-        console.log("back")
+        console.log("back");
         // setLoading(true);
         backwardQuestion({
             surveyID: surveyID,
         }).finally(() => {
             setLoading(false);
         });
-    }
+    };
 
     if (loading) {
         // return <div>Loading</div>;

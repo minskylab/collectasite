@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import {FisrtScreenSurveyQuery, Survey, SurveyQuery} from "../../../data/collecta";
+import { FisrtScreenSurveyQuery, Survey, SurveyQuery } from "../../../data/collecta";
 import { styled } from "linaria/react";
 import dayjs from "dayjs";
 import Skeleton from "react-loading-skeleton";
@@ -61,7 +61,7 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
     const day = dueDate.format("DD");
     const month = dueDate.format("MMMM");
 
-    const percent = (props.data?.surveyPercent as number);
+    const percent = props.data?.surveyPercent as number;
     const surveyIsExpired = dueDate.isBefore(new Date());
     const surveyIsDone = percent == 1 || props.data?.survey.done; // TODO: Use that to splash a "completed survey" message
     const surveyIsInProgress = percent < 1 && 0 < percent;
@@ -71,10 +71,10 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
     let descriptionMessage = "";
 
     if (surveyIsExpired) {
-        dueMessage =`Vencio el ${day} de ${month}.`;
+        dueMessage = `Vencio el ${day} de ${month}.`;
         titleMessage = "Encuesta no disponible";
     } else {
-        dueMessage =`Vence ${expiredIn}, el ${day} de ${month}.`;
+        dueMessage = `Vence ${expiredIn}, el ${day} de ${month}.`;
         titleMessage = props.data?.survey.title || "";
         descriptionMessage = props.data?.survey.description || "";
     }
@@ -82,9 +82,7 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
     return (
         <Wrapper>
             <Content>
-                <Due>
-                    {props.data ? dueMessage : (<Skeleton height="20px" width="200px" />)}
-                </Due>
+                <Due>{props.data ? dueMessage : <Skeleton height="20px" width="200px" />}</Due>
                 <Title>{props.data ? titleMessage : <Skeleton height="40px" width="320px" />}</Title>
                 <Description>
                     {props.data ? (
@@ -93,10 +91,14 @@ const StartSurvey: FC<StartSurveyProps> = (props) => {
                         <Skeleton height="20px" width="100%" count={3} />
                     )}
                 </Description>
-                {surveyIsInProgress && !surveyIsExpired?<ToCompleteMessage>
-                    Su encuesta esta completada al <b>{`${(percent*100).toFixed(0)}%`}</b>.<br/>
-                    Puede continuarla donde la dejo por última vez.
-                </ToCompleteMessage>:<></>}
+                {surveyIsInProgress && !surveyIsExpired ? (
+                    <ToCompleteMessage>
+                        Su encuesta esta completada al <b>{`${(percent * 100).toFixed(0)}%`}</b>.<br />
+                        Puede continuarla donde la dejo por última vez.
+                    </ToCompleteMessage>
+                ) : (
+                    <></>
+                )}
             </Content>
         </Wrapper>
     );

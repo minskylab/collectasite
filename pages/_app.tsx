@@ -14,7 +14,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
         forward(ops$),
         tap(({ error }) => {
             if (error) {
-                let msg = error.message;
+                const msg = error.message;
                 const networkError = "Failed to fetch";
                 const unauthorizedError = "unauthorized";
                 if (msg.includes(networkError)) {
@@ -30,7 +30,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
                     console.log("Otro tipo de error: " + error);
                 }
             }
-        })
+        }),
     );
 };
 

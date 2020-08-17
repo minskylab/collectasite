@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import SatisfactionElement, { SatisfactionOption } from "./Element";
 import Faces, { SatisfactionIcon } from "./Faces";
-import { Icon } from 'components';
+import { Icon } from "components";
 import { styled } from "linaria/react";
 
 const Container = styled.div`
@@ -18,8 +18,7 @@ const WrapperFace = styled.div`
     position: relative;
 `;
 
-
-let defaultColors: Map<number, string> = new Map<number, string>();
+const defaultColors: Map<number, string> = new Map<number, string>();
 defaultColors.set(-1, "#ff7a84");
 defaultColors.set(-0.5, "#ff9c85");
 defaultColors.set(0, "#ffd7a1");
@@ -35,11 +34,11 @@ const defaultOptions: SatisfactionOption[] = [
 ];
 
 const defaultFaces: SatisfactionIcon[] = [
-    { value: -1, face: <Icon name='satisfaction-1-filled' color='#ff7a84' size={80} /> },
-    { value: -0.5, face: <Icon name='satisfaction-2-filled' color={"#ff9c85"} size={80} /> },
-    { value: 0, face: <Icon name='satisfaction-3-filled' color={"#ffd7a1"} size={80} /> },
-    { value: 0.5, face: <Icon name='satisfaction-4-filled' color={"#b8f7a1"} size={80} /> },
-    { value: 1.0, face: <Icon name='satisfaction-5-filled' color={"#89eeae"} size={80} /> },
+    { value: -1, face: <Icon name="satisfaction-1-filled" color="#ff7a84" size={80} /> },
+    { value: -0.5, face: <Icon name="satisfaction-2-filled" color={"#ff9c85"} size={80} /> },
+    { value: 0, face: <Icon name="satisfaction-3-filled" color={"#ffd7a1"} size={80} /> },
+    { value: 0.5, face: <Icon name="satisfaction-4-filled" color={"#b8f7a1"} size={80} /> },
+    { value: 1.0, face: <Icon name="satisfaction-5-filled" color={"#89eeae"} size={80} /> },
 ];
 
 interface SatisfactionInputProps {
@@ -52,7 +51,7 @@ interface SatisfactionInputProps {
 
 const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
     let satisfactionOptions: SatisfactionOption[] = defaultOptions;
-    let options: string[] = [];
+    const options: string[] = [];
 
     if (props.options) {
         props.options.forEach((_, optKey, __) => {
@@ -74,7 +73,7 @@ const SatisfactionInput: FC<SatisfactionInputProps> = (props) => {
         props.onChangeAnswers && props.onChangeAnswers([satisfaction.toFixed(1)]);
     };
 
-    const currentFace = parseFloat(props.answers?props.answers[0]:"0.0") || 0.0;
+    const currentFace = parseFloat(props.answers ? props.answers[0] : "0.0") || 0.0;
 
     return (
         <Container>

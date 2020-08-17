@@ -26,24 +26,24 @@ const Label = styled.label`
 `;
 
 interface TextInputProps {
-  onChange?: (input: string) => void;
-  labelText?: string;
-  placeholderText?: string;
+    onChange?: (input: string) => void;
+    labelText?: string;
+    placeholderText?: string;
 }
 
 const InputGeneral: FC<TextInputProps> = (props) => {
-  let value = undefined;
+    const value = undefined;
 
-  return (
-    <InputContainer>
-      <Label>{props.labelText}</Label>
-      <Input
-        value={value}
-        placeholder={props.placeholderText}
-        onChange={(e) => props.onChange && props.onChange(e.target.value)}
-      ></Input>
-    </InputContainer>
-  );
+    return (
+        <InputContainer>
+            <Label>{props.labelText}</Label>
+            <Input
+                value={value}
+                placeholder={props.placeholderText}
+                onChange={(e) => props.onChange && props.onChange(e.target.value)}
+            ></Input>
+        </InputContainer>
+    );
 };
 
 export default InputGeneral;

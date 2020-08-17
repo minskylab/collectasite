@@ -93,7 +93,6 @@ const ContentWrapper = styled.div`
         padding-top: 3rem;
         align-items: flex-start;
     }
-    
 `;
 
 const textTitle = css`
@@ -101,7 +100,7 @@ const textTitle = css`
     font-style: normal;
     font-weight: normal;
     font-size: 2.3rem;
-    line-height: 3rem;    
+    line-height: 3rem;
     color: var(--color-text);
     text-align: left;
     width: 100%;
@@ -185,8 +184,8 @@ const Home: NextPage = () => {
         const { token } = router.query;
         if (typeof token === "string") {
             setToken(token);
-            console.log("SET TOKEN: ", localStorage.getItem("jwtToken"))
-            window.location.replace(window.location.href.split("?")[0])
+            console.log("SET TOKEN: ", localStorage.getItem("jwtToken"));
+            window.location.replace(window.location.href.split("?")[0]);
         }
     }, []);
 
@@ -219,31 +218,47 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
     //     pause: true,
     // });
     const [{ data, fetching, error }] = useProfileQuery();
-    const [tabSelected, setTabSelected] = useState<string>("Nuevos")
-    const [searchSelected, setSearchSelected] = useState<string>("CardMode")
+    const [tabSelected, setTabSelected] = useState<string>("Nuevos");
+    const [searchSelected, setSearchSelected] = useState<string>("CardMode");
 
     // useEffect(() => {
     //     run();
     // }, []);
 
-    console.log(fetching, error, data)
+    console.log(fetching, error, data);
     // return <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}><LoadingMessage text={"CARGANDO..."} /></div>
 
     if (fetching) {
         return (
-            <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <div
+                style={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
                 <LoadingMessage text={"CARGANDO..."} />
             </div>
-        )
+        );
     }
 
     if (error) {
         console.log(error, "ERROR....");
         return (
-            <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                <ErrorMessage title={"ERROR"} error={error.message}/>
+            <div
+                style={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <ErrorMessage title={"ERROR"} error={error.message} />
             </div>
-        )
+        );
     }
 
     return (
@@ -254,15 +269,15 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
             <div>
                 <motion.div className={menuWrapper} initial={false}>
                     <div style={{ padding: 30 }}>
-                        <Icon name='menu' color='#023146' size={30} />
+                        <Icon name="menu" color="#023146" size={30} />
                     </div>
                 </motion.div>
                 <AvatarPosition>
                     {data ? (
                         <Avatar size={"2.5rem"} image={data.profile.picture || ""} />
                     ) : (
-                            <Skeleton key="avatar" height="42px" width="42px" />
-                        )}
+                        <Skeleton key="avatar" height="42px" width="42px" />
+                    )}
                 </AvatarPosition>
             </div>
             <WrapperHome>
@@ -280,8 +295,8 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                                 {data ? (
                                     <>Hola {data.profile.name ? data.profile.name.split(" ", 1)[0] : ""},</>
                                 ) : (
-                                        <Skeleton height="30px" width="260px" />
-                                    )}
+                                    <Skeleton height="30px" width="260px" />
+                                )}
                             </div>
                             <div
                                 className={text}
@@ -292,67 +307,89 @@ const HomeUserData: FC<UserData> = (props: UserData) => {
                             >
                                 {data ? (
                                     <>
-                                        Esta es una lista de tus <b>encuestas pendientes</b>, trata de contestarlas antes de
-                                    que se acabe el tiempo.
-                                </>
+                                        Esta es una lista de tus <b>encuestas pendientes</b>, trata de contestarlas
+                                        antes de que se acabe el tiempo.
+                                    </>
                                 ) : (
-                                        <Skeleton key="head" height="80px" width="280px"></Skeleton>
-                                    )}
+                                    <Skeleton key="head" height="80px" width="280px"></Skeleton>
+                                )}
                             </div>
                         </WrapperText>
                     </LeftPart>
                     <RightPart>
                         <WrapperTab>
-                            <Tabs onClick={(s) => { if (s) { setTabSelected(s) } }} selected={tabSelected} />
+                            <Tabs
+                                onClick={(s) => {
+                                    if (s) {
+                                        setTabSelected(s);
+                                    }
+                                }}
+                                selected={tabSelected}
+                            />
                         </WrapperTab>
                         <br />
-                        <Search onClick={(s) => { if (s) { setSearchSelected(s) } }} selected={searchSelected} />
+                        <Search
+                            onClick={(s) => {
+                                if (s) {
+                                    setSearchSelected(s);
+                                }
+                            }}
+                            selected={searchSelected}
+                        />
                         <div className={cardsWrapper}>
                             <div className={cardsContainer}>
                                 {data ? (
                                     data.profile ? (
                                         data.profile.surveys ? (
-                                            data.profile.surveys.filter((survey) => {
-                                                let filteredSurvey = dayjs(survey.dueDate).isAfter(new Date());
-                                                if (tabSelected === "Nuevos") {
-                                                    if (survey.flow?.state === survey.flow?.initialState) {
-                                                        return filteredSurvey;
+                                            data.profile.surveys
+                                                .filter((survey) => {
+                                                    const filteredSurvey = dayjs(survey.dueDate).isAfter(new Date());
+                                                    if (tabSelected === "Nuevos") {
+                                                        if (survey.flow?.state === survey.flow?.initialState) {
+                                                            return filteredSurvey;
+                                                        } else {
+                                                            return;
+                                                        }
+                                                    } else if (tabSelected === "En progreso") {
+                                                        if (
+                                                            survey.flow?.state !== survey.flow?.initialState &&
+                                                            survey.flow?.state !== survey.flow?.terminationState
+                                                        ) {
+                                                            return filteredSurvey;
+                                                        } else {
+                                                            return;
+                                                        }
+                                                    } else if (tabSelected === "Completados") {
+                                                        if (
+                                                            survey.flow?.state === survey.flow?.terminationState ||
+                                                            survey.done
+                                                        ) {
+                                                            return filteredSurvey;
+                                                        } else {
+                                                            return;
+                                                        }
                                                     } else {
-                                                        return
+                                                        return;
                                                     }
-                                                } else if (tabSelected === "En progreso") {
-                                                    if (survey.flow?.state !== survey.flow?.initialState && survey.flow?.state !== survey.flow?.terminationState) {
-                                                        return filteredSurvey;
-                                                    } else {
-                                                        return
-                                                    }
-                                                } else if (tabSelected === "Completados") {
-                                                    if (survey.flow?.state === survey.flow?.terminationState || survey.done) {
-                                                        return filteredSurvey;
-                                                    } else {
-                                                        return
-                                                    }
-                                                } else {
-                                                    return;
-                                                }
-                                            }).map((survey: any, s: number) => (
-                                                <div key={s} className={cardItem}>
-                                                    <CollectaCard
-                                                        {...survey}
-                                                        isShadow={true}
-                                                        onSelected={(id) => {
-                                                            router.push(`/s/${id}`);
-                                                        }}
-                                                        disable={tabSelected === "Completados"}
-                                                    />
-                                                    {/* <div>{survey.flow.state}, {survey.flow.initialState}, {survey.flow.terminationState}</div> */}
-                                                </div>
-                                            ))
+                                                })
+                                                .map((survey: any, s: number) => (
+                                                    <div key={s} className={cardItem}>
+                                                        <CollectaCard
+                                                            {...survey}
+                                                            isShadow={true}
+                                                            onSelected={(id) => {
+                                                                router.push(`/s/${id}`);
+                                                            }}
+                                                            disable={tabSelected === "Completados"}
+                                                        />
+                                                        {/* <div>{survey.flow.state}, {survey.flow.initialState}, {survey.flow.terminationState}</div> */}
+                                                    </div>
+                                                ))
                                         ) : null
                                     ) : null
                                 ) : (
-                                        <Skeleton key="card" height="300px" width={"260px"} />
-                                    )}
+                                    <Skeleton key="card" height="300px" width={"260px"} />
+                                )}
                             </div>
                         </div>
                     </RightPart>

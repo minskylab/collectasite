@@ -32,7 +32,7 @@ interface SatisfactionElementProps {
     onChangeValue?: (val: number) => void;
 }
 
-let lastValue: number = 0;
+let lastValue = 0;
 
 const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
     const d = props.diameter || 700;
@@ -43,8 +43,8 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
     const ratio = 360 / totalSections;
     const angles = arr.map((v, i) => Math.round((i + 1) * ratio - ratio / 4));
 
-    let colors: any = {};
-    let names: any = {};
+    const colors: any = {};
+    const names: any = {};
 
     const sortedOptions = props.options.sort((opt1, opt2) => opt2.value - opt1.value);
     sortedOptions.map((opt, i) => {
@@ -62,7 +62,7 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
     }, [value]);
 
     const onPan = (event: Event, info: PanInfo) => {
-        let rot = (props.dynamicRatio || 1) * alpha * info.offset.x * 360;
+        const rot = (props.dynamicRatio || 1) * alpha * info.offset.x * 360;
         r.set(lastValue + rot);
     };
 
@@ -118,7 +118,7 @@ const SatisfactionElement: FC<SatisfactionElementProps> = (props) => {
                                         d / 2,
                                         d,
                                         angle,
-                                        angles[i === angles.length - 1 ? 0 : i + 1]
+                                        angles[i === angles.length - 1 ? 0 : i + 1],
                                     )}
                                     fill={colors[i]}
                                 />

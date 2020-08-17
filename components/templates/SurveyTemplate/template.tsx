@@ -48,10 +48,11 @@ interface SurveyTemplateProps {
 }
 
 const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
-    const isFirstQuestion = props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
+    const isFirstQuestion =
+        props.currentQuestion?.lastQuestionOfSurvey.lastQuestion.flow.state ===
         props.firstScreen?.survey.flow?.initialState;
 
-    const percent = (props.firstScreen?.surveyPercent as number);
+    const percent = props.firstScreen?.surveyPercent as number;
     const dueDate = dayjs(props.firstScreen?.survey.dueDate);
     const surveyIsNotAvailable = percent == 1 || props.firstScreen?.survey.done || dueDate.isBefore(new Date());
     const surveyIsInProgress = percent < 1;
@@ -59,7 +60,7 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
     let nextButtonText = "COMENZAR";
 
     if (surveyIsInProgress) {
-        nextButtonText = "CONTINUAR"
+        nextButtonText = "CONTINUAR";
     }
 
     return (
@@ -75,19 +76,24 @@ const SurveyTemplate: FC<SurveyTemplateProps> = (props) => {
                 )}
             </CurrentView>
             <ButtonsWrapper>
-                {!isFirstQuestion && !surveyIsNotAvailable && !props.begin ? <BackButtonContainer>
-                    <BackButton onBackClick={props.onBack} experimental disabled={props.disabled} />
-                </BackButtonContainer> : null}
+                {!isFirstQuestion && !surveyIsNotAvailable && !props.begin ? (
+                    <BackButtonContainer>
+                        <BackButton onBackClick={props.onBack} experimental disabled={props.disabled} />
+                    </BackButtonContainer>
+                ) : null}
                 <NextButtonContainer>
-                    {!surveyIsNotAvailable ?
-                        props.begin ?
+                    {!surveyIsNotAvailable ? (
+                        props.begin ? (
                             <StartButton onStartClick={props.onStart} disabled={props.disabled} text={nextButtonText} />
-                            : <NextButton
+                        ) : (
+                            <NextButton
                                 onNextClick={props.onNext}
                                 text={nextButtonText}
                                 experimental
                                 disabled={props.disabled}
-                            /> : null}
+                            />
+                        )
+                    ) : null}
                 </NextButtonContainer>
             </ButtonsWrapper>
         </Screen>
