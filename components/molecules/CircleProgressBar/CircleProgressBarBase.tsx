@@ -136,8 +136,6 @@ const CircleProgressBarBase: FC<CircleProgressBarBaseProps> = (props: CircleProg
         };
     }, [progressBar]);
 
-    useEffect(() => {}, [progressBar]);
-
     return (
         <figure className={className} style={props.style}>
             <svg viewBox={circleConfig.viewBox} width={size} height={size}>

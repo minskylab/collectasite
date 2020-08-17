@@ -31,7 +31,7 @@ interface TextInputProps {
     placeholderText?: string;
 }
 
-const InputGeneral: FC<TextInputProps> = (props) => {
+const InputGeneral: FC<TextInputProps> = (props: TextInputProps) => {
     const value = undefined;
 
     return (
